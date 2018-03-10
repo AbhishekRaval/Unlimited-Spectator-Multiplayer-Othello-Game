@@ -1,36 +1,7 @@
-<div class="jumbotron">
-  <h2><%= gettext "Welcome to %{name}!", name: "Phoenix" %></h2>
-  <p class="lead">A productive web framework that<br />does not compromise speed and maintainability.</p>
-</div>
-
-<div class="row marketing">
-  <div class="col-lg-6">
-    <h4>Resources</h4>
-    <ul>
-      <li>
-        <a href="http://phoenixframework.org/docs/overview">Guides</a>
-      </li>
-      <li>
-        <a href="https://hexdocs.pm/phoenix">Docs</a>
-      </li>
-      <li>
-        <a href="https://github.com/phoenixframework/phoenix">Source</a>
-      </li>
-    </ul>
-  </div>
-
-  <div class="col-lg-6">
-    <h4>Help</h4>
-    <ul>
-      <li>
-        <a href="http://groups.google.com/group/phoenix-talk">Mailing list</a>
-      </li>
-      <li>
-        <a href="http://webchat.freenode.net/?channels=elixir-lang">#elixir-lang on freenode IRC</a>
-      </li>
-      <li>
-        <a href="https://twitter.com/elixirphoenix">@elixirphoenix</a>
-      </li>
-    </ul>
-  </div>
-</div>
+<div class="jumbotron my-auto" id="gamename">
+      <h4 class="display-4">Othello Game </h4>
+      <p><input type="text"  class="form-control" id="game-name" name="Game Name" placeholder="Enter Game Name"></p>
+      <p><input type="text"  class="form-control" id="player-name" name="Player Name" placeholder="Enter Player Name"></p>
+      <p><a href="" id="ahr"><Button class="btn btn-primary" id="game-button">Go to Game</Button></a></p>
+      <p id="game-out"> </p>
+    </div>
