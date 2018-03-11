@@ -1,0 +1,10 @@
+<script>
+	window.gameName = "<%= @game_name %>"
+</script>
+<h1>Memory Game : <%= @game_name %></h1>
+
+<div id="game" >
+  Loading... 
+</div>
+
+
