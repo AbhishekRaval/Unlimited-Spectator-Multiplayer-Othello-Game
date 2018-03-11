@@ -1,7 +1,0 @@
-<div class="jumbotron my-auto" id="gamename">
-      <h4 class="display-4">Othello Game </h4>
-      <p><input type="text"  class="form-control" id="game-name" name="Game Name" placeholder="Enter Game Name"></p>
-      <p><input type="text"  class="form-control" id="player-name" name="Player Name" placeholder="Enter Player Name"></p>
-      <p><a href="" id="ahr"><Button class="btn btn-primary" id="game-button">Go to Game</Button></a></p>
-      <p id="game-out"> </p>
-    </div>

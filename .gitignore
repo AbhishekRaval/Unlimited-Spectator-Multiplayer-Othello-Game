@@ -1,14 +1,14 @@
 # App artifacts
-/_build
-/db
-/deps
-/*.ez
+/othello/_build
+/othello/db
+/othello/deps
+/othello/*.ez
 
 # Generated on crash by the VM
 /othello/erl_crash.dump
 
 # Generated on crash by NPM
-npm-debug.log
+/othello/npm-debug.log
 
 # Static artifacts
 /othello/assets/node_modules
