@@ -1,7 +1,77 @@
-<div class="jumbotron my-auto" id="gamename">
-      <h4 class="display-4">Othello Game </h4>
-      <p><input type="text"  class="form-control" id="game-name" name="Game Name" placeholder="Enter Game Name"></p>
-      <p><input type="text"  class="form-control" id="player-name" name="Player Name" placeholder="Enter Player Name"></p>
-      <p><a href="" id="ahr"><Button class="btn btn-primary" id="game-button">Go to Game</Button></a></p>
-      <p id="game-out"> </p>
-    </div>
+<section class="h-100">
+	<header class="container h-100">
+		<table class="table table-bordered table-dark text-center">
+			<thead>
+				<tr>
+					<th scope="col"> Welcome to Othello Game</th>
+				</tr>
+			</thead>
+		</table>	  
+		<div class="d-flex align-items-center justify-content-center h-100 py-5">
+			<div class="d-flex flex-column mx-auto">
+				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
+				<div class="py-5">
+					<div class="row">
+						<p class="mr-2">Enter Game Name:</p> 
+						<p><input type="text"  class="form-control" id="game-name" name="Game Name" placeholder="Your Game Name"></p>
+					</div>
+					<div class="row">
+						<p class="mr-3">Enter Your Name: </p>
+						<p><input type="text"  class="form-control" id="player-name" name="Player Name" placeholder="Your Name"></p>
+					</div>
+					<p  class="text-center"><a href="" id="ahr"><Button class="btn btn-primary" id="game-button">Join Game</Button></a></p>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex align-items-center justify-content-center h-100">
+			<div class="d-flex flex-column mx-auto">
+				<div class="card"  style="width: 50rem;">
+					<div class="card-header">
+						<!-- Source: http://www.boardgamecapital.com/game_rules/othello.pdf -->
+						Learn Othello Game
+					</div>
+					<div class="card-body">
+						<p class="card-text">
+							<ul>
+								<li>
+									Each player takes 32 disks and chooses one color to use throughout the game.
+									Black places two black disks and White places two white disks as shown in Figure 1.
+								</li>
+								<img src="<%= static_path(@conn, "/images/figure1.jpg") %>" height = "25%" width = "25%">
+								<li>
+									<p>A move consists of "outflanking" your opponent’s disk(s), then flipping the outflanked disk(s) to your color.</p> 
+									<p>To "outflank" means to place a disk on the board so that your opponent’s row (or rows) of disks is bordered at each end by a disk of your color. A row may be made up of one or more disks.Here’s one example: White disk A was already in place on the board. The placement of white disk B outflanks the row of three black disks.</p>
+								</li>
+								<img src="<%= static_path(@conn, "/images/descrule1.jpg") %>" height = "25%" width = "25%">
+								<li>White flips the outflanked disks and the row now looks like this: </li>
+								<img src="<%= static_path(@conn, "/images/descrule2.jpg") %>" height = "25%" width = "25%">
+							</ul>
+						</p>
+						<h5 class="card-title">Othello Game Rules</h5>
+						<p class="card-text">
+							<ol>
+								<li>Black always moves first.</li>
+								<li>If a player cannot outflank and flip at least one opposing disk, they forfeit their turn and their opponent moves again. However, if a move is available a player may not forfeit their turn.</li>
+								<li>A disk may outflank any number of disksin one or more rows in any number of directions at the same time--horizontally, vertically or diagonally. A "row" is defined as one or more disks in a continuous straight line. (See Figures 2 and 3).</li>
+								<img src="<%= static_path(@conn, "/images/figure2.jpg") %>" height = "25%" width = "25%">
+								<img src="<%= static_path(@conn, "/images/figure3.jpg") %>" height = "25%" width = "25%">
+								<li>Players may not skip over their own color disk(s) to outflank an opposing disk. (See Figure 4.)</li>
+								<img src="<%= static_path(@conn, "/images/figure4.jpg") %>" height = "25%" width = "25%">
+								<li>Disk(s) may only be outflanked as a direct result of a move and must fall in the direct line of the disk placed down. (See Figure 5 and 6.)</li>
+								<img src="<%= static_path(@conn, "/images/figure5.jpg") %>" height = "25%" width = "25%">
+								<img src="<%= static_path(@conn, "/images/figure6.jpg") %>" height = "25%" width = "25%">
+								<li>All disks outflanked in any one movemust be flipped, even if it is to the player’s advantage not to flip them at all.</li>
+								<li>A player who flips a disk that should not have been turned may correct the mistake as long as the opponent has not made a subsequent move. If the opponent has already moved, it is too late for a change and the disk(s) remain as is.</li>
+								<li>Once a disk is placed on a square, it can never be moved to another square later in the game.</li>
+								<li>If a player runs out of disks, but still has the opportunity to outflank an opposing disk on their turn, the 
+								opponent must give the player a disk to use. This can happen as many times as the player needs and can use a disk.</li>
+								<li>When it is no longer possible for either player to move, the game is over. Disks are counted and the player with the majority of their color showing is the winner.</li>
+							</ol>
+						</p>
+						<a href="#" class="btn btn-link">Go to top</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</header>
+</section>
