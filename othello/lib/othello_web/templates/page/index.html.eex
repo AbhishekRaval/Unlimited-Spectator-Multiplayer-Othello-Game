@@ -1,9 +1,9 @@
 <section class="h-100">
 	<header class="container h-100">
-		<table class="table table-bordered table-dark text-center">
+		<table class="table text-center">
 			<thead>
 				<tr>
-					<th scope="col"> Welcome to Othello Game</th>
+					<th scope="col" class="text-white"> Welcome to Othello Game</th>
 				</tr>
 			</thead>
 		</table>	  
@@ -12,11 +12,11 @@
 				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
 				<div class="py-5">
 					<div class="row">
-						<p class="mr-2">Enter Game Name:</p> 
+						<p class="mr-2 text-white" >Enter Game Name:</p> 
 						<p><input type="text"  class="form-control" id="game-name" name="Game Name" placeholder="Your Game Name"></p>
 					</div>
 					<div class="row">
-						<p class="mr-3">Enter Your Name: </p>
+						<p class="mr-3 text-white">Enter Your Name: </p>
 						<p><input type="text"  class="form-control" id="player-name" name="Player Name" placeholder="Your Name"></p>
 					</div>
 					<p  class="text-center"><a href="" id="ahr"><Button class="btn btn-primary" id="game-button">Join Game</Button></a></p>
@@ -25,7 +25,7 @@
 		</div>
 		<div class="d-flex align-items-center justify-content-center h-100">
 			<div class="d-flex flex-column mx-auto">
-				<div class="card"  style="width: 50rem;">
+				<div class="card text-white"  style="width: 50rem; background-color: transparent;  border-width: 0;">
 					<div class="card-header">
 						<!-- Source: http://www.boardgamecapital.com/game_rules/othello.pdf -->
 						Learn Othello Game

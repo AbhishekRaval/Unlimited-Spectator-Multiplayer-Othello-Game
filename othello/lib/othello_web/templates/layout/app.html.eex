@@ -11,7 +11,8 @@
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
-  <body>
+  <!-- Background Image Source: http://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/307430/769489f1336ad61ab6ca83770bbc642ab1db9207.jpg-->
+  <body background="<%= static_path(@conn, "/images/background.jpg") %>">
     <div class="container">
       <main role="main">
         <%= render @view_module, @view_template, assigns%>
