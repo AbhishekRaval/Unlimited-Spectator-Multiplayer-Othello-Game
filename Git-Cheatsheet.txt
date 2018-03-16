@@ -1,0 +1,53 @@
+Some GIT Command.
+
+pwd = current working directory.
+~ = represents the path.
+ls = lists all the file in the containing folder.
+mkdir name = Creates new Folder
+rm -r name = deletes the folder.
+
+GIT init -> It initializes the empty git repository.
+git add filename -> tracks all the git files as added.
+git add. -> it will add all the files.
+
+clear -> clear all the command on the screen 
+
+Git rm-r folder = recursively remove any file.
+
+git rm --cached<file> = to unstage the file.
+Esc:WQ to quit the vim editor.
+
+Git commit -m"added a readme file."
+git diff (will show the changes you created in the code.)
+git diff --staged (to create staged diff)
+
+* Branch can be used to create a branch.
+
+Git branch "name" = it creates branch by desired name.
+git checkout "name" = checkout older-commits, individual files, checkout branch & switches over to it.
+Git checkout master = switches to master branch
+git checkout _b "name" = creates a new branch & switches over to it.
+
+git branch - lists all the branch.
+ note: whenever you create a branch and input some changes in it , then the change is in jurisdiction of that branch only, when checkout moves to master branch , them all that change is gone from repository , untill the branch is declared in the shell.
+
+ git merge name  = to merge the branch into master branch.
+
+ git commit -a -m"message" = for all the changes
+ git branch --merge(shows list of merged branches) 
+ git branch --no-merge(shows branches that have not been merged.)
+git branch -d name = this will delete 
+git branch -D name = this will forcedelete 
+git remote add origin "url" => url given by github, to remotely add a repository.
+git push -u origin => u here stands for unstring _|
+
+* Github Markdown.
+= readme.md
+= .gitignore
+
+How to rollback a Git repository to particular commit ?
+1.Make a copy of brancha at current state: git branch branchname
+2.Reset your branch to your desired commit with git reset --hard(Sha value)
+3.You can delete branch like czyexp when unneccesary. git branch -D czyexp.
+
+Git checkout -- theirs -- path, to retrieve one file from another branch.
