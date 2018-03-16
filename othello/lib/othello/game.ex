@@ -26,7 +26,7 @@ defmodule othello.Game do
   def handleTileClick (game, row, column) do
 
     clickedTile = game.grid[row][column]
-    if clickedTile === 0 do  # if current user is on of the players
+    if clickedTile === 0 do  # if current user is on of the players TODO
       newGameState = checkHit(game, clickedTile, row, column)
     else
       newGameState = game
