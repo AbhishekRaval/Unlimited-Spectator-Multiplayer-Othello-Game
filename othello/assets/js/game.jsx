@@ -4,8 +4,8 @@ import { Button } from "reactstrap";
 import { Progress } from "reactstrap";
 import { Table } from "reactstrap";
 
-export default function run_game(root) {
-  ReactDOM.render(root);
+export default function run_game(root, channel) {
+  ReactDOM.render(<Game channel={channel} />, root);
 }
 
 class Layout extends React.Component {
