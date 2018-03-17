@@ -23,29 +23,8 @@ import socket from "./socket"
 import run_game from "./game";
 
 function init() {
-  let root = document.getElementById('game');
-  //run_game(root);
-
-  let channel = socket.channel("games:" + window.gameName, {})
-  channel.join()
-    .receive("ok", resp => { console.log("Joined successfully", resp) })
-    .receive("error", resp => { console.log("Unable to join", resp) })
-  
-
-  if (!root) {
-    $('#game-button').click(() => {
-      let gn = $('#game-name').val();
-      let pn = $('#player-name').val();
-      console.log("/games/"+gn)
-      $('#ahr').attr("href", "/games/"+gn)
-      channel.push("joining", { gn: gn, pn: pn }).receive("joined", resp => 
-        { console.log("Player joined successfully") });
-      });
-	return;
-  }
-  
-  run_game(root, channel);
-
+  let root = document.getElementById('gamename');
+  run_game(root);
 }
 
 // Use jQuery to delay until page loaded.

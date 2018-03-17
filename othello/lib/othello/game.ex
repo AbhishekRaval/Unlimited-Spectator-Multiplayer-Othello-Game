@@ -26,7 +26,7 @@ defmodule othello.Game do
   def handleTileClick (game, row, column, pn) do
 
     clickedTile = game.grid[row][column]
-    if pn === game.p1 or pn === game.p2 do 
+    if pn === game.p1 or pn === game.p2 do
       if clickedTile === 0 and isValid(game, row, column) do
           newGameState = checkHit(game, clickedTile, row, column)
       end
@@ -52,6 +52,39 @@ defmodule othello.Game do
 
   def checkRightUp(game, row, column) do
 
+    retVal = false
+    if game.p1_turn do
+      if column > 0 and row < 7 do
+        if game.grid[row+1][column-1] === 1 do
+          checkLeftUp(game, row+1, column-1)
+        else
+          if game.grid[row+1][column-1] === 2 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end
+    else
+      if column > 0 and row < 7 do
+        if game.grid[row+1][column-1] === 2 do
+          checkLeftUp(game, row+1, column-1)
+        else
+          if game.grid[row+1][column-1] === 1 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end
+    end
+    retVal
+
+
   end
 
   def checkRightDown(game, row, column) do
@@ -59,7 +92,7 @@ defmodule othello.Game do
   end
 
   def checkLeftUp(game, row, column) do
-    
+
   end
 
   def checkLeftDown(game, row, column) do
@@ -82,7 +115,7 @@ defmodule othello.Game do
         end
       else
         retVal = false
-      end      
+      end
     else
       if column < 7 do
         if game.grid[row][column+1] === 2 do
@@ -96,7 +129,7 @@ defmodule othello.Game do
         end
       else
         retVal = false
-      end 
+      end
     end
     retVal
 
