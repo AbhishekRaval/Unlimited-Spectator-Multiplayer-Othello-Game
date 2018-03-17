@@ -54,6 +54,116 @@ defmodule Othello.Game do
 
     retVal = false
     if game.p1_turn do
+      if column < 7 and row > 0 do
+        if game.grid[row-1][column+1] === 1 do
+          checkLeftUp(game, row-1, column+1)
+        else
+          if game.grid[row-1][column+1] === 2 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end
+    else
+      if column < 7 and row > 0 do
+        if game.grid[row-1][column+1] === 2 do
+          checkLeftUp(game, row-1, column+1)
+        else
+          if game.grid[row-1][column+1] === 1 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end
+    end
+    retVal
+
+
+  end
+
+  def checkRightDown(game, row, column) do
+
+    retVal = false
+    if game.p1_turn do
+      if column < 7 and row < 7 do
+        if game.grid[row+1][column+1] === 1 do
+          checkLeftUp(game, row+1, column+1)
+        else
+          if game.grid[row+1][column+1] === 2 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end
+    else
+      if column < 7 and row < 7 do
+        if game.grid[row+1][column+1] === 2 do
+          checkLeftUp(game, row+1, column+1)
+        else
+          if game.grid[row+1][column+1] === 1 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end
+    end
+    retVal
+
+
+  end
+
+  def checkLeftUp(game, row, column) do
+
+    retVal = false
+    if game.p1_turn do
+      if column > 0 and row > 0 do
+        if game.grid[row-1][column-1] === 1 do
+          checkLeftUp(game, row-1, column-1)
+        else
+          if game.grid[row-1][column-1] === 2 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end
+    else
+      if column > 0 and row > 0 do
+        if game.grid[row-1][column-1] === 2 do
+          checkLeftUp(game, row-1, column-1)
+        else
+          if game.grid[row-1][column-1] === 1 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end
+    end
+    retVal
+
+  end
+
+  def checkLeftDown(game, row, column) do
+
+    retVal = false
+    if game.p1_turn do
       if column > 0 and row < 7 do
         if game.grid[row+1][column-1] === 1 do
           checkLeftUp(game, row+1, column-1)
@@ -83,19 +193,6 @@ defmodule Othello.Game do
       end
     end
     retVal
-
-
-  end
-
-  def checkRightDown(game, row, column) do
-
-  end
-
-  def checkLeftUp(game, row, column) do
-
-  end
-
-  def checkLeftDown(game, row, column) do
 
   end
 
@@ -151,7 +248,7 @@ defmodule Othello.Game do
         end
       else
         retVal = false
-      end      
+      end
     else
       if column < 7 do
         if game.grid[row][column-1] === 2 do
@@ -165,7 +262,7 @@ defmodule Othello.Game do
         end
       else
         retVal = false
-      end 
+      end
     end
     retVal
 
