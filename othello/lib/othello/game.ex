@@ -104,6 +104,38 @@ defmodule othello.Game do
 
   def checkLeft(game, row, column) do
 
+    retVal = false
+    if game.p1_turn do
+      if column < 7 do
+        if game.grid[row][column-1] === 1 do
+          checkLeftUp(game, row, column-1)
+        else
+          if game.grid[row][column-1] === 2 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end      
+    else
+      if column < 7 do
+        if game.grid[row][column-1] === 2 do
+          checkLeftUp(game, row, column-1)
+        else
+          if game.grid[row][column-1] === 1 do
+            retVal = true
+          else
+            retVal = false
+          end
+        end
+      else
+        retVal = false
+      end 
+    end
+    retVal
+
   end
 
   def checkUp(game, row, column) do
