@@ -1,13 +1,34 @@
+<link rel="stylesheet" type="text/css" href=""<%= static_path(@conn, "/css/gamedesign.css") %>"">
+<style type="text/css">
+</style>
  <body>
- <div class="container">
-<script>
-	window.gameName = "<%= @game_name %>"
-</script>
-<h1>Memory Game : <%= @game_name %></h1>
+ 	<div class="container">
+ 		<section class="h-100">
+ 			<header class="container h-100">
+ 				<table class="table text-center">
+			<thead>
+				<tr>
+					<th scope="col" class="text-white"> Welcome to Othello Game</th>
+				</tr>
+			</thead>
+			</table>	 
+ 				<div class="d-flex align-items-center justify-content-center h-100 ">
+ 					<div class="d-flex flex-column mx-auto">
+ 						<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
+ 						<div>
+ 								<script>
+ 									window.gameName = "<%= @game_name %>"
+ 								</script>
+ 								<h1>Othello Game : <%= @game_name %></h1>
 
-<div id="game" >
-  Loading React Code ... 
-</div>
-</div>
-</body>
+ 								<div id="game" >
+ 									Loading React Code ... 
+ 								</div>
+ 						</div>
+ 					</div>
+ 				</div>
+ 			</header>
+ 		</section>
+ 	</div> <!-- /container -->
+ </body>
 
