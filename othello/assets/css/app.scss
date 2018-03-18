@@ -1,4 +1,85 @@
 /* This file is for your main application css. */
 
 @import "bootstrap";
-	
+
+/* Gameboard  css  */
+
+#gameboard .card {
+  width: 55px;
+  height: 55px;
+  text-align: center;
+  background-color:#20b2aa;
+}
+
+#gameboard .table th,#gameboard .table td{
+	padding: 0.25rem;
+}
+
+
+#gameboard .cardFlip {
+  width: 55px;
+  height: 55px;
+  text-align: center;
+  background-color:	#b22028;
+}
+
+#gameboard .cardReveal{
+width: 55px;
+  height: 55px;
+  text-align: center;
+  font-size:250%;
+  background-color:	#2071b2;	
+}
+
+#gameboard .middlefont{
+padding-top:8px;	
+}
+
+#gameboard .card span {
+  line-height: 55px;
+}
+
+#gameboard .table{
+	width: 30%;
+}
+
+
+@media only screen and (max-width: 500px) {
+
+#gameboard .progressBar{
+	width: 320px;
+}
+
+#gameboard .card {
+	width: 35px;
+	height: 35px;
+	text-align: center;
+	font-size:170%;
+	background-color:#20b2aa;
+	}
+
+#gameboard .card span {
+  line-height: 35px;
+}
+
+
+#gameboard .cardFlip {
+	width: 35px;
+	height: 35px;
+	text-align: center;
+	font-size:170%;
+	background-color:	#b22028;
+	}
+
+#gameboard .cardReveal{
+	width: 35px;
+	height: 35px;
+	text-align: center;
+	font-size:170%;
+	background-color:	#2071b2;	
+	}
+
+#gameboard .middlefont{
+	padding-top:4px;	
+}
+}
