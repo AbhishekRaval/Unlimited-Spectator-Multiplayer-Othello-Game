@@ -30,7 +30,7 @@ function init() {
   channel.join()
     .receive("ok", resp => { console.log("Joined successfully", resp) })
     .receive("error", resp => { console.log("Unable to join", resp) })
-  
+
 
   if (!root) {
     $('#game-button').click(() => {
@@ -38,12 +38,12 @@ function init() {
       let pn = $('#player-name').val();
       console.log("/games/"+gn)
       $('#ahr').attr("href", "/games/"+gn)
-      channel.push("joining", { gn: gn, pn: pn }).receive("joined", resp => 
+      channel.push("joining", { gn: gn, pn: pn }).receive("joined", resp =>
         { console.log("Player joined successfully") });
       });
 	return;
   }
-  
+
   run_game(root, channel);
 
 }
