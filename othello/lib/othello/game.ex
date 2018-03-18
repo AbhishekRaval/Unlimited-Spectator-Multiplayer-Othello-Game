@@ -284,7 +284,7 @@ defmodule Othello.Game do
         end
       else
         retVal = false
-      end      
+      end
     else
       if column < 7 do
         if game.grid[row+1][column] === 2 do
@@ -298,7 +298,7 @@ defmodule Othello.Game do
         end
       else
         retVal = false
-      end 
+      end
     end
     retVal
 
@@ -320,7 +320,7 @@ defmodule Othello.Game do
         end
       else
         retVal = false
-      end      
+      end
     else
       if column < 7 do
         if game.grid[row-1][column] === 2 do
@@ -334,27 +334,90 @@ defmodule Othello.Game do
         end
       else
         retVal = false
-      end 
+      end
     end
     retVal
 
   end
 
-
-  ##
-# cases:
-# if diagonal-right-up block has diff value
-# if diagonal-left-up block has diff value
-# if diagonal-right-down block has diff value
-# if diagonal-left-down block has diff value
-#
-
-  ##
-
   def checkHit(game, clickedTile, row, column) do
+
+    if checkUp(game, row, column) do
+      game = checkHitUp(game, row,column)
+    end
+    if checkDown(game, row, column) do
+      game = checkHitDown(game, row,column)
+    end
+    if checkLeft(game, row, column) do
+      game = checkHitLeft(game, row,column)
+    end
+    if checkRight(game, row, column) do
+      game = checkHitRight(game, row,column)
+    end
+    if checkLeftUp(game, row, column) do
+      game = checkHitLeftUp(game, row,column)
+    end
+    if checkLeftDown(game, row, column) do
+      game = checkHitLeftDown(game, row,column)
+    end
+    if checkRightUp(game, row, column) do
+      game = checkHitRightUp(game, row,column)
+    end
+    if checkRightDown(game, row, column) do
+      game = checkHitRightDown(game, row,column)
+    end
 
   end
 
+  def checkHitUp(game, row,column) do
+    newGameVal = game
+    if game.p1_turn do
+      if column < 7 do
+        if game.grid[row+1][column] === 1 do
+          checkLeftUp(game, row+1, column)
+          newGameVal = %{
+              p1_turn: game.p1_turn,
+              grid: put_in game.grid[row+1][column], 2,
+              p1: game.p1,
+              p2: game.p2,
+              p1score: game.p1score,
+              p2score: game.p2score
+            }
+        else
+          if game.grid[row+1][column] === 2 do
+            newGameVal = game
+          else
+            newGameVal = game
+          end
+        end
+      else
+        newGameVal = game
+      end
+    else
+      if column < 7 do
+        if game.grid[row+1][column] === 2 do
+          checkLeftUp(game, row+1, column)
+          newGameVal = %{
+              p1_turn: game.p1_turn,
+              grid: put_in game.grid[row+1][column], 1,
+              p1: game.p1,
+              p2: game.p2,
+              p1score: game.p1score,
+              p2score: game.p2score
+            }
 
+        else
+          if game.grid[row+1][column] === 1 do
+            newGameVal = game
+          else
+            newGameVal = game
+          end
+        end
+      else
+        newGameVal = game
+      end
+    end
+    newGameVal
+  end
 
 end
