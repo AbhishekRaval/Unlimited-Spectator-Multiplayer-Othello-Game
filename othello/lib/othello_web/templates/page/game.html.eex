@@ -1,6 +1,3 @@
-<link rel="stylesheet" type="text/css" href=""<%= static_path(@conn, "/css/gamedesign.css") %>"">
-<style type="text/css">
-</style>
  <body>
  	<div class="container">
  		<section class="h-100">
@@ -15,7 +12,7 @@
  				<div class="d-flex align-items-center justify-content-center h-100 ">
  					<div class="d-flex flex-column mx-auto">
  						<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
- 						<div>
+ 						<div id="gameboard">
  								<script>
  									window.gameName = "<%= @game_name %>"
  								</script>

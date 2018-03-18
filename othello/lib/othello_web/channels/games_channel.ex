@@ -20,6 +20,14 @@ defmodule OthelloWeb.GamesChannel do
     {:reply, {:joined, resp}, socket}
   end
 
+ def handle_in("handleclickfn", %{"i" => i, "j" => j}, socket) do
+    game_init = socket.assigns[:game]
+    game_fn = Game.handleclickfn(game_init,i,j)
+    socket = socket|>assign(:game, game_fn)
+    {:reply, {:ok, %{"game" => Game.client_view(game_fn)}}, socket}
+  end
+
+
   # It is also common to receive messages from the client and
   # broadcast to everyone in the current topic (games:lobby).
   def handle_in("shout", payload, socket) do

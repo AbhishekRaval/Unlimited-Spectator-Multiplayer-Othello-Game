@@ -4,18 +4,9 @@ import { Button } from "reactstrap";
 import { Progress } from "reactstrap";
 import { Table } from "reactstrap";
 
-export default function run_game(root, channel) {
-  ReactDOM.render( < Layout width = {
-    8
-  }
-  height = {
-    8
-  }
-  str = {
-    "AABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHH"
-  }
-  />, root);
-}
+export default function run_game(root, channel) { ReactDOM.render( < Layout width = {  8  }
+  height = {  8  }
+  str = {    "AABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHH"}  />, root); }
 
 const gameStatesType = {
   WFC: "WAITING_FIRST_CARD",
@@ -76,48 +67,74 @@ function createArray(length) {
 class Layout extends React.Component {
   constructor(props) {
     super(props);
-    if (props.width * props.height % 2 == 1) {
-      alert("Number of Cards is Odd");
-    }
-    if (props.width * props.height != props.str.length) {
-      alert("String should be of the size" + props.width * props.height)
-    }
-    var cards = createArray(props.height, props.width);
-    var possArray = generateStringArray(props.str);
-    for (var i = 0; i < props.height; i++) {
-      for (var j = 0; j < props.width; j++) {
-        cards[i][j] = {
-          cardValue: possArray[i * props.width + j],
-          flipped: false,
-          i: i,
-          j: j,
-          colState:0
-        };
-      }
-    }
+    this.channel = props.channel;
+    this.channel
+      .join()
+      .receive("ok", this.gotView.bind(this))
+      .receive("error", resp => {
+      console.log("Unable to join, failed", resp);
+    });
 
     this.state = {
-      cards: cards,
-      gameState: gameStatesType.WFC,
-      firstCard: null,
-      secondCard: 0,
-      count: 0,
-      score: 0,
-      percent:0,
-      height:props.height,
-      width:props.width,
-      str:props.str
+      p1_turn: true,
+      grid: null,
+      p1: null,
+      p2:null,
+      p1score: 0,
+      p2score: 0
     };
   }
+
+  gotView(msg) {
+    console.log("Got View", msg);
+    this.setState(msg.game);
+    if ((this.state.width * this.state.height) % 2 == 1) {
+      alert("Number of Cards is Odd");
+    }
+    if (this.state.width * this.state.height != this.state.str.length) {
+      alert(
+        "String should be of the size" + this.state.width * this.state.height
+      );
+    }
+  }
+
+  serverClickHandle(card, i, j) {
+    console.log("here");
+    this.channel
+      .push("handleclickfn", { i: i, j: j })
+      .receive("ok", this.gotView.bind(this));
+       if (this.state.percent == 100) {
+      alert("Game Complete, Click Reset Game to start new Game.")
+    }
+  }
+
   render() {
-    const cardsRendered = this.state.cards.map((rowOfCards, rowindex) => < tr > {
-          rowOfCards.map((card, cardIndex) => < td onClick = {
-              () => this.cardClick(card)
-            } > < Card card = {
-              card
-            }
-            /></td > )
-        } < /tr>);
+    let cardsRendered = this.state.grid.map((cardrow, rowindex) => (
+      <table key={rowindex}>
+        <tbody>
+          <tr key={rowindex}>
+            {cardrow.map((card, i) => (
+              <td
+                key={i}
+                onClick={() => this.serverClickHandle(card, rowindex, i)}
+                >
+                <div
+                  className={
+                    !card.flipped
+                      ? "card"
+                    : card.colstate == 1 ? "cardReveal" : "cardFlip"
+                  }
+                  >
+                  <div className="middlefont">
+                    {card.flipped ? card.cardValue : " "}
+                  </div>
+                </div>
+              </td>
+            ))}
+          </tr>
+        </tbody>
+      </table>
+    ));
        
        
        return <div> 
