@@ -23,13 +23,15 @@ import socket from "./socket"
 import run_game from "./game";
 
 function init() {
+
+  let channel = socket.channel("games:" + window.gameName, {})
   let root = document.getElementById('game');
   //run_game(root);
 
-  let channel = socket.channel("games:" + window.gameName, {})
-  channel.join()
-    .receive("ok", resp => { console.log("Joined successfully", resp) })
-    .receive("error", resp => { console.log("Unable to join", resp) })
+
+  // channel.join()
+  //   .receive("ok", resp => { console.log("Joined successfully", resp) })
+  //   .receive("error", resp => { console.log("Unable to join", resp) })
 
 
   if (!root) {

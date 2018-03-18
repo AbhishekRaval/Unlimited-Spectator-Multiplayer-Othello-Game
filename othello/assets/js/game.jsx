@@ -6,7 +6,7 @@ import { Table } from "reactstrap";
 
 export default function run_game(root, channel) { ReactDOM.render( < Layout width = {  8  }
   height = {  8  }
-  str = {    "AABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHH"}  />, root); }
+  str = {    "AABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHH"} channel = {channel} />, root); }
 
 const gameStatesType = {
   WFC: "WAITING_FIRST_CARD",
@@ -68,8 +68,7 @@ class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.channel = props.channel;
-    this.channel
-      .join()
+    this.channel.join()
       .receive("ok", this.gotView.bind(this))
       .receive("error", resp => {
       console.log("Unable to join, failed", resp);
@@ -77,7 +76,7 @@ class Layout extends React.Component {
 
     this.state = {
       p1_turn: true,
-      grid: null,
+      grid: [],
       p1: null,
       p2:null,
       p1score: 0,
@@ -88,14 +87,14 @@ class Layout extends React.Component {
   gotView(msg) {
     console.log("Got View", msg);
     this.setState(msg.game);
-    if ((this.state.width * this.state.height) % 2 == 1) {
-      alert("Number of Cards is Odd");
-    }
-    if (this.state.width * this.state.height != this.state.str.length) {
-      alert(
-        "String should be of the size" + this.state.width * this.state.height
-      );
-    }
+    // if ((this.state.width * this.state.height) % 2 == 1) {
+    //   alert("Number of Cards is Odd");
+    // }
+    // if (this.state.width * this.state.height != this.state.str.length) {
+    //   alert(
+    //     "String should be of the size" + this.state.width * this.state.height
+    //   );
+    // }
   }
 
   serverClickHandle(card, i, j) {
@@ -109,11 +108,11 @@ class Layout extends React.Component {
   }
 
   render() {
-    let cardsRendered = this.state.grid.map((cardrow, rowindex) => (
+    let cardsRendered = Object.keys(this.state.grid).map((cardrow, rowindex) => (
       <table key={rowindex}>
         <tbody>
           <tr key={rowindex}>
-            {cardrow.map((card, i) => (
+            {Object.keys(this.state.grid[cardrow]).map((card, i) => (
               <td
                 key={i}
                 onClick={() => this.serverClickHandle(card, rowindex, i)}
@@ -123,8 +122,7 @@ class Layout extends React.Component {
                     !card.flipped
                       ? "card"
                     : card.colstate == 1 ? "cardReveal" : "cardFlip"
-                  }
-                  >
+                  }>
                   <div className="middlefont">
                     {card.flipped ? card.cardValue : " "}
                   </div>
@@ -135,20 +133,20 @@ class Layout extends React.Component {
         </tbody>
       </table>
     ));
-       
-       
-       return <div> 
-       <div class="row">
-    <table class="table table-dark">
+
+
+       return <div>
+       <div className="row">
+    <table className="table table-dark">
     <tbody>
     <tr>
-    <td> {  cardsRendered   } </td> 
-    < /tr > < /tbody>
-     < /table > </div>
-     <div class="text-center"> 
-       <button type="submit" class="btn btn-primary">Leave the Game</button>    
-    </div>        
-       < /div> 
+    <td> {  cardsRendered   } </td>
+    </tr> </tbody>
+     </table> </div>
+   <div className="text-center">
+       <button type="submit" className="btn btn-primary">Leave the Game</button>
+    </div>
+       </div>
 
 
 

@@ -1,9 +1,10 @@
 defmodule OthelloWeb.GamesChannel do
   use OthelloWeb, :channel
+  alias Othello.Game
 
   def join("games:" <> game_name, payload, socket) do
     if authorized?(payload) do
-      {:ok, %{"join" => game_name},socket}
+      {:ok, %{"game" => Game.new()},socket}
     else
       {:error, %{reason: "unauthorized"}}
     end
