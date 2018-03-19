@@ -99,12 +99,19 @@ class Layout extends React.Component {
 
   serverClickHandle(card, i, j) {
     console.log("here");
-    this.channel
-      .push("handleclickfn", { i: i, j: j })
+    if (this.state.p1_turn) {
+      this.channel
+      .push("handleclickfn", { i: i, j: j, pn: this.state.p1 })
       .receive("ok", this.gotView.bind(this));
-       if (this.state.percent == 100) {
-      alert("Game Complete, Click Reset Game to start new Game.")
     }
+    else {
+      this.channel
+      .push("handleclickfn", { i: i, j: j, pn: this.state.p2 })
+      .receive("ok", this.gotView.bind(this));
+    }    
+    // if (this.state.percent == 100) {
+    //   alert("Game Complete, Click Reset Game to start new Game.")
+    // }
   }
 
   render() {

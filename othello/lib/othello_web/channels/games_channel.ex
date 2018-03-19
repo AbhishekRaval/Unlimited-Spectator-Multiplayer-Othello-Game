@@ -21,9 +21,9 @@ defmodule OthelloWeb.GamesChannel do
     {:reply, {:joined, resp}, socket}
   end
 
- def handle_in("handleclickfn", %{"i" => i, "j" => j}, socket) do
+ def handle_in("handleclickfn", %{"i" => i, "j" => j, "pn" => pn}, socket) do
     game_init = socket.assigns[:game]
-    game_fn = Game.handleclickfn(game_init,i,j)
+    game_fn = Game.handleTileClick(game_init,i,j,pn)
     socket = socket|>assign(:game, game_fn)
     {:reply, {:ok, %{"game" => Game.client_view(game_fn)}}, socket}
   end
