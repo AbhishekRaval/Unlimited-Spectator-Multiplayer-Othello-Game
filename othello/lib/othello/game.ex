@@ -345,27 +345,27 @@ defmodule Othello.Game do
     if checkUp(game, row, column) do
       game = checkHitUp(game, row,column)
     end
-    # if checkDown(game, row, column) do
-    #   game = checkHitDown(game, row,column)
-    # end
-    # if checkLeft(game, row, column) do
-    #   game = checkHitLeft(game, row,column)
-    # end
-    # if checkRight(game, row, column) do
-    #   game = checkHitRight(game, row,column)
-    # end
-    # if checkLeftUp(game, row, column) do
-    #   game = checkHitLeftUp(game, row,column)
-    # end
-    # if checkLeftDown(game, row, column) do
-    #   game = checkHitLeftDown(game, row,column)
-    # end
-    # if checkRightUp(game, row, column) do
-    #   game = checkHitRightUp(game, row,column)
-    # end
-    # if checkRightDown(game, row, column) do
-    #   game = checkHitRightDown(game, row,column)
-    # end
+    if checkDown(game, row, column) do
+      game = checkHitDown(game, row,column)
+    end
+    if checkLeft(game, row, column) do
+      game = checkHitLeft(game, row,column)
+    end
+    if checkRight(game, row, column) do
+      game = checkHitRight(game, row,column)
+    end
+    if checkLeftUp(game, row, column) do
+      game = checkHitLeftUp(game, row,column)
+    end
+    if checkLeftDown(game, row, column) do
+      game = checkHitLeftDown(game, row,column)
+    end
+    if checkRightUp(game, row, column) do
+      game = checkHitRightUp(game, row,column)
+    end
+    if checkRightDown(game, row, column) do
+      game = checkHitRightDown(game, row,column)
+    end
 
   end
 
