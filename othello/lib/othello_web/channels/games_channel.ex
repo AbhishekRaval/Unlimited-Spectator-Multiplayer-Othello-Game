@@ -26,7 +26,7 @@ defmodule OthelloWeb.GamesChannel do
     game_init = socket.assigns[:game]
     game_fn = Game.handleTileClick(game_init,i,j,pn)
     socket = socket|>assign(:game, game_fn)
-    {:reply, {:ok, %{"game" => Game.client_view(game_fn)}}, socket}
+    {:reply, {:ok, %{"game" => game_fn}}, socket}
   end
 
 

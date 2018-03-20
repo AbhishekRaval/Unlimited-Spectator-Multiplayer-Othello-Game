@@ -26,7 +26,7 @@ defmodule Othello.Game do
   def handleTileClick(game, row, column, pn) do
 
     clickedTile = game.grid[row][column]
-    if pn === game.p1 or pn === game.p2 do
+    if pn === game.p1 or pn === game.p2 or true do
       if clickedTile === 0 and isValid(game, row, column) do
           newGameState = checkHit(game, clickedTile, row, column)
       end
