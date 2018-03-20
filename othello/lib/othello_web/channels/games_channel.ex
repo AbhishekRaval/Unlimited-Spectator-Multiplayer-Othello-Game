@@ -18,6 +18,7 @@ defmodule OthelloWeb.GamesChannel do
 
   def handle_in("joining", payload, socket) do
     resp = %{ "pn" => payload["pn"] }
+    IO.puts(resp)
     {:reply, {:joined, resp}, socket}
   end
 
