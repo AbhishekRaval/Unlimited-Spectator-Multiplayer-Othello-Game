@@ -15,6 +15,7 @@
  						<div id="gameboard">
  								<script>
  									window.gameName = "<%= @game_name %>"
+ 									window.playerName = "<%= @player_name %>"
  								</script>
  								<h1>Othello Game : <%= @game_name %></h1>
 

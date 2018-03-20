@@ -3,10 +3,11 @@ import ReactDOM from "react-dom";
 import { Button } from "reactstrap";
 import { Progress } from "reactstrap";
 import { Table } from "reactstrap";
+//declare var pName;
 
-export default function run_game(root, channel) { ReactDOM.render( < Layout width = {  8  }
-  height = {  8  }
-  str = {    "AABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHH"} channel = {channel} />, root); }
+export default function run_game(root, channel) { ReactDOM.render( <Layout width = {  8  }
+  height = {  8  } 
+  str = {"AABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHH"} channel = {channel} />, root)}
 
 const gameStatesType = {
   WFC: "WAITING_FIRST_CARD",
@@ -24,46 +25,6 @@ class Card extends React.Component {
 }
 
 
-function generateStringArray(str) {
-  var arr = new Array(16);
-  for (var i = 0; i < str.length; i++) {
-    arr[i] = str.charAt(i);
-  }
-  arr = shuffle(arr);
-  return arr;
-}
-
-function shuffle(array) {
-  let counter = array.length;
-
-  // While there are elements in the array
-  while (counter > 0) {
-    // Pick a random index
-    let index = Math.floor(Math.random() * counter);
-
-    // Decrease counter by 1
-    counter--;
-
-    // And swap the last element with it
-    let temp = array[counter];
-    array[counter] = array[index];
-    array[index] = temp;
-  }
-  return array;
-}
-
-function createArray(length) {
-  var arr = new Array(length || 0),
-    i = length;
-
-  if (arguments.length > 1) {
-    var args = Array.prototype.slice.call(arguments, 1);
-    while (i--) arr[length - 1 - i] = createArray.apply(this, args);
-  }
-
-  return arr;
-}
-
 class Layout extends React.Component {
   constructor(props) {
     super(props);
@@ -73,6 +34,8 @@ class Layout extends React.Component {
       .receive("error", resp => {
       console.log("Unable to join, failed", resp);
     });
+
+      console.log(window.playerName);
 
     this.state = {
       p1_turn: true,
@@ -123,12 +86,12 @@ class Layout extends React.Component {
               <td
                 key={i}
                 onClick={() => this.serverClickHandle(card, rowindex, i)}
+
                 >
-                <div
+
+                <div 
                   className={
-                    !card.flipped
-                      ? "card"
-                    : card.colstate == 1 ? "cardReveal" : "cardFlip"
+                    this.state.grid[cardrow][card] == 0 ? "card" : this.state.grid[cardrow][card] == 1 ? "cardReveal" : "cardFlip"
                   }>
                   <div className="middlefont">
                     {card.flipped ? card.cardValue : " "}

@@ -19,16 +19,13 @@ import "phoenix_html"
 // paths "./socket" or full ones "web/static/js/socket".
 
 import socket from "./socket"
-
 import run_game from "./game";
 
-function init() {
 
+function init() {
   let channel = socket.channel("games:" + window.gameName, {})
   let root = document.getElementById('game');
   //run_game(root);
-
-
   // channel.join()
   //   .receive("ok", resp => { console.log("Joined successfully", resp) })
   //   .receive("error", resp => { console.log("Unable to join", resp) })
@@ -37,13 +34,15 @@ function init() {
   if (!root) {
     $('#game-button').click(() => {
       let gn = $('#game-name').val();
-      let pn = $('#player-name').val();
-      console.log("/games/"+gn)
-      $('#ahr').attr("href", "/games/"+gn)
-      channel.push("joining", { gn: gn, pn: pn }).receive("joined", resp =>
-        { console.log("Player joined successfully") });
-      });
-	return;
+      let pn = $('#player-name').val()+"";
+      console.log("/games/"+gn+pn);
+      $('#ahr').attr("href", "/games/"+gn+"/"+pn);
+      //console.log(playerName + "player Name is here : :: : : " + pn )
+      // channel.push("joining", { gn: gn, pn: pn }).receive("joined", resp =>
+      //   { console.log("Player joined successfully") });
+      // 
+    });
+	 
   }
 
   run_game(root, channel);
