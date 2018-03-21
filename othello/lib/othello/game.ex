@@ -284,7 +284,7 @@ defmodule Othello.Game do
           retVal = checkUp(game, row-1, column)
         else
           if game.grid[row-1][column] === 2 do
-            retVal = true
+             retVal = true     # fasaaad ki jad! 
           else
             retVal = false
           end
@@ -484,7 +484,7 @@ defmodule Othello.Game do
       end
     else
       game = put_in(game.grid[row][column], 1)
-      if row > 0 do
+      if column > 0 do
         if game.grid[row][column-1] === 2 do
           newGameVal = checkHitLeft(game, row, column-1)
           # newGameVal = put_in(game.grid[row][column-1], 1)
@@ -522,9 +522,9 @@ defmodule Othello.Game do
       end
     else
       game = put_in(game.grid[row][column], 1)
-      if row > 0 do
+      if column < 7 do
         if game.grid[row][column+1] === 2 do
-          newGameVal = checkHitRight(game, row-1, column)
+          newGameVal = checkHitRight(game, row, column+1)
           # newGameVal = put_in(game.grid[row][column+1], 1)
         else
           if game.grid[row][column+1] === 1 do
@@ -547,7 +547,7 @@ defmodule Othello.Game do
       game = put_in(game.grid[row][column], 2)
       if column < 7 and row < 7 do
         if game.grid[row+1][column+1] === 1 do
-          newGameVal = checkRightDown(game, row+1, column+1)
+          newGameVal = checkHitRightDown(game, row+1, column+1)
           # newGameVal = put_in(game.grid[row+1][column+1], 2)
         else
           if game.grid[row+1][column+1] === 2 do
@@ -563,7 +563,7 @@ defmodule Othello.Game do
       game = put_in(game.grid[row][column], 1)
       if column < 7 and row < 7 do
         if game.grid[row+1][column+1] === 2 do
-          newGameVal = checkRightDown(game, row+1, column+1)
+          newGameVal = checkHitRightDown(game, row+1, column+1)
           # newGameVal = put_in(game.grid[row+1][column+1], 1)
         else
           if game.grid[row+1][column+1] === 1 do
@@ -588,7 +588,7 @@ defmodule Othello.Game do
           newGameVal = checkHitRightUp(game, row-1, column+1)
           # newGameVal = put_in(game.grid[row-1][column+1], 2)
         else
-          if game.grid[row+1][column+1] === 2 do
+          if game.grid[row-1][column+1] === 2 do
             newGameVal = game
           else
             newGameVal = game
