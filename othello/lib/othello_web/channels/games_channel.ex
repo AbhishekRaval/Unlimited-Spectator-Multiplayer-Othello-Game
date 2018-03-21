@@ -3,6 +3,10 @@ defmodule OthelloWeb.GamesChannel do
   alias Othello.Game
 
   def join("games:" <> game_name, payload, socket) do
+    game = Game.new
+    socket = socket
+             |>assign(:game, game)
+             |>assign(:game_name, game_name)
     if authorized?(payload) do
       {:ok, %{"game" => Game.new()},socket}
     else
@@ -22,9 +26,9 @@ defmodule OthelloWeb.GamesChannel do
     {:reply, {:joined, resp}, socket}
   end
 
- def handle_in("handleclickfn", %{"i" => i, "j" => j, "pn" => pn}, socket) do
+ def handle_in("handleclickfn", %{"i" => i, "j" => j}, socket) do
     game_init = socket.assigns[:game]
-    game_fn = Game.handleTileClick(game_init,i,j,pn)
+    game_fn = Game.handleTileClick(game_init,i,j)
     socket = socket|>assign(:game, game_fn)
     {:reply, {:ok, %{"game" => game_fn}}, socket}
   end

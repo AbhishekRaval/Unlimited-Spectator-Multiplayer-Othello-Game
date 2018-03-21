@@ -23,16 +23,21 @@ defmodule Othello.Game do
       }
   end
 
-  def handleTileClick(game, row, column, pn) do
+  def handleTileClick(game, row, column) do
 
+    newGameState = game
+    IO.inspect(game)
     clickedTile = game.grid[row][column]
-    if pn === game.p1 or pn === game.p2 or true do
-      if clickedTile === 0 and isValid(game, row, column) do
-          newGameState = checkHit(game, clickedTile, row, column)
-      end
-    else
-      newGameState = game
+    if clickedTile === 0 and isValid(game, row, column) do
+      newGameState = checkHit(game, clickedTile, row, column)
     end
+    # if pn === game.p1 or pn === game.p2 or true do
+    #   if clickedTile === 0 and isValid(game, row, column) do
+    #       newGameState = checkHit(game, clickedTile, row, column)
+    #   end
+    # else
+    #   newGameState = game
+    # end
     newGameState
 
   end
@@ -366,6 +371,7 @@ defmodule Othello.Game do
     if checkRightDown(game, row, column) do
       game = checkHitRightDown(game, row,column)
     end
+    game
 
   end
 
