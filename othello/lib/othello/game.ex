@@ -278,10 +278,10 @@ defmodule Othello.Game do
     retVal = false
     if game.p1_turn do
       if row > 0 do
-        if game.grid[row+1][column] === 1 do
-          checkUp(game, row+1, column)
+        if game.grid[row-1][column] === 1 do
+          checkUp(game, row-1, column)
         else
-          if game.grid[row+1][column] === 2 do
+          if game.grid[row-1][column] === 2 do
             retVal = true
           else
             retVal = false
@@ -292,10 +292,10 @@ defmodule Othello.Game do
       end
     else
       if row > 0 do
-        if game.grid[row+1][column] === 2 do
-          checkUp(game, row+1, column)
+        if game.grid[row-1][column] === 2 do
+          checkUp(game, row-1, column)
         else
-          if game.grid[row+1][column] === 1 do
+          if game.grid[row-1][column] === 1 do
             retVal = true
           else
             retVal = false
@@ -314,10 +314,10 @@ defmodule Othello.Game do
     retVal = false
     if game.p1_turn do
       if row < 7 do
-        if game.grid[row-1][column] === 1 do
-          checkDown(game, row-1, column)
+        if game.grid[row+1][column] === 1 do
+          checkDown(game, row+1, column)
         else
-          if game.grid[row-1][column] === 2 do
+          if game.grid[row+1][column] === 2 do
             retVal = true
           else
             retVal = false
@@ -328,10 +328,10 @@ defmodule Othello.Game do
       end
     else
       if row < 7 do
-        if game.grid[row-1][column] === 2 do
-          checkDown(game, row-1, column)
+        if game.grid[row+1][column] === 2 do
+          checkDown(game, row+1, column)
         else
-          if game.grid[row-1][column] === 1 do
+          if game.grid[row+1][column] === 1 do
             retVal = true
           else
             retVal = false
