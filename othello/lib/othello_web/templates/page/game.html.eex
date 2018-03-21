@@ -1,4 +1,11 @@
- <body>
+ <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg") %>); 
+ 	background-repeat: no-repeat;
+    background-attachment: fixed;
+  	background-size: cover;
+	width: 100%;
+	height: 100vh;
+	background-position: center center;
+	position: relative;">
  	<div class="container">
  		<section class="h-100">
  			<header class="container h-100">
@@ -10,20 +17,20 @@
 			</thead>
 			</table>	 
  				<div class="d-flex align-items-center justify-content-center h-100 ">
- 					<div class="d-flex flex-column mx-auto">
+ 					
  						<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
  						<div id="gameboard">
  								<script>
  									window.gameName = "<%= @game_name %>"
  									window.playerName = "<%= @player_name %>"
  								</script>
- 								<h1>Othello Game : <%= @game_name %></h1>
+ 								<h4 class="text-center py-3 text-white">Hey, <%= @player_name %> You joined <%= @game_name %> game.</h4>
 
  								<div id="game" >
  									Loading React Code ... 
  								</div>
  						</div>
- 					</div>
+ 					
  				</div>
  			</header>
  		</section>

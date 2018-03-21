@@ -78,6 +78,8 @@ class Layout extends React.Component {
   }
 
   render() {
+
+    let playerturn  = <div><b>{this.state.p1_turn? this.state.player1 + "'s Turn": this.state.player2 + "'s Turn"}</b></div>
     let cardsRendered = Object.keys(this.state.grid).map((cardrow, rowindex) => (
       <table key={rowindex}>
         <tbody>
@@ -105,24 +107,46 @@ class Layout extends React.Component {
     ));
 
 
-       return <div>
-       <div className="row">
-    <table className="table table-dark">
-    <tbody>
-    <tr>
-    <td> {  cardsRendered   } </td>
-    </tr> </tbody>
-     </table> </div>
-   <div className="text-center">
-       <button type="submit" className="btn btn-primary">Leave the Game</button>
+    return <div className ="container">
+    <div className="row">
+      <div className="d-flex flex-column mx-auto my-auto float-left">
+        <div className="border border-primary text-center player1">
+          <h4> Player1 Details:  </h4>
+          <p> Player1: {this.state.pl} </p>
+          <p> Player1's Score : {this.state.p1score}  </p>
+          <span>
+             <button type="submit" className="btn btn-primary mr-3">Leave</button>
+             <button type="submit" className="btn btn-secondary">Reset</button>
+          </span>
+          <p className="mt-2"> {playerturn}  </p>
+         </div>
+      </div>
+      <div className="d-flex flex-column mx-auto">
+        <table className="table" id="gametable">
+          <tbody>
+            <tr>
+              <td> {  cardsRendered   } </td>
+            </tr> 
+          </tbody>
+        </table> 
+
+        <div className="text-center">
+          <button type="submit" className="btn btn-primary mt-3">Leave the Game</button>
+        </div>
+      </div>
+      <div className="d-flex flex-column mx-auto my-auto float-right">
+        <span className="border border-primary player2 text-center">
+          <h4> Player2 Details:  </h4>
+          <p> Player2: {this.state.p2} </p>
+          <p> Player2's Score : {this.state.p2score}  </p>
+          <span>
+             <button type="submit" className="btn btn-primary mr-3">Leave</button>
+             <button type="submit" className="btn btn-secondary">Reset</button>
+          </span>
+          <p className="mt-2"> {playerturn}  </p>
+         </span>
+      </div>
+    </div>      
     </div>
-       </div>
-
-
-
-
-
-
-
   }
 }

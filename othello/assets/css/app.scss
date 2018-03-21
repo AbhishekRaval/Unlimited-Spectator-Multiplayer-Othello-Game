@@ -8,11 +8,13 @@
   width: 55px;
   height: 55px;
   text-align: center;
-  background-color:#20b2aa;
+  background-color:#17712B;
+  transition: box-shadow 1s;
 }
 
 #gameboard .table th,#gameboard .table td{
-	padding: 0.25rem;
+	padding: 0.01rem;
+	border: 3px solid black;
 }
 
 
@@ -20,7 +22,12 @@
   width: 55px;
   height: 55px;
   text-align: center;
-  background-color:	white;
+  /* white */
+  /* Image Source :  http://othellogame.net/revello/; */
+  background-image: url("http://othellogame.net/revello/images/chip-white-1x.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color:	#17712B;
 }
 
 #gameboard .cardReveal{
@@ -28,7 +35,11 @@ width: 55px;
   height: 55px;
   text-align: center;
   font-size:250%;
-  background-color:	black;	
+  /* black */
+  background-image: url("http://othellogame.net/revello/images/chip-black-1x.png");
+  background-color:	#17712B;	
+  background-repeat: no-repeat;
+  background-position: center center;
 }
 
 #gameboard .middlefont{
@@ -42,6 +53,23 @@ padding-top:8px;
 #gameboard .table{
 	width: 30%;
 }
+
+#gameboard .player1{
+	height: 300px;
+	padding-top: 50px;
+	margin-right: 15px;
+	width: 180px;
+	background-color: white;
+}
+
+#gameboard .player2{
+	padding-top: 50px;
+	height: 300px;
+	margin-left: 15px;
+	width: 180px;
+	background-color: white;
+}
+
 
 
 @media only screen and (max-width: 500px) {
