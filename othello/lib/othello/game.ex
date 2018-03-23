@@ -28,20 +28,14 @@ defmodule Othello.Game do
     newGameState = game
 
     clickedTile = game.grid[row][column]
-    if (clickedTile === 0 or clickedTile === 3) and isValid(game, row, column) do
-      IO.puts("inside if")
-      newGameState = checkHit(game, clickedTile, row, column)
-      newGameState = %{newGameState | p1_turn: !newGameState.p1_turn}
-      newGameState = getvalidtiles(newGameState)
-      IO.inspect(newGameState)
-    end
-    # if pn === game.p1 or pn === game.p2 or true do
-    #   if clickedTile === 0 and isValid(game, row, column) do
-    #       newGameState = checkHit(game, clickedTile, row, column)
-    #   end
-    # else
-    #   newGameState = game
-    # end
+    if game.p1 !== nil and game.p2 !== nil do
+      if (clickedTile === 0 or clickedTile === 3) and isValid(game, row, column) do
+        newGameState = checkHit(game, clickedTile, row, column)
+        newGameState = %{newGameState | p1_turn: !newGameState.p1_turn}
+        newGameState = getvalidtiles(newGameState)
+        IO.inspect(newGameState)
+      end
+    end 
     newGameState
 
   end
@@ -101,14 +95,6 @@ defmodule Othello.Game do
           end
       end
     end
-    # checkUp(game, row, column)
-    # or checkDown(game, row, column)
-    # or checkLeft(game, row, column)
-    # or checkRight(game, row, column)
-    # or checkLeftUp(game, row, column)
-    # or checkRightUp(game, row, column)
-    # or checkLeftDown(game, row, column)
-    # or checkRightDown(game, row, column)
     result
 
   end
@@ -340,7 +326,7 @@ defmodule Othello.Game do
           retVal = checkUp(game, row-1, column)
         else
           if game.grid[row-1][column] === 2 do
-             retVal = true     # fasaaad ki jad!
+             retVal = true     
           else
             retVal = false
           end
@@ -408,35 +394,35 @@ defmodule Othello.Game do
   def checkHit(game, clickedTile, row, column) do
 
     if checkUp(game, row, column) do
-      IO.puts("trying checkHitUp")
+      # IO.puts("trying checkHitUp")
       game = checkHitUp(game, row,column)
     end
     if checkDown(game, row, column) do
-      IO.puts("trying checkHitDown")
+      # IO.puts("trying checkHitDown")
       game = checkHitDown(game, row,column)
     end
     if checkLeft(game, row, column) do
-      IO.puts("trying checkHitLeft")
+      # IO.puts("trying checkHitLeft")
       game = checkHitLeft(game, row,column)
     end
     if checkRight(game, row, column) do
-      IO.puts("trying checkHitRight")
+      # IO.puts("trying checkHitRight")
       game = checkHitRight(game, row,column)
     end
     if checkLeftUp(game, row, column) do
-      IO.puts("trying checkHitLeftUp")
+      # IO.puts("trying checkHitLeftUp")
       game = checkHitLeftUp(game, row,column)
     end
     if checkLeftDown(game, row, column) do
-      IO.puts("trying checkHitLeftDown")
+      # IO.puts("trying checkHitLeftDown")
       game = checkHitLeftDown(game, row,column)
     end
     if checkRightUp(game, row, column) do
-      IO.puts("trying checkHitRightUp")
+      # IO.puts("trying checkHitRightUp")
       game = checkHitRightUp(game, row,column)
     end
     if checkRightDown(game, row, column) do
-      IO.puts("trying checkHitRightDown")
+      # IO.puts("trying checkHitRightDown")
       game = checkHitRightDown(game, row,column)
     end
     countScore(game)
@@ -782,22 +768,16 @@ defmodule Othello.Game do
             {k,
           Enum.into(Enum.map(v, fn({key,value}) ->
             if isValid(game,k,key) do
-                 game = put_in(game.grid[k][key], {key,3})
-                 IO.inspect(game.grid[k][key])
+                 {key, 3}
             else
-                 {key, game.grid[k][key]}
+              if game.grid[k][key] === 1 or game.grid[k][key] === 2 do
+                {key, game.grid[k][key]}
+              else
+                {key, 0}
+              end
             end
           end), %{})}
         end), %{})
-    IO.inspect(gl)
-    # Enum.each(game.grid, fn{k,v} ->
-    #   Enum.map(v, fn({key,value}, game) ->
-    #     if isValid(game,k,key) do
-    #       game = put_in(game.grid[k][key], 3)
-    #       IO.inspect(game.grid[k][key])
-    #     end
-    #   end)
-    # end)
      %{game | grid: gl}
   end
 
