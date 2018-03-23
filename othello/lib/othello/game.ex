@@ -337,7 +337,7 @@ defmodule Othello.Game do
           retVal = checkUp(game, row-1, column)
         else
           if game.grid[row-1][column] === 2 do
-             retVal = true     # fasaaad ki jad! 
+             retVal = true     # fasaaad ki jad!
           else
             retVal = false
           end
@@ -747,12 +747,12 @@ defmodule Othello.Game do
   end
 
   def countScore(game) do
-    
-    blackc = Enum.sum(Enum.map(game.grid, fn{k,v} -> 
-        (Enum.count(Map.values(v), fn(key) -> 
+
+    blackc = Enum.sum(Enum.map(game.grid, fn{k,v} ->
+        (Enum.count(Map.values(v), fn(key) ->
                   key === 1 end)) end))
-    whitec = Enum.sum(Enum.map(game.grid, fn{k,v} -> 
-        (Enum.count(Map.values(v), fn(key) -> 
+    whitec = Enum.sum(Enum.map(game.grid, fn{k,v} ->
+        (Enum.count(Map.values(v), fn(key) ->
                   key === 2 end)) end))
     game = %{
               p1_turn: game.p1_turn,
@@ -762,6 +762,14 @@ defmodule Othello.Game do
               p1score: whitec,
               p2score: blackc
             }
+  end
+
+  def addPlayer1(game, player1) do
+    %{game | p1: player1}
+  end
+
+  def addPlayer2(game, player2) do
+    %{game | p2: player2}
   end
 
 end

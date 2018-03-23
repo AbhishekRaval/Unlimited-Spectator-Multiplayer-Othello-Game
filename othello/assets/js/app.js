@@ -40,9 +40,9 @@ function init() {
       //console.log(playerName + "player Name is here : :: : : " + pn )
       // channel.push("joining", { gn: gn, pn: pn }).receive("joined", resp =>
       //   { console.log("Player joined successfully") });
-      // 
+      //
     });
-	 
+
   }
 
   run_game(root, channel);

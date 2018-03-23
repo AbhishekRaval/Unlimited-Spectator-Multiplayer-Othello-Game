@@ -6,7 +6,7 @@ import { Table } from "reactstrap";
 //declare var pName;
 
 export default function run_game(root, channel) { ReactDOM.render( <Layout width = {  8  }
-  height = {  8  } 
+  height = {  8  }
   str = {"AABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHH"} channel = {channel} />, root)}
 
 const gameStatesType = {
@@ -79,14 +79,25 @@ class Layout extends React.Component {
       .receive("ok", this.gotView.bind(this));
     } else {
         //close popup
-    }    
+    }
   }
 
   serverClickHandle(card, i, j) {
     console.log("here");
-    this.channel
-      .push("handleclickfn", { i: i, j: j})
-      .receive("ok", this.gotView.bind(this));
+    if (this.state.p1_turn && (this.state.p1 == window.playerName)) {
+      this.channel
+        .push("handleclickfn", { i: i, j: j})
+        .receive("ok", this.gotView.bind(this));
+    }
+    else if (!(this.state.p1_turn) &&  (this.state.p2 == window.playerName) ) {
+      this.channel
+        .push("handleclickfn", { i: i, j: j})
+        .receive("ok", this.gotView.bind(this));
+    }
+    else{
+      alert("Trying to be oversmart huh!?")
+    }
+
     // if (this.state.p1_turn) {
     //   this.channel
     //   .push("handleclickfn", { i: i, j: j, pn: this.state.p1 })
@@ -96,7 +107,7 @@ class Layout extends React.Component {
     //   this.channel
     //   .push("handleclickfn", { i: i, j: j, pn: this.state.p2 })
     //   .receive("ok", this.gotView.bind(this));
-    // }    
+    // }
     // if (this.state.percent == 100) {
     //   alert("Game Complete, Click Reset Game to start new Game.")
     // }
@@ -104,8 +115,8 @@ class Layout extends React.Component {
 
   render() {
 
-    let playerturn  = <div><b>{this.state.p1 === null? "Click to join Game":
-    this.state.p1_turn? this.state.player1 + "'s Turn": this.state.player2 + "'s Turn"}</b></div>
+    let playerturn  = <div><b>{(this.state.p1 == null || this.state.p2 == null) ? "":
+    this.state.p1_turn? this.state.p1 + "'s Turn": this.state.p2 + "'s Turn"}</b></div>
     let cardsRendered = Object.keys(this.state.grid).map((cardrow, rowindex) => (
       <table key={rowindex}>
         <tbody>
@@ -117,9 +128,9 @@ class Layout extends React.Component {
 
                 >
 
-                <div 
+                <div
                   className={
-                    this.state.grid[cardrow][card] == 0 ? "card" : 
+                    this.state.grid[cardrow][card] == 0 ? "card" :
                           this.state.grid[cardrow][card] == 1 ? "cardReveal" : "cardFlip"
                   }>
                 </div>
@@ -131,12 +142,12 @@ class Layout extends React.Component {
     ));
 
     let gamep1button = (<div>
-                   {this.state.p1 === null  ? ( <button type="submit" data-toggle="modal" data-target="#player1Join" 
+                   {this.state.p1 === null  ? ( <button type="submit" data-toggle="modal" data-target="#player1Join"
                     className="btn btn-primary my-2"
-                    onClick={() => this.p1join()}>                    
-                    Join Game as Player1</button>) 
+                    onClick={() => this.p1join()}>
+                    Join Game as Player1</button>)
                    : ("Player1 playing")}
-                  </div>); 
+                  </div>);
     let gamep1leavebutton =(<div> {this.state.p1 == window.playerName ?
                     (<span>
                        <button type="submit" className="btn btn-primary mr-3">Leave</button>
@@ -146,9 +157,9 @@ class Layout extends React.Component {
     let gamep2button = (<div>
                    {this.state.p2 === null  ? ( <button type="submit" className="btn btn-primary my-2"
                     onClick={() => this.p2join()}>
-                    Join Game as Player2</button>) 
+                    Join Game as Player2</button>)
                    : ("Player2 playing")}
-                  </div>); 
+                  </div>);
     let gamep2leavebutton =(<div> {this.state.p2 == window.playerName ?
                     (<span>
                        <button type="submit" className="btn btn-primary mr-3">Leave</button>
@@ -161,9 +172,9 @@ class Layout extends React.Component {
         <div className="border border-white text-center text-white player1">
           <h4> Player1  </h4>
           <img src="http://othellogame.net/revello/images/chip-white-1x.png" height="55" width="55"/>
-          <p> Name: {this.state.pl} </p>
+          <p> Name: {this.state.p1} </p>
           <p> <h2> {this.state.p1score} </h2> Score</p>
-           <p> {gamep1button} {gamep1leavebutton}</p>       
+           <p> {gamep1button} {gamep1leavebutton}</p>
           <p className="mt-2"> {playerturn}  </p>
          </div>
       </div>
@@ -172,9 +183,9 @@ class Layout extends React.Component {
           <tbody>
             <tr>
               <td> {  cardsRendered   } </td>
-            </tr> 
+            </tr>
           </tbody>
-        </table> 
+        </table>
 
         <div className="text-center">
           <button type="submit" className="btn btn-primary mt-3">Leave the Game</button>
@@ -185,12 +196,12 @@ class Layout extends React.Component {
           <h4> Player2   </h4>
           <img src="http://othellogame.net/revello/images/chip-black-1x.png" height="55" width="55"/>
           <p> Name: {this.state.p2} </p>
-          <p> <h2> {this.state.p2score} </h2> Score</p>        
-          <p> {gamep2button} {gamep2leavebutton}</p>  
+          <p> <h2> {this.state.p2score} </h2> Score</p>
+          <p> {gamep2button} {gamep2leavebutton}</p>
           <p className="mt-2"> {playerturn}  </p>
          </div>
       </div>
-    </div>      
+    </div>
     </div>
   }
 }
