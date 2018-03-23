@@ -7,7 +7,9 @@ defmodule OthelloWeb.GamesChannel do
     socket = socket
              |>assign(:game, game)
              |>assign(:game_name, game_name)
+    Othello.GameBackup.save(game_name,game)
     if authorized?(payload) do
+      #broadcast! socket, "game:new", %{game: game}
       {:ok, %{"game" => game},socket}
     else
       {:error, %{reason: "unauthorized"}}
@@ -27,27 +29,33 @@ defmodule OthelloWeb.GamesChannel do
   # end
 
   def handle_in("player1join", %{"player1" => player1}, socket) do
-    game_init = socket.assigns[:game]
+    game_init = Othello.GameBackup.load(socket.assigns[:game_name])
     game_fn = Game.addPlayer1(game_init, player1)
     Othello.GameBackup.save(socket.assigns[:game_name], game_fn)
     socket = socket|>assign(:game, game_fn)
-    {:reply, {:ok, %{"game" => game_fn}}, socket}
+    broadcast! socket, "player1join", %{"game" => game_fn}
+    {:noreply, socket}
+    #{:reply, {:ok, %{"game" => game_fn}}, socket}
   end
 
   def handle_in("player2join", %{"player2" => player2}, socket) do
-    game_init = socket.assigns[:game]
+    game_init = Othello.GameBackup.load(socket.assigns[:game_name])
     game_fn = Game.addPlayer2(game_init, player2)
     Othello.GameBackup.save(socket.assigns[:game_name], game_fn)
     socket = socket|>assign(:game, game_fn)
-    {:reply, {:ok, %{"game" => game_fn}}, socket}
+    broadcast! socket, "player2join", %{"game" => game_fn}
+    {:noreply, socket}
+    #{:reply, {:ok, %{"game" => game_fn}}, socket}
   end
 
  def handle_in("handleclickfn", %{"i" => i, "j" => j}, socket) do
-    game_init = socket.assigns[:game]
+    game_init = Othello.GameBackup.load(socket.assigns[:game_name])
     game_fn = Game.handleTileClick(game_init,i,j)
     Othello.GameBackup.save(socket.assigns[:game_name], game_fn)
     socket = socket|>assign(:game, game_fn)
-    {:reply, {:ok, %{"game" => game_fn}}, socket}
+    #attribution: https://medium.com/@Stephanbv/elixir-phoenix-build-a-simple-chat-room-7f20ee8e8f9c
+    broadcast! socket, "handleclickfn", %{"game" => game_fn}
+    {:noreply, socket}
   end
 
 
