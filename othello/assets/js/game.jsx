@@ -76,7 +76,7 @@ s
   }
 
   p2join(){
-     if (confirm("Are you sure, you want to join as Player1")) {
+     if (confirm("Are you sure, you want to join as Player2")) {
         console.log("You pressed OK!");
         this.channel
       .push("player2join", {player2: window.playerName})
@@ -120,7 +120,7 @@ s
   render() {
 
     let playerturn  = <div><b>{(this.state.p1 == null || this.state.p2 == null) ? "":
-    this.state.p1_turn? this.state.p1 + "'s Turn": this.state.p2 + "'s Turn"}</b></div>
+    this.state.p1_turn? "Player1: " + this.state.p1 + "'s Turn": "Player2: " + this.state.p2 + "'s Turn"}</b></div>
     let cardsRendered = Object.keys(this.state.grid).map((cardrow, rowindex) => (
       <table key={rowindex}>
         <tbody>
@@ -135,7 +135,8 @@ s
                 <div
                   className={
                     this.state.grid[cardrow][card] == 0 ? "card" :
-                          this.state.grid[cardrow][card] == 1 ? "cardReveal" : this.state.grid[cardrow][card] == 2 ? "cardFlip" : "cardFlip1"
+                          this.state.grid[cardrow][card] == 1 ? "cardReveal" : 
+                          this.state.grid[cardrow][card] == 2 ? "cardFlip" : "cardFlip1"
                   }>
                 </div>
               </td>
@@ -146,25 +147,25 @@ s
     ));
 
     let gamep1button = (<div>
-                   {this.state.p1 === null  ? ( <button type="submit" data-toggle="modal" data-target="#player1Join"
+                   {(this.state.p1 === null && !(this.state.p2 === window.playerName) ) ? ( <button type="submit" data-toggle="modal" data-target="#player1Join"
                     className="btn btn-primary my-2"
                     onClick={() => this.p1join()}>
                     Join Game as Player1</button>)
-                   : ("Player1 playing")}
+                   :(this.state.p2 === window.playerName && (this.state.p1 === null))?"Waiting for Player1 to join game":""}
                   </div>);
-    let gamep1leavebutton =(<div> {this.state.p1 == window.playerName ?
+    let gamep1leavebutton =(<div className="mt-2"> {this.state.p1 == window.playerName ?
                     (<span>
                        <button type="submit" className="btn btn-primary mr-3">Leave</button>
                        <button type="submit" className="btn btn-secondary">Reset</button>
                     </span>):("")} </div>);
 
     let gamep2button = (<div>
-                   {this.state.p2 === null  ? ( <button type="submit" className="btn btn-primary my-2"
+                   {(this.state.p2 === null && !(this.state.p1 == window.playerName)) ? ( <button type="submit" className="btn btn-primary my-2"
                     onClick={() => this.p2join()}>
                     Join Game as Player2</button>)
-                   : ("Player2 playing")}
+                   :(this.state.p1 === window.playerName && (this.state.p2 === null))?"Waiting for Player2 to join game":""}
                   </div>);
-    let gamep2leavebutton =(<div> {this.state.p2 == window.playerName ?
+    let gamep2leavebutton =(<div className="mt-2"> {this.state.p2 == window.playerName ?
                     (<span>
                        <button type="submit" className="btn btn-primary mr-3">Leave</button>
                        <button type="submit" className="btn btn-secondary">Reset</button>
@@ -179,7 +180,6 @@ s
           <p> Name: {this.state.p1} </p>
           <p> <h2> {this.state.p1score} </h2> Score</p>
            <p> {gamep1button} {gamep1leavebutton}</p>
-          <p className="mt-2"> {playerturn}  </p>
          </div>
       </div>
       <div className="d-flex flex-column mx-auto">
@@ -190,7 +190,8 @@ s
             </tr>
           </tbody>
         </table>
-
+           <div className="text-center text-white">
+           </div>       
         <div className="text-center">
           <button type="submit" className="btn btn-primary mt-3">Leave the Game</button>
         </div>
