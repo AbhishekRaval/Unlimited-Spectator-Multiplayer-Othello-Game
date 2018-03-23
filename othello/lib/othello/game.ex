@@ -46,14 +46,67 @@ defmodule Othello.Game do
 
   def isValid(game, row, column) do
 
-    checkUp(game, row, column)
-    or checkDown(game, row, column)
-    or checkLeft(game, row, column)
-    or checkRight(game, row, column)
-    or checkLeftUp(game, row, column)
-    or checkRightUp(game, row, column)
-    or checkLeftDown(game, row, column)
-    or checkRightDown(game, row, column)
+    result = false
+    if game.p1_turn do
+      if game.grid[row-1][column] === 1 do
+        result = result or checkUp(game, row, column)
+      end
+      if game.grid[row+1][column] === 1 do
+        result = result or checkDown(game, row, column)
+      end
+      if game.grid[row][column-1] === 1 do
+        result = result or checkLeft(game, row, column)
+      end
+      if game.grid[row][column+1] === 1 do
+        result = result or checkRight(game, row, column)
+      end
+      if game.grid[row-1][column-1] === 1 do
+        result = result or checkLeftUp(game, row, column)
+      end
+      if game.grid[row-1][column+1] === 1 do
+        result = result or checkRightUp(game, row, column)
+      end
+      if game.grid[row+1][column-1] === 1 do
+        result = result or checkLeftDown(game, row, column)
+      end
+      if game.grid[row+1][column+1] === 1 do
+        result = result or checkRightDown(game, row, column)
+      end
+    else
+      if game.grid[row-1][column] === 2 do
+        result = result or checkUp(game, row, column)
+      end
+      if game.grid[row+1][column] === 2 do
+        result = result or checkDown(game, row, column)
+      end
+      if game.grid[row][column-1] === 2 do
+        result = result or checkLeft(game, row, column)
+      end
+      if game.grid[row][column+1] === 2 do
+        result = result or checkRight(game, row, column)
+      end
+      if game.grid[row-1][column-1] === 2 do
+        result = result or checkLeftUp(game, row, column)
+      end
+      if game.grid[row-1][column+1] === 2 do
+        result = result or checkRightUp(game, row, column)
+      end
+      if game.grid[row+1][column-1] === 2 do
+        result = result or checkLeftDown(game, row, column)
+      end
+      if game.grid[row+1][column+1] === 2 do
+        result = result or checkRightDown(game, row, column)
+      end
+    end
+    # checkUp(game, row, column)
+    # or checkDown(game, row, column)
+    # or checkLeft(game, row, column)
+    # or checkRight(game, row, column)
+    # or checkLeftUp(game, row, column)
+    # or checkRightUp(game, row, column)
+    # or checkLeftDown(game, row, column)
+    # or checkRightDown(game, row, column)
+    result
 
   end
 
@@ -383,7 +436,7 @@ defmodule Othello.Game do
       IO.puts("trying checkHitRightDown")
       game = checkHitRightDown(game, row,column)
     end
-    game
+    countScore(game)
 
   end
 
@@ -691,6 +744,24 @@ defmodule Othello.Game do
       end
     end
     newGameVal
+  end
+
+  def countScore(game) do
+    
+    blackc = Enum.sum(Enum.map(game.grid, fn{k,v} -> 
+        (Enum.count(Map.values(v), fn(key) -> 
+                  key === 1 end)) end))
+    whitec = Enum.sum(Enum.map(game.grid, fn{k,v} -> 
+        (Enum.count(Map.values(v), fn(key) -> 
+                  key === 2 end)) end))
+    game = %{
+              p1_turn: game.p1_turn,
+              grid: game.grid,
+              p1: game.p1,
+              p2: game.p2,
+              p1score: whitec,
+              p2score: blackc
+            }
   end
 
 end
