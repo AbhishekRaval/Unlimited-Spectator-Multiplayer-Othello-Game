@@ -26,12 +26,14 @@ defmodule Othello.Game do
   def handleTileClick(game, row, column) do
 
     newGameState = game
-    IO.inspect(game)
+
     clickedTile = game.grid[row][column]
-    if clickedTile === 0 and isValid(game, row, column) do
+    if (clickedTile === 0 or clickedTile === 3) and isValid(game, row, column) do
       IO.puts("inside if")
       newGameState = checkHit(game, clickedTile, row, column)
       newGameState = %{newGameState | p1_turn: !newGameState.p1_turn}
+      newGameState = getvalidtiles(newGameState)
+      IO.inspect(newGameState)
     end
     # if pn === game.p1 or pn === game.p2 or true do
     #   if clickedTile === 0 and isValid(game, row, column) do
@@ -45,57 +47,58 @@ defmodule Othello.Game do
   end
 
   def isValid(game, row, column) do
-
-    result = false
-    if game.p1_turn do
-      if game.grid[row-1][column] === 1 do
-        result = result or checkUp(game, row, column)
-      end
-      if game.grid[row+1][column] === 1 do
-        result = result or checkDown(game, row, column)
-      end
-      if game.grid[row][column-1] === 1 do
-        result = result or checkLeft(game, row, column)
-      end
-      if game.grid[row][column+1] === 1 do
-        result = result or checkRight(game, row, column)
-      end
-      if game.grid[row-1][column-1] === 1 do
-        result = result or checkLeftUp(game, row, column)
-      end
-      if game.grid[row-1][column+1] === 1 do
-        result = result or checkRightUp(game, row, column)
-      end
-      if game.grid[row+1][column-1] === 1 do
-        result = result or checkLeftDown(game, row, column)
-      end
-      if game.grid[row+1][column+1] === 1 do
-        result = result or checkRightDown(game, row, column)
-      end
-    else
-      if game.grid[row-1][column] === 2 do
-        result = result or checkUp(game, row, column)
-      end
-      if game.grid[row+1][column] === 2 do
-        result = result or checkDown(game, row, column)
-      end
-      if game.grid[row][column-1] === 2 do
-        result = result or checkLeft(game, row, column)
-      end
-      if game.grid[row][column+1] === 2 do
-        result = result or checkRight(game, row, column)
-      end
-      if game.grid[row-1][column-1] === 2 do
-        result = result or checkLeftUp(game, row, column)
-      end
-      if game.grid[row-1][column+1] === 2 do
-        result = result or checkRightUp(game, row, column)
-      end
-      if game.grid[row+1][column-1] === 2 do
-        result = result or checkLeftDown(game, row, column)
-      end
-      if game.grid[row+1][column+1] === 2 do
-        result = result or checkRightDown(game, row, column)
+      if game.grid[row][column] !== 1 and game.grid[row][column] !== 2 do
+        result = false
+        if game.p1_turn do
+          if game.grid[row-1][column] === 1 do
+            result = result or checkUp(game, row, column)
+          end
+          if game.grid[row+1][column] === 1 do
+            result = result or checkDown(game, row, column)
+          end
+          if game.grid[row][column-1] === 1 do
+            result = result or checkLeft(game, row, column)
+          end
+          if game.grid[row][column+1] === 1 do
+            result = result or checkRight(game, row, column)
+          end
+          if game.grid[row-1][column-1] === 1 do
+            result = result or checkLeftUp(game, row, column)
+          end
+          if game.grid[row-1][column+1] === 1 do
+            result = result or checkRightUp(game, row, column)
+          end
+          if game.grid[row+1][column-1] === 1 do
+            result = result or checkLeftDown(game, row, column)
+          end
+          if game.grid[row+1][column+1] === 1 do
+            result = result or checkRightDown(game, row, column)
+          end
+        else
+          if game.grid[row-1][column] === 2 do
+            result = result or checkUp(game, row, column)
+          end
+          if game.grid[row+1][column] === 2 do
+            result = result or checkDown(game, row, column)
+          end
+          if game.grid[row][column-1] === 2 do
+            result = result or checkLeft(game, row, column)
+          end
+          if game.grid[row][column+1] === 2 do
+            result = result or checkRight(game, row, column)
+          end
+          if game.grid[row-1][column-1] === 2 do
+            result = result or checkLeftUp(game, row, column)
+          end
+          if game.grid[row-1][column+1] === 2 do
+            result = result or checkRightUp(game, row, column)
+          end
+          if game.grid[row+1][column-1] === 2 do
+            result = result or checkLeftDown(game, row, column)
+          end
+          if game.grid[row+1][column+1] === 2 do
+            result = result or checkRightDown(game, row, column)
+          end
       end
     end
     # checkUp(game, row, column)
@@ -771,5 +774,33 @@ defmodule Othello.Game do
   def addPlayer2(game, player2) do
     %{game | p2: player2}
   end
+
+
+  def getvalidtiles(game) do
+
+    gl = Enum.into(Enum.map(game.grid, fn({k,v}) ->
+            {k,
+          Enum.into(Enum.map(v, fn({key,value}) ->
+            if isValid(game,k,key) do
+                 game = put_in(game.grid[k][key], {key,3})
+                 IO.inspect(game.grid[k][key])
+            else
+                 {key, game.grid[k][key]}
+            end
+          end), %{})}
+        end), %{})
+    IO.inspect(gl)
+    # Enum.each(game.grid, fn{k,v} ->
+    #   Enum.map(v, fn({key,value}, game) ->
+    #     if isValid(game,k,key) do
+    #       game = put_in(game.grid[k][key], 3)
+    #       IO.inspect(game.grid[k][key])
+    #     end
+    #   end)
+    # end)
+     %{game | grid: gl}
+  end
+
+
 
 end

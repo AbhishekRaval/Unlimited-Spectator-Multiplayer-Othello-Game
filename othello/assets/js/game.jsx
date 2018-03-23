@@ -131,7 +131,7 @@ class Layout extends React.Component {
                 <div
                   className={
                     this.state.grid[cardrow][card] == 0 ? "card" :
-                          this.state.grid[cardrow][card] == 1 ? "cardReveal" : "cardFlip"
+                          this.state.grid[cardrow][card] == 1 ? "cardReveal" : this.state.grid[cardrow][card] == 2 ? "cardFlip" : "cardFlip1"
                   }>
                 </div>
               </td>

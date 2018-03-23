@@ -29,6 +29,17 @@
   background-position: center center;
   background-color:	#17712B;
 }
+#gameboard .cardFlip1 {
+  width: 55px;
+  height: 55px;
+  text-align: center;
+  /* white */
+  /* Image Source :  http://othellogame.net/revello/; */
+  // background-image: url("http://othellogame.net/revello/images/chip-white-1x.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color:	grey;
+}
 
 #gameboard .cardReveal{
 width: 55px;
@@ -37,13 +48,13 @@ width: 55px;
   font-size:250%;
   /* black */
   background-image: url("http://othellogame.net/revello/images/chip-black-1x.png");
-  background-color:	#17712B;	
+  background-color:	#17712B;
   background-repeat: no-repeat;
   background-position: center center;
 }
 
 #gameboard .middlefont{
-padding-top:8px;	
+padding-top:8px;
 }
 
 #gameboard .card span {
@@ -106,10 +117,10 @@ padding-top:8px;
 	height: 35px;
 	text-align: center;
 	font-size:170%;
-	background-color: black;	
+	background-color: black;
 	}
 
 #gameboard .middlefont{
-	padding-top:4px;	
+	padding-top:4px;
 }
 }
