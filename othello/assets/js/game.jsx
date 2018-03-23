@@ -35,7 +35,17 @@ class Layout extends React.Component {
       console.log("Unable to join, failed", resp);
     });
 
-      console.log(window.playerName);
+    this.channel.on("handleclickfn",payload=>
+    {let game = payload.game;
+    this.setState(game)});  
+    
+    this.channel.on("player1join",payload=>
+    {let game = payload.game;
+    this.setState(game)});
+
+    this.channel.on("player2join",payload=>
+    {let game = payload.game;
+    this.setState(game)});
 
     this.state = {
       p1_turn: true,
@@ -50,15 +60,9 @@ class Layout extends React.Component {
   gotView(msg) {
     console.log("Got View", msg);
     this.setState(msg.game);
-    // if ((this.state.width * this.state.height) % 2 == 1) {
-    //   alert("Number of Cards is Odd");
-    // }
-    // if (this.state.width * this.state.height != this.state.str.length) {
-    //   alert(
-    //     "String should be of the size" + this.state.width * this.state.height
-    //   );
-    // }
   }
+
+s
 
   p1join(){
      if (confirm("Are you sure, you want to join as Player1")) {
