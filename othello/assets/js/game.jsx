@@ -60,6 +60,28 @@ class Layout extends React.Component {
     // }
   }
 
+  p1join(){
+     if (confirm("Are you sure, you want to join as Player1")) {
+        console.log("You pressed OK!");
+        this.channel
+      .push("player1join", {player1: window.playerName})
+      .receive("ok", this.gotView.bind(this));
+    } else {
+        //close popup
+    }
+  }
+
+  p2join(){
+     if (confirm("Are you sure, you want to join as Player1")) {
+        console.log("You pressed OK!");
+        this.channel
+      .push("player2join", {player2: window.playerName})
+      .receive("ok", this.gotView.bind(this));
+    } else {
+        //close popup
+    }    
+  }
+
   serverClickHandle(card, i, j) {
     console.log("here");
     this.channel
@@ -82,7 +104,8 @@ class Layout extends React.Component {
 
   render() {
 
-    let playerturn  = <div><b>{this.state.p1_turn? this.state.player1 + "'s Turn": this.state.player2 + "'s Turn"}</b></div>
+    let playerturn  = <div><b>{this.state.p1 === null? "Click to join Game":
+    this.state.p1_turn? this.state.player1 + "'s Turn": this.state.player2 + "'s Turn"}</b></div>
     let cardsRendered = Object.keys(this.state.grid).map((cardrow, rowindex) => (
       <table key={rowindex}>
         <tbody>
@@ -96,11 +119,9 @@ class Layout extends React.Component {
 
                 <div 
                   className={
-                    this.state.grid[cardrow][card] == 0 ? "card" : this.state.grid[cardrow][card] == 1 ? "cardReveal" : "cardFlip"
+                    this.state.grid[cardrow][card] == 0 ? "card" : 
+                          this.state.grid[cardrow][card] == 1 ? "cardReveal" : "cardFlip"
                   }>
-                  <div className="middlefont">
-                    {card.flipped ? card.cardValue : " "}
-                  </div>
                 </div>
               </td>
             ))}
@@ -109,18 +130,40 @@ class Layout extends React.Component {
       </table>
     ));
 
+    let gamep1button = (<div>
+                   {this.state.p1 === null  ? ( <button type="submit" data-toggle="modal" data-target="#player1Join" 
+                    className="btn btn-primary my-2"
+                    onClick={() => this.p1join()}>                    
+                    Join Game as Player1</button>) 
+                   : ("Player1 playing")}
+                  </div>); 
+    let gamep1leavebutton =(<div> {this.state.p1 == window.playerName ?
+                    (<span>
+                       <button type="submit" className="btn btn-primary mr-3">Leave</button>
+                       <button type="submit" className="btn btn-secondary">Reset</button>
+                    </span>):("")} </div>);
+
+    let gamep2button = (<div>
+                   {this.state.p2 === null  ? ( <button type="submit" className="btn btn-primary my-2"
+                    onClick={() => this.p2join()}>
+                    Join Game as Player2</button>) 
+                   : ("Player2 playing")}
+                  </div>); 
+    let gamep2leavebutton =(<div> {this.state.p2 == window.playerName ?
+                    (<span>
+                       <button type="submit" className="btn btn-primary mr-3">Leave</button>
+                       <button type="submit" className="btn btn-secondary">Reset</button>
+                    </span>):("")} </div>);
 
     return <div className ="container">
     <div className="row">
       <div className="d-flex flex-column mx-auto my-auto float-left">
-        <div className="border border-primary text-center player1">
-          <h4> Player1 Details:  </h4>
-          <p> Player1: {this.state.pl} </p>
-          <p> Player1's Score : {this.state.p1score}  </p>
-          <span>
-             <button type="submit" className="btn btn-primary mr-3">Leave</button>
-             <button type="submit" className="btn btn-secondary">Reset</button>
-          </span>
+        <div className="border border-white text-center text-white player1">
+          <h4> Player1  </h4>
+          <img src="http://othellogame.net/revello/images/chip-white-1x.png" height="55" width="55"/>
+          <p> Name: {this.state.pl} </p>
+          <p> <h2> {this.state.p1score} </h2> Score</p>
+           <p> {gamep1button} {gamep1leavebutton}</p>       
           <p className="mt-2"> {playerturn}  </p>
          </div>
       </div>
@@ -138,16 +181,14 @@ class Layout extends React.Component {
         </div>
       </div>
       <div className="d-flex flex-column mx-auto my-auto float-right">
-        <span className="border border-primary player2 text-center">
-          <h4> Player2 Details:  </h4>
-          <p> Player2: {this.state.p2} </p>
-          <p> Player2's Score : {this.state.p2score}  </p>
-          <span>
-             <button type="submit" className="btn btn-primary mr-3">Leave</button>
-             <button type="submit" className="btn btn-secondary">Reset</button>
-          </span>
+        <div className="border border-light player2 text-white text-center">
+          <h4> Player2   </h4>
+          <img src="http://othellogame.net/revello/images/chip-black-1x.png" height="55" width="55"/>
+          <p> Name: {this.state.p2} </p>
+          <p> <h2> {this.state.p2score} </h2> Score</p>        
+          <p> {gamep2button} {gamep2leavebutton}</p>  
           <p className="mt-2"> {playerturn}  </p>
-         </span>
+         </div>
       </div>
     </div>      
     </div>
