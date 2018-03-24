@@ -6,7 +6,8 @@ defmodule Othello.Game do
       p1: nil,
       p2: nil,
       p1score: 0,
-      p2score: 0
+      p2score: 0,
+      msg: []
     }
   end
 
@@ -749,7 +750,8 @@ defmodule Othello.Game do
               p1: game.p1,
               p2: game.p2,
               p1score: whitec,
-              p2score: blackc
+              p2score: blackc,
+              msg: game.msg
             }
   end
 
@@ -779,6 +781,13 @@ defmodule Othello.Game do
           end), %{})}
         end), %{})
      %{game | grid: gl}
+  end
+
+  #code added by Abhishek
+  def appendmsg(game, msg) do
+    msgupdate = [msg | game.msg]
+    #IO.inspect(msgupdate)
+    %{game | msg: msgupdate}
   end
 
 
