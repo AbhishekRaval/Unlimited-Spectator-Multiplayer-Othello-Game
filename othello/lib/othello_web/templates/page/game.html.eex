@@ -1,7 +1,4 @@
- <body style="background-image: -webkit-linear-gradient(0, rgba(255,255,255,.014) 50%, transparent 50%),
-    -webkit-linear-gradient(0, rgba(255,255,255,.015) 50%, transparent 50%),
-    -webkit-linear-gradient(0, transparent 50%, rgba(255,255,255,.02) 50%),
-    -webkit-linear-gradient(0, transparent 50%, rgba(255,255,255,.02) 50%); 
+ <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg") %>); 
  	background-repeat: no-repeat;
     background-attachment: fixed;
   	background-size: cover;
