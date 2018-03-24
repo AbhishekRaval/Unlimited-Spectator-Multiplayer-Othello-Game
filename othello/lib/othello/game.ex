@@ -6,7 +6,8 @@ defmodule Othello.Game do
       p1: nil,
       p2: nil,
       p1score: 0,
-      p2score: 0
+      p2score: 0,
+      winner: 0
     }
   end
 
@@ -32,10 +33,11 @@ defmodule Othello.Game do
       if (clickedTile === 0 or clickedTile === 3) and isValid(game, row, column) do
         newGameState = checkHit(game, clickedTile, row, column)
         newGameState = %{newGameState | p1_turn: !newGameState.p1_turn}
+        newGameState = checkforWinner(newGameState)
         newGameState = getvalidtiles(newGameState)
         IO.inspect(newGameState)
       end
-    end 
+    end
     newGameState
 
   end
@@ -326,7 +328,7 @@ defmodule Othello.Game do
           retVal = checkUp(game, row-1, column)
         else
           if game.grid[row-1][column] === 2 do
-             retVal = true     
+             retVal = true
           else
             retVal = false
           end
@@ -749,7 +751,8 @@ defmodule Othello.Game do
               p1: game.p1,
               p2: game.p2,
               p1score: whitec,
-              p2score: blackc
+              p2score: blackc,
+              winner: game.winner
             }
   end
 
@@ -781,6 +784,47 @@ defmodule Othello.Game do
      %{game | grid: gl}
   end
 
-
+  def checkforWinner(game) do
+    if game.p1_turn do
+      g = getvalidtiles(game)
+      wc = Enum.sum(Enum.map(g.grid, fn{k,v} ->
+          (Enum.count(Map.values(v), fn(key) ->
+                    key === 3 end)) end))
+      if wc === 0 do
+        g = %{g | p1_turn: false}
+        g = getvalidtiles(g)
+        bc = Enum.sum(Enum.map(g.grid, fn{k,v} ->
+            (Enum.count(Map.values(v), fn(key) ->
+                      key === 3 end)) end))
+        if bc === 0 do
+          if game.p1score > game.p2score do
+            game = %{g | winner: 1}
+          else
+            game = %{g | winner: 2}
+          end
+        end
+      end
+    else
+      g = getvalidtiles(game)
+      bc = Enum.sum(Enum.map(g.grid, fn{k,v} ->
+          (Enum.count(Map.values(v), fn(key) ->
+                    key === 3 end)) end))
+      if bc === 0 do
+        g = %{g | p1_turn: true}
+        g = getvalidtiles(g)
+        wc = Enum.sum(Enum.map(g.grid, fn{k,v} ->
+            (Enum.count(Map.values(v), fn(key) ->
+                      key === 3 end)) end))
+        if wc === 0 do
+          if game.p1score > game.p2score do
+            game = %{g | winner: 1}
+          else
+            game = %{g | winner: 2}
+          end
+        end
+      end
+    end
+    game
+  end
 
 end
