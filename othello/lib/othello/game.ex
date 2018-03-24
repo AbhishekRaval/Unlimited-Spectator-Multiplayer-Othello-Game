@@ -7,6 +7,7 @@ defmodule Othello.Game do
       p2: nil,
       p1score: 0,
       p2score: 0,
+      msg: [],
       winner: 0
     }
   end
@@ -754,6 +755,7 @@ defmodule Othello.Game do
               p2: game.p2,
               p1score: whitec,
               p2score: blackc,
+              msg: game.msg,
               winner: game.winner
             }
   end
@@ -784,6 +786,12 @@ defmodule Othello.Game do
           end), %{})}
         end), %{})
      %{game | grid: gl}
+  end
+
+  def appendmsg(game, msg) do
+    msgupdate = [msg | game.msg]
+    #IO.inspect(msgupdate)
+    %{game | msg: msgupdate}
   end
 
   def checkforWinner(game) do

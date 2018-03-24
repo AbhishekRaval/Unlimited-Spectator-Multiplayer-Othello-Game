@@ -38,6 +38,16 @@ defmodule OthelloWeb.GamesChannel do
     #{:reply, {:ok, %{"game" => game_fn}}, socket}
   end
 
+  def handle_in("sendmsg", %{"msg" => msg}, socket) do
+    game_init = Othello.GameBackup.load(socket.assigns[:game_name])
+    game_fn = Game.appendmsg(game_init, msg)
+    Othello.GameBackup.save(socket.assigns[:game_name], game_fn)
+    socket = socket|>assign(:game, game_fn)
+    broadcast! socket, "sendmsg", %{"game" => game_fn}
+    {:noreply, socket}
+    #{:reply, {:ok, %{"game" => game_fn}}, socket}
+  end
+
   def handle_in("player2join", %{"player2" => player2}, socket) do
     game_init = Othello.GameBackup.load(socket.assigns[:game_name])
     game_fn = Game.addPlayer2(game_init, player2)
