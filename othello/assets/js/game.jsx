@@ -3,27 +3,11 @@ import ReactDOM from "react-dom";
 import { Button } from "reactstrap";
 import { Progress } from "reactstrap";
 import { Table } from "reactstrap";
+//chatfeed api attribution: https://github.com/brandonmowat/react-chat-ui/tree/message-groups/src/ChatBubble
+import { ChatFeed, Message } from 'react-chat-ui';
 //declare var pName;
 
-export default function run_game(root, channel) { ReactDOM.render( <Layout width = {  8  }
-  height = {  8  }
-  str = {"AABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHHAABBCCDDEEFFGGHH"} channel = {channel} />, root)}
-
-const gameStatesType = {
-  WFC: "WAITING_FIRST_CARD",
-  WSC: "WAITING_SECOND_CARD",
-  WRONG: "WRONG",
-  TIMEOUT: "TIMEOUT"
-};
-
-class Card extends React.Component {
-  render() {
-    return <div className ={ !this.props.card.flipped?"card":((this.props.card.colState===1)?"cardReveal":"cardFlip")} >
-      <span><div className = "middlefont"> {
-        this.props.card.flipped ? this.props.card.cardValue:" "}</div></span> </div >
-  }
-}
-
+export default function run_game(root, channel) { ReactDOM.render( <Layout channel = {channel} />, root)}
 
 class Layout extends React.Component {
   constructor(props) {
@@ -42,10 +26,20 @@ class Layout extends React.Component {
     this.channel.on("player1join",payload=>
     {let game = payload.game;
     this.setState(game)});
+    
+    this.channel.on("sendmsg",payload=>
+    {let game = payload.game;
+      console.log(game);
+    this.setState(game)});
+
 
     this.channel.on("player2join",payload=>
     {let game = payload.game;
     this.setState(game)});
+
+    this.handleChange = this.handleChange.bind(this);
+    this.keyPress = this.keyPress.bind(this);
+    this.onMessageSubmit = this.onMessageSubmit.bind(this);
 
     this.state = {
       p1_turn: true,
@@ -54,16 +48,41 @@ class Layout extends React.Component {
       p2:null,
       p1score: 0,
       p2score: 0,
+      msg: [],
       winner: 0
     };
   }
+
 
   gotView(msg) {
     console.log("Got View", msg);
     this.setState(msg.game);
   }
 
-s
+
+   handleChange(e) {
+        const input = e.target.value;
+   }
+
+   keyPress(e){
+     const input = e.target.value;
+      if(e.keyCode == 13){
+        if(!(input == ""))  
+        {         
+          this.onMessageSubmit(input, e);
+        }
+      }
+   }
+
+  onMessageSubmit(txt,e) {
+    const input = txt; 
+    console.log(input)
+    let msg = {id: ((this.state.msg.length) + 2), message: input, senderName: window.playerName};
+    this.channel.push("sendmsg",{msg: msg})
+         .receive("ok",this.gotView.bind(this));
+    e.target.value = ''; 
+  }
+
 
   p1join(){
      if (confirm("Are you sure, you want to join as Player1")) {
@@ -102,36 +121,21 @@ s
     else{
       alert("Trying to be oversmart huh!?")
     }
-
-    // if (this.state.p1_turn) {
-    //   this.channel
-    //   .push("handleclickfn", { i: i, j: j, pn: this.state.p1 })
-    //   .receive("ok", this.gotView.bind(this));
-    // }
-    // else {
-    //   this.channel
-    //   .push("handleclickfn", { i: i, j: j, pn: this.state.p2 })
-    //   .receive("ok", this.gotView.bind(this));
-    // }
-    // if (this.state.percent == 100) {
-    //   alert("Game Complete, Click Reset Game to start new Game.")
-    // }
   }
 
   render() {
 
     let playerturn  = <div><b>{(this.state.p1 == null || this.state.p2 == null) ? "":
     this.state.p1_turn? "Player1: " + this.state.p1 + "'s Turn": "Player2: " + this.state.p2 + "'s Turn"}</b></div>
+
     let cardsRendered = Object.keys(this.state.grid).map((cardrow, rowindex) => (
       <table key={rowindex}>
         <tbody>
           <tr key={rowindex}>
-            {Object.keys(this.state.grid[cardrow]).map((card, i) => (
+            {Object.keys (this.state.grid[cardrow]).map((card, i) => (
               <td
                 key={i}
-                onClick={() => this.serverClickHandle(card, rowindex, i)}
-
-                >
+                onClick={() => this.serverClickHandle(card, rowindex, i)}>
 
                 <div
                   className={
@@ -146,6 +150,28 @@ s
         </tbody>
       </table>
     ));
+
+    // let moosg = ( <div> {this.state.msg.map((card, i) => (console.log(card ,i)))} </div>);
+    let messageList = <ChatFeed
+            //chatBubble={this.state.useCustomBubble && customBubble}
+            maxHeight={100}
+            messages={this.state.msg.reverse().map((data, index) =>( (data.senderName === window.playerName)?
+              (new Message ({id: 0 ,message: data.message ,senderName: data.senderName})):
+              (new Message(data))))} // Boolean: list of message objects
+            showSenderName
+            //  bubbleStyles={
+            //   {
+            //     text: {
+            //       fontSize: 30, 
+            //       color: "white"
+            //     },
+            //     chatbubble: {
+            //       borderRadius: 70,
+            //       padding: 40
+            //     }
+            //   }
+            // }
+          />
 
     let gamep1button = (<div>
                    {(this.state.p1 === null && !(this.state.p2 === window.playerName) ) ? ( <button type="submit" data-toggle="modal" data-target="#player1Join"
@@ -181,6 +207,7 @@ s
           <p> Name: {this.state.p1} </p>
           <p> <h2> {this.state.p1score} </h2> Score</p>
            <p> {gamep1button} {gamep1leavebutton}</p>
+           <p className="mt-2"> {playerturn}  </p>
          </div>
       </div>
       <div className="d-flex flex-column mx-auto">
@@ -207,6 +234,12 @@ s
           <p className="mt-2"> {playerturn}  </p>
          </div>
       </div>
+    </div>
+    <div className="chatcontainer">
+        <div className="chatfeed-wrapper">
+        {messageList}
+          <input placeholder={window.playerName + "Enter your msg"} onKeyDown={this.keyPress} onChange={this.handleChange} />
+   </div> 
     </div>
     </div>
   }

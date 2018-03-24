@@ -1,4 +1,7 @@
- <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg") %>); 
+ <body style="background-image: -webkit-linear-gradient(0, rgba(255,255,255,.014) 50%, transparent 50%),
+    -webkit-linear-gradient(0, rgba(255,255,255,.015) 50%, transparent 50%),
+    -webkit-linear-gradient(0, transparent 50%, rgba(255,255,255,.02) 50%),
+    -webkit-linear-gradient(0, transparent 50%, rgba(255,255,255,.02) 50%); 
  	background-repeat: no-repeat;
     background-attachment: fixed;
   	background-size: cover;
@@ -12,7 +15,7 @@
  				<table class="table text-center">
 			<thead>
 				<tr>
-					<th scope="col" class="text-white"> Welcome to Othello Game</th>
+					<th scope="col" class="text-white"> Welcome, <%= @player_name %>  to Othello Game</th>
 				</tr>
 			</thead>
 			</table>	 
@@ -24,8 +27,6 @@
  									window.gameName = "<%= @game_name %>"
  									window.playerName = "<%= @player_name %>"
  								</script>
- 								<h4 class="text-center py-3 text-white">Hey, <%= @player_name %> You joined <%= @game_name %> game.</h4>
-
  								<div id="game" >
  									Loading React Code ... 
  								</div>
@@ -33,6 +34,11 @@
  					
  				</div>
  			</header>
+ 			<footer>
+ 				<div class="d-flex align-items-center justify-content-center h-100 text-white mt-3">
+ 				Made with <span style="color: #e25555; font-size: 25px;	margin-left: 2px; margin-right: 2px;">&hearts;</span> at Northeastern University ,by Nishchay, Ketan ,Abhishek.
+ 				</div>
+ 			</footer>
  		</section>
  	</div> <!-- /container -->
  </body>

@@ -124,3 +124,50 @@ padding-top:8px;
 	padding-top:4px;
 }
 }
+
+/* credits for API: https://github.com/brandonmowat/react-chat-ui/blob/message-groups/demo/index.html*/
+.chatcontainer {
+  max-width: 450px;
+  margin: 0 auto;
+  margin-top: 20px;
+}
+
+.install {
+  text-align: center;
+  margin: 20px auto;
+}
+
+.chatfeed-wrapper input {
+  border: none;
+  border-top: 1px solid #ddd;
+  font-size: 16px;
+  padding: 10px;
+  height: 60%;
+  width: 100%;
+}
+
+.chatfeed-wrapper input:focus {
+  outline: none;
+}
+
+.chatfeed-wrapper {
+  box-shadow: 0 20px 20px rgba(0, 0, 0, .08);
+  border-radius: 4px;
+  max-width: 350px;
+  margin: 0 auto;
+  border: 1px solid #ddd;
+  padding-bottom: 5px;
+}
+
+#chat-panel {
+  padding: 0px 10px;
+}
+
+.chat-history {
+  display: block;
+  min-height: 250px;
+}
+
+.text-center {
+  text-align: center;
+}
