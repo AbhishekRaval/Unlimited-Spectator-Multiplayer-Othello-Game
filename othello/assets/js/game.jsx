@@ -37,6 +37,14 @@ class Layout extends React.Component {
     {let game = payload.game;
     this.setState(game)});
 
+    this.channel.on("leave",payload=>
+    {let game = payload.game;
+    this.setState(game)});
+
+    this.channel.on("reset",payload=>
+    {let game = payload.game;
+    this.setState(game)});
+    
     this.handleChange = this.handleChange.bind(this);
     this.keyPress = this.keyPress.bind(this);
     this.onMessageSubmit = this.onMessageSubmit.bind(this);
@@ -106,6 +114,38 @@ class Layout extends React.Component {
     }
   }
 
+  leave(){
+    if (confirm("Are you sure, you want to leave the game?")){
+      if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
+        console.log("You pressed OK!");
+         this.channel
+       .push("leave", {player: window.playerName})
+       .receive("ok", this.gotView.bind(this));
+     }
+     window.location.href  = "/"
+    }
+  }
+
+  leaveCurrentGame(){
+    if (confirm("Are you sure, you want to leave the game?")){
+      if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
+        console.log("You pressed OK!");
+         this.channel
+       .push("leave", {player: window.playerName})
+       .receive("ok", this.gotView.bind(this));
+     }
+    }
+  }
+
+  reset(){
+    if (confirm("Are you sure, you want to reset the game?")){
+        console.log("You pressed OK!");
+         this.channel
+       .push("reset")
+       .receive("ok", this.gotView.bind(this));
+    }
+  }
+
   serverClickHandle(card, i, j) {
     console.log("here");
     if (this.state.p1_turn && (this.state.p1 == window.playerName)) {
@@ -151,7 +191,8 @@ class Layout extends React.Component {
       </table>
     ));
 
-    // let moosg = ( <div> {this.state.msg.map((card, i) => (console.log(card ,i)))} </div>);
+    let winnerName = (<div>{this.state.winner==1?this.state.p1:this.state.winner==2?this.state.p2:""}</div>);
+
     let messageList = <ChatFeed
             //chatBubble={this.state.useCustomBubble && customBubble}
             maxHeight={100}
@@ -182,8 +223,8 @@ class Layout extends React.Component {
                   </div>);
     let gamep1leavebutton =(<div className="mt-2"> {this.state.p1 == window.playerName ?
                     (<span>
-                       <button type="submit" className="btn btn-primary mr-3">Leave</button>
-                       <button type="submit" className="btn btn-secondary">Reset</button>
+                       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
+                       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
                     </span>):("")} </div>);
 
     let gamep2button = (<div>
@@ -194,11 +235,16 @@ class Layout extends React.Component {
                   </div>);
     let gamep2leavebutton =(<div className="mt-2"> {this.state.p2 == window.playerName ?
                     (<span>
-                       <button type="submit" className="btn btn-primary mr-3">Leave</button>
-                       <button type="submit" className="btn btn-secondary">Reset</button>
+                       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
+                       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
                     </span>):("")} </div>);
 
-    return <div className ="container">
+    return<div className ="container">
+    <div className="row">
+      <div class="winneralert alert alert-success" role="alert">
+        <h4 class="alert-heading">Congratulations {winnerName}, you have won the game!</h4>
+      </div>
+    </div>
     <div className="row">
       <div className="d-flex flex-column mx-auto my-auto float-left">
         <div className="border border-white text-center text-white player1">
@@ -221,7 +267,7 @@ class Layout extends React.Component {
            <div className="text-center text-white">
            </div>
         <div className="text-center">
-          <button type="submit" className="btn btn-primary mt-3">Leave the Game</button>
+          <button type="submit" onClick={() => this.leave()} className="btn btn-primary mt-3">Leave the Game</button>
         </div>
       </div>
       <div className="d-flex flex-column mx-auto my-auto float-right">

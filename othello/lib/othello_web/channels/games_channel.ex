@@ -58,6 +58,26 @@ defmodule OthelloWeb.GamesChannel do
     #{:reply, {:ok, %{"game" => game_fn}}, socket}
   end
 
+  def handle_in("leave", %{"player" => player}, socket) do
+    game_init = Othello.GameBackup.load(socket.assigns[:game_name])
+    game_fn = Game.leave(game_init, player)
+    Othello.GameBackup.save(socket.assigns[:game_name], game_fn)
+    socket = socket|>assign(:game, game_fn)
+    broadcast! socket, "leave", %{"game" => game_fn}
+    {:noreply, socket}
+    #{:reply, {:ok, %{"game" => game_fn}}, socket}
+  end
+
+  def handle_in("reset",payload, socket) do
+    game_init = Othello.GameBackup.load(socket.assigns[:game_name])
+    game_fn = Game.reset(game_init)
+    Othello.GameBackup.save(socket.assigns[:game_name], game_fn)
+    socket = socket|>assign(:game, game_fn)
+    broadcast! socket, "reset", %{"game" => game_fn}
+    {:noreply, socket}
+    #{:reply, {:ok, %{"game" => game_fn}}, socket}
+  end
+
  def handle_in("handleclickfn", %{"i" => i, "j" => j}, socket) do
     game_init = Othello.GameBackup.load(socket.assigns[:game_name])
     game_fn = Game.handleTileClick(game_init,i,j)
