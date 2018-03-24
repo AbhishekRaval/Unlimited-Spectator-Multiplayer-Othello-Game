@@ -1,4 +1,7 @@
- <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg") %>); 
+ <body style="background-image: -webkit-linear-gradient(0, rgba(255,255,255,.014) 50%, transparent 50%),
+    -webkit-linear-gradient(0, rgba(255,255,255,.015) 50%, transparent 50%),
+    -webkit-linear-gradient(0, transparent 50%, rgba(255,255,255,.02) 50%),
+    -webkit-linear-gradient(0, transparent 50%, rgba(255,255,255,.02) 50%); 
  	background-repeat: no-repeat;
     background-attachment: fixed;
   	background-size: cover;
@@ -31,6 +34,11 @@
  					
  				</div>
  			</header>
+ 			<footer>
+ 				<div class="d-flex align-items-center justify-content-center h-100 text-white mt-3">
+ 				Made with <span style="color: #e25555; font-size: 25px;	margin-left: 2px; margin-right: 2px;">&hearts;</span> at Northeastern University ,by Nishchay, Ketan ,Abhishek.
+ 				</div>
+ 			</footer>
  		</section>
  	</div> <!-- /container -->
  </body>

@@ -153,7 +153,7 @@ class Layout extends React.Component {
     // let moosg = ( <div> {this.state.msg.map((card, i) => (console.log(card ,i)))} </div>);
     let messageList = <ChatFeed
             //chatBubble={this.state.useCustomBubble && customBubble}
-            maxHeight={250}
+            maxHeight={100}
             messages={this.state.msg.reverse().map((data, index) =>( (data.senderName === window.playerName)?
               (new Message ({id: 0 ,message: data.message ,senderName: data.senderName})):
               (new Message(data))))} // Boolean: list of message objects
