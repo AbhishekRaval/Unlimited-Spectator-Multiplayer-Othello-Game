@@ -12,7 +12,7 @@ defmodule Othello.Game do
   end
 
   def init() do
-    
+
     %{
       0 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
       1 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
@@ -23,7 +23,7 @@ defmodule Othello.Game do
       6 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
       7 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0}
     }
-     
+
   end
 
   def handleTileClick(game, row, column) do
@@ -827,6 +827,19 @@ defmodule Othello.Game do
       end
     end
     game
+  end
+
+  def leave(game, player) do
+    if game.p1 === player do
+      game = %{game | p1: nil}
+    else
+      game = %{game | p2: nil}
+    end
+    game
+  end
+
+  def reset(game) do
+    %{game | grid: init(), p1score: 0, p2score: 0, p1_turn: true}
   end
 
 end

@@ -47,6 +47,14 @@ class Layout extends React.Component {
     {let game = payload.game;
     this.setState(game)});
 
+    this.channel.on("leave",payload=>
+    {let game = payload.game;
+    this.setState(game)});
+
+    this.channel.on("reset",payload=>
+    {let game = payload.game;
+    this.setState(game)});
+
     this.state = {
       p1_turn: true,
       grid: [],
@@ -84,6 +92,38 @@ s
       .receive("ok", this.gotView.bind(this));
     } else {
         //close popup
+    }
+  }
+
+  leave(){
+    if (confirm("Are you sure, you want to leave the game?")){
+      if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
+        console.log("You pressed OK!");
+         this.channel
+       .push("leave", {player: window.playerName})
+       .receive("ok", this.gotView.bind(this));
+     }
+     window.location.href  = "/"
+    }
+  }
+
+  leaveCurrentGame(){
+    if (confirm("Are you sure, you want to leave the game?")){
+      if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
+        console.log("You pressed OK!");
+         this.channel
+       .push("leave", {player: window.playerName})
+       .receive("ok", this.gotView.bind(this));
+     }
+    }
+  }
+
+  reset(){
+    if (confirm("Are you sure, you want to reset the game?")){
+        console.log("You pressed OK!");
+         this.channel
+       .push("reset")
+       .receive("ok", this.gotView.bind(this));
     }
   }
 
@@ -147,6 +187,7 @@ s
       </table>
     ));
 
+    let winnerName = (<div>{this.state.winner==1?this.state.p1:this.state.winner==2?this.state.p2:""}</div>);
     let gamep1button = (<div>
                    {(this.state.p1 === null && !(this.state.p2 === window.playerName) ) ? ( <button type="submit" data-toggle="modal" data-target="#player1Join"
                     className="btn btn-primary my-2"
@@ -156,8 +197,8 @@ s
                   </div>);
     let gamep1leavebutton =(<div className="mt-2"> {this.state.p1 == window.playerName ?
                     (<span>
-                       <button type="submit" className="btn btn-primary mr-3">Leave</button>
-                       <button type="submit" className="btn btn-secondary">Reset</button>
+                       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
+                       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
                     </span>):("")} </div>);
 
     let gamep2button = (<div>
@@ -168,11 +209,16 @@ s
                   </div>);
     let gamep2leavebutton =(<div className="mt-2"> {this.state.p2 == window.playerName ?
                     (<span>
-                       <button type="submit" className="btn btn-primary mr-3">Leave</button>
-                       <button type="submit" className="btn btn-secondary">Reset</button>
+                       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
+                       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
                     </span>):("")} </div>);
 
-    return <div className ="container">
+    return<div className ="container">
+    <div className="row">
+      <div class="winneralert alert alert-success" role="alert">
+        <h4 class="alert-heading">Congratulations {winnerName}, you have won the game!</h4>
+      </div>
+    </div>
     <div className="row">
       <div className="d-flex flex-column mx-auto my-auto float-left">
         <div className="border border-white text-center text-white player1">
@@ -194,7 +240,7 @@ s
            <div className="text-center text-white">
            </div>
         <div className="text-center">
-          <button type="submit" className="btn btn-primary mt-3">Leave the Game</button>
+          <button type="submit" onClick={() => this.leave()} className="btn btn-primary mt-3">Leave the Game</button>
         </div>
       </div>
       <div className="d-flex flex-column mx-auto my-auto float-right">
