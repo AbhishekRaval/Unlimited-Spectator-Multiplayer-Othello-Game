@@ -6,21 +6,24 @@ defmodule Othello.Game do
       p1: nil,
       p2: nil,
       p1score: 0,
-      p2score: 0
+      p2score: 0,
+      winner: 0
     }
   end
 
   def init() do
-     %{
-        0 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
-        1 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
-        2 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
-        3 => %{0 => 0, 1 => 0, 2 => 0, 3 => 2, 4 => 1, 5 => 0, 6 => 0, 7 => 0},
-        4 => %{0 => 0, 1 => 0, 2 => 0, 3 => 1, 4 => 2, 5 => 0, 6 => 0, 7 => 0},
-        5 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
-        6 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
-        7 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0}
-      }
+    
+    %{
+      0 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
+      1 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
+      2 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
+      3 => %{0 => 0, 1 => 0, 2 => 0, 3 => 2, 4 => 1, 5 => 0, 6 => 0, 7 => 0},
+      4 => %{0 => 0, 1 => 0, 2 => 0, 3 => 1, 4 => 2, 5 => 0, 6 => 0, 7 => 0},
+      5 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
+      6 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
+      7 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0}
+    }
+     
   end
 
   def handleTileClick(game, row, column) do
@@ -32,10 +35,11 @@ defmodule Othello.Game do
       if (clickedTile === 0 or clickedTile === 3) and isValid(game, row, column) do
         newGameState = checkHit(game, clickedTile, row, column)
         newGameState = %{newGameState | p1_turn: !newGameState.p1_turn}
+        newGameState = checkforWinner(newGameState)
         newGameState = getvalidtiles(newGameState)
         IO.inspect(newGameState)
       end
-    end 
+    end
     newGameState
 
   end
@@ -326,7 +330,7 @@ defmodule Othello.Game do
           retVal = checkUp(game, row-1, column)
         else
           if game.grid[row-1][column] === 2 do
-             retVal = true     
+             retVal = true
           else
             retVal = false
           end
@@ -749,7 +753,8 @@ defmodule Othello.Game do
               p1: game.p1,
               p2: game.p2,
               p1score: whitec,
-              p2score: blackc
+              p2score: blackc,
+              winner: game.winner
             }
   end
 
@@ -781,6 +786,58 @@ defmodule Othello.Game do
      %{game | grid: gl}
   end
 
-
+  def checkforWinner(game) do
+    if game.p1_turn do
+      g = getvalidtiles(game)
+      wc = Enum.sum(Enum.map(g.grid, fn{k,v} ->
+          (Enum.count(Map.values(v), fn(key) ->
+                    key === 3 end)) end))
+      if wc === 0 do
+        game = %{game | p1_turn: false}
+        g = getvalidtiles(game)
+        blc = Enum.sum(Enum.map(g.grid, fn{k,v} ->
+            (Enum.count(Map.values(v), fn(key) ->
+                      key === 3 end)) end))
+        if blc === 0 do
+          if game.p1score > game.p2score do
+            game = %{g | winner: 1}
+          else
+            game = %{g | winner: 2}
+          end
+        end
+      end
+    else
+      g = getvalidtiles(game)
+      blc = Enum.sum(Enum.map(g.grid, fn{k,v} ->
+          (Enum.count(Map.values(v), fn(key) ->
+                    key === 3 end)) end))
+      if blc === 0 do
+        game = %{game | p1_turn: true}
+        g = getvalidtiles(game)
+        wc = Enum.sum(Enum.map(g.grid, fn{k,v} ->
+            (Enum.count(Map.values(v), fn(key) ->
+                      key === 3 end)) end))
+        if wc === 0 do
+          if game.p1score > game.p2score do
+            game = %{g | winner: 1}
+          else
+            game = %{g | winner: 2}
+          end
+        end
+      end
+    end
+    game
+  end
 
 end
+
+# %{
+#   0 => %{0 => 0, 1 => 0, 2 => 2, 3 => 2, 4 => 1, 5 => 0, 6 => 2, 7 => 2},
+#   1 => %{0 => 1, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
+#   2 => %{0 => 2, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
+#   3 => %{0 => 2, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
+#   4 => %{0 => 2, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
+#   5 => %{0 => 2, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
+#   6 => %{0 => 2, 1 => 2, 2 => 1, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
+#   7 => %{0 => 2, 1 => 2, 2 => 0, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2}
+# }

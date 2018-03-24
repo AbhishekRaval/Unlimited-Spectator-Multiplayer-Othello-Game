@@ -37,8 +37,8 @@ class Layout extends React.Component {
 
     this.channel.on("handleclickfn",payload=>
     {let game = payload.game;
-    this.setState(game)});  
-    
+    this.setState(game)});
+
     this.channel.on("player1join",payload=>
     {let game = payload.game;
     this.setState(game)});
@@ -53,7 +53,8 @@ class Layout extends React.Component {
       p1: null,
       p2:null,
       p1score: 0,
-      p2score: 0
+      p2score: 0,
+      winner: 0
     };
   }
 
@@ -135,7 +136,7 @@ s
                 <div
                   className={
                     this.state.grid[cardrow][card] == 0 ? "card" :
-                          this.state.grid[cardrow][card] == 1 ? "cardReveal" : 
+                          this.state.grid[cardrow][card] == 1 ? "cardReveal" :
                           this.state.grid[cardrow][card] == 2 ? "cardFlip" : "cardFlip1"
                   }>
                 </div>
@@ -191,7 +192,7 @@ s
           </tbody>
         </table>
            <div className="text-center text-white">
-           </div>       
+           </div>
         <div className="text-center">
           <button type="submit" className="btn btn-primary mt-3">Leave the Game</button>
         </div>
