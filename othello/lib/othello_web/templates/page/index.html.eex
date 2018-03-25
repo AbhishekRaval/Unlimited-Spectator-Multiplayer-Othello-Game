@@ -9,11 +9,13 @@
  <div class="container">
 <section class="h-100">
 	<header class="container h-100">
-		<table class="table text-center">
+		<table class="table text-center" style="  border-color: black;
+ 			border-style: solid;
+ 			border-width: 0px 0px 4px 0px; ">
 			<thead>
 				<tr>
-					<th scope="col" class="text-white"> Welcome to Othello Game</th>
-				</tr>
+ 					<th scope="col" class="text-white"><h3> Welcome to Othello Game</h3></th>
+ 				</tr>
 			</thead>
 		</table>
 		<div class="d-flex align-items-center justify-content-center h-100 py-5">
