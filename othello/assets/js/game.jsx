@@ -164,7 +164,6 @@ class Layout extends React.Component {
   }
 
   render() {
-
     let playerturn  = <div><b>{(this.state.p1 == null || this.state.p2 == null) ? "":
     this.state.p1_turn? "Player1: " + this.state.p1 + "'s Turn": "Player2: " + this.state.p2 + "'s Turn"}</b></div>
 
@@ -180,8 +179,10 @@ class Layout extends React.Component {
                 <div
                   className={
                     this.state.grid[cardrow][card] == 0 ? "card" :
-                          this.state.grid[cardrow][card] == 1 ? "cardReveal" :
-                          this.state.grid[cardrow][card] == 2 ? "cardFlip" : "cardFlip1"
+                          this.state.grid[cardrow][card] == 1 ? "blackTile" :
+                          this.state.grid[cardrow][card] == 2 ? "whiteTile" : 
+                            this.state.p1_turn ? "flipWhite":"flipBlack"
+
                   }>
                 </div>
               </td>

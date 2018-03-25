@@ -12,13 +12,23 @@
 }
 
 
-#gameboard .cardFlip1:hover{
-transition: box-shadow 1s;
-  background-image: url("http://othellogame.net/revello/images/chip-mini-black-1x.png");
+
+#gameboard .flipWhite:hover{
+  background-image: url("http://othellogame.net/revello/images/chip-white-1x.png");
   background-repeat: no-repeat;
   background-position: center center;
-  background-color: #17712B;
-  background-size: 70% 7 0%;
+  box-shadow: 0 0px 2px 0px #328C46; 
+  background-color: #045315;
+  background-size: 40% 40%;
+}
+
+#gameboard .flipBlack:hover{
+  background-image: url("http://othellogame.net/revello/images/chip-black-1x.png");
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: 0 0px 2px 0px #328C46; 
+  background-color: #045315;
+  background-size: 40% 40%;
 }
 
 #gameboard .table th,#gameboard .table td{
@@ -27,7 +37,7 @@ transition: box-shadow 1s;
 }
 
 
-#gameboard .cardFlip {
+#gameboard .whiteTile {
   width: 55px;
   height: 55px;
   text-align: center;
@@ -39,17 +49,19 @@ transition: box-shadow 1s;
   background-position: center center;
   background-color:	#17712B; 
 }
-#gameboard .cardFlip1 {
-  transition: .4s;
+#gameboard .flipWhite {
   width: 55px;
   height: 55px;
   text-align: center;
-  /* white */
-  /* Image Source :  http://othellogame.net/revello/; */
   background-color: #17712B; 
 }
-
-#gameboard .cardReveal{
+#gameboard .flipBlack {
+  width: 55px;
+  height: 55px;
+  text-align: center;
+  background-color: #17712B; 
+}
+#gameboard .blackTile{
   transition: .4s;
   width: 55px;
   height: 55px;
