@@ -15,6 +15,7 @@
     "react-chat-ui": "^0.3.1",
     "react-dom": "^16.2.0",
     "reactstrap": "^5.0.0-alpha.4",
+    "sweetalert": "^2.1.0",
     "underscore": "^1.8.3"
   },
   "devDependencies": {
