@@ -1,4 +1,4 @@
- <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg") %>); 
+ <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg") %>);
  	background-repeat: no-repeat;
     background-attachment: fixed;
   	background-size: cover;
@@ -15,20 +15,20 @@
 					<th scope="col" class="text-white"> Welcome to Othello Game</th>
 				</tr>
 			</thead>
-		</table>	  
+		</table>
 		<div class="d-flex align-items-center justify-content-center h-100 py-5">
 			<div class="d-flex flex-column mx-auto">
 				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
 				<div class="py-5">
 					<div class="row">
-						<p class="mr-2 text-white" >Enter Game Name:</p> 
+						<p class="mr-2 text-white" >Enter Game Name:</p>
 						<p><input type="text"  class="form-control" id="game-name" name="Game Name" placeholder="Your Game Name"></p>
 					</div>
 					<div class="row">
 						<p class="mr-3 text-white">Enter Your Name: </p>
 						<p><input type="text"  class="form-control" id="player-name" name="Player Name" placeholder="Your Name"></p>
 					</div>
-					<p  class="text-center"><a href="" id="ahr"><Button class="btn btn-primary" id="game-button">Join Game</Button></a></p>
+					<p  class="text-center"><Button class="btn btn-primary" id="game-button">Join Game</Button></p>
 				</div>
 			</div>
 		</div>
@@ -37,7 +37,7 @@
 				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
 				<div>
 					<div class="row">
-					<div class="card text-white"  style="width:75%; margin-left: auto; margin-right: auto; 
+					<div class="card text-white"  style="width:75%; margin-left: auto; margin-right: auto;
 					display:block; background-color: transparent;  border-width: 0;">
 					<div class="card-header">
 						<!-- Source: http://www.boardgamecapital.com/game_rules/othello.pdf -->
@@ -52,7 +52,7 @@
 								</li>
 								<img src="<%= static_path(@conn, "/images/figure1.jpg") %>" height = "25%" width = "25%">
 								<li>
-									<p>A move consists of "outflanking" your opponent’s disk(s), then flipping the outflanked disk(s) to your color.</p> 
+									<p>A move consists of "outflanking" your opponent’s disk(s), then flipping the outflanked disk(s) to your color.</p>
 									<p>To "outflank" means to place a disk on the board so that your opponent’s row (or rows) of disks is bordered at each end by a disk of your color. A row may be made up of one or more disks.Here’s one example: White disk A was already in place on the board. The placement of white disk B outflanks the row of three black disks.</p>
 								</li>
 								<img src="<%= static_path(@conn, "/images/descrule1.jpg") %>" height = "25%" width = "25%">
@@ -76,14 +76,14 @@
 								<li>All disks outflanked in any one movemust be flipped, even if it is to the player’s advantage not to flip them at all.</li>
 								<li>A player who flips a disk that should not have been turned may correct the mistake as long as the opponent has not made a subsequent move. If the opponent has already moved, it is too late for a change and the disk(s) remain as is.</li>
 								<li>Once a disk is placed on a square, it can never be moved to another square later in the game.</li>
-								<li>If a player runs out of disks, but still has the opportunity to outflank an opposing disk on their turn, the 
+								<li>If a player runs out of disks, but still has the opportunity to outflank an opposing disk on their turn, the
 								opponent must give the player a disk to use. This can happen as many times as the player needs and can use a disk.</li>
 								<li>When it is no longer possible for either player to move, the game is over. Disks are counted and the player with the majority of their color showing is the winner.</li>
 							</ol>
 						</p>
 						<a href="#" class="btn btn-link">Go to top</a>
 					</div>
-				</div>				
+				</div>
 					</div>
 				</div>
 			</div>
