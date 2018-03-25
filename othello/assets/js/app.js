@@ -20,7 +20,7 @@ import "phoenix_html"
 
 import socket from "./socket"
 import run_game from "./game";
-
+import swal from "sweetalert";
 
 function init() {
   let channel = socket.channel("games:" + window.gameName, {})
@@ -34,13 +34,36 @@ function init() {
   if (!root) {
     $('#game-button').click(() => {
       let gn = $('#game-name').val();
-      let pn = $('#player-name').val()+"";
+      let pn = $('#player-name').val();
       console.log("/games/"+gn+pn);
-      $('#ahr').attr("href", "/games/"+gn+"/"+pn);
+      // $('#ahr').attr("href", "/games/"+gn+"/"+pn);
+      if (gn == "" || pn == ""){
+        swal("Please enter both the game name and the player name!");
+      }
+      else{
+        window.location.href  = "/games/"+gn+"/"+pn;
+      }
+
       //console.log(playerName + "player Name is here : :: : : " + pn )
       // channel.push("joining", { gn: gn, pn: pn }).receive("joined", resp =>
       //   { console.log("Player joined successfully") });
       //
+    });
+    $('#player-name').keypress(function (e) {
+      var key = e.which;
+      if(key == 13)  // the enter key code
+       {
+         $('#game-button').click();
+         return false;
+       }
+    });
+    $('#game-name').keypress(function (e) {
+      var key = e.which;
+      if(key == 13)  // the enter key code
+       {
+         $('#game-button').click();
+         return false;
+       }
     });
 
   }

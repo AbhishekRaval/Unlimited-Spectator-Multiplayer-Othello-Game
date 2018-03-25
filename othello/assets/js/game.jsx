@@ -6,6 +6,8 @@ import { Table } from "reactstrap";
 //chatfeed api attribution: https://github.com/brandonmowat/react-chat-ui/tree/message-groups/src/ChatBubble
 import { ChatFeed, Message } from 'react-chat-ui';
 //declare var pName;
+//sweetalert api used for customizing alertboxes attribution:https://github.com/t4t5/sweetalert
+import swal from 'sweetalert'
 
 export default function run_game(root, channel) { ReactDOM.render( <Layout channel = {channel} />, root)}
 
@@ -21,12 +23,60 @@ class Layout extends React.Component {
 
     this.channel.on("handleclickfn",payload=>
     {let game = payload.game;
-    this.setState(game)});
+    this.setState(game)
+        let count =0;
+    Object.keys(game.grid).map((cardrow, rowindex) =>
+                                ( Object.keys(game.grid[cardrow]).map((card, i) =>
+                                                                    ( game.grid[cardrow][card] == 3 ? count+1:count))));
+
+    let noMovePlayer = (game.p1_turn)?game.p2:game.p1;
+
+    if (count==0 && ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)) && this.state.winner == 0) {
+      console.log("Idhar hai ye B****Ka");
+      swal("No valid moves left for", noMovePlayer);
+      //swal("No valid moves left for" + noMovePlayer);
+    }
+    else{
+      console.log(this.state.winner)
+      this.state.winner==1? swal({
+                                  title: "THE WINNER IS.." + this.state.p1,
+                                  text: "",
+                                  icon: "success",
+                                  buttons: true,
+                                  dangerMode: true,
+                                })
+                                .then((willDelete) => {
+                                  if (willDelete) {
+                                    this.channel
+                                  .push("reset")
+                                  .receive("ok", this.gotView.bind(this));
+                                  }
+                                })
+                                :this.state.winner==2?
+                                swal({
+                                      title: "THE WINNER IS.." + this.state.p1,
+                                      text: "",
+                                      icon: "success",
+                                      buttons: true,
+                                      dangerMode: true,
+                                    })
+                                    .then((willDelete) => {
+                                      if (willDelete) {
+                                        this.channel
+                                      .push("reset")
+                                      .receive("ok", this.gotView.bind(this));
+                                      }
+                                    })
+                                    :"";
+    }
+
+
+  });
 
     this.channel.on("player1join",payload=>
     {let game = payload.game;
     this.setState(game)});
-    
+
     this.channel.on("sendmsg",payload=>
     {let game = payload.game;
       console.log(game);
@@ -44,7 +94,7 @@ class Layout extends React.Component {
     this.channel.on("reset",payload=>
     {let game = payload.game;
     this.setState(game)});
-    
+
     this.handleChange = this.handleChange.bind(this);
     this.keyPress = this.keyPress.bind(this);
     this.onMessageSubmit = this.onMessageSubmit.bind(this);
@@ -75,75 +125,146 @@ class Layout extends React.Component {
    keyPress(e){
      const input = e.target.value;
       if(e.keyCode == 13){
-        if(!(input == ""))  
-        {         
+        if(!(input == ""))
+        {
           this.onMessageSubmit(input, e);
         }
       }
    }
 
   onMessageSubmit(txt,e) {
-    const input = txt; 
+    const input = txt;
     console.log(input)
     let msg = {id: ((this.state.msg.length) + 2), message: input, senderName: window.playerName};
     this.channel.push("sendmsg",{msg: msg})
          .receive("ok",this.gotView.bind(this));
-    e.target.value = ''; 
+    e.target.value = '';
   }
 
 
   p1join(){
-     if (confirm("Are you sure, you want to join as Player1")) {
+
         console.log("You pressed OK!");
         this.channel
       .push("player1join", {player1: window.playerName})
       .receive("ok", this.gotView.bind(this));
-    } else {
-        //close popup
-    }
+      swal({
+        title: "Great!",
+        text: "You joined as Player1!",
+        icon: "success",
+        button: "Play!",
+      });
+
   }
 
   p2join(){
-     if (confirm("Are you sure, you want to join as Player2")) {
+
         console.log("You pressed OK!");
         this.channel
       .push("player2join", {player2: window.playerName})
       .receive("ok", this.gotView.bind(this));
-    } else {
-        //close popup
-    }
+      swal({
+        title: "Great!",
+        text: "You joined as Player2!",
+        icon: "success",
+        button: "Play!",
+      });
   }
 
   leave(){
-    if (confirm("Are you sure, you want to leave the game?")){
-      if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
-        console.log("You pressed OK!");
-         this.channel
-       .push("leave", {player: window.playerName})
-       .receive("ok", this.gotView.bind(this));
-     }
-     window.location.href  = "/"
-    }
+    swal({
+          title: "Are you sure?",
+          text: "You want to leave the game?",
+          icon: "warning",
+          buttons: true,
+          dangerMode: true,
+        })
+        .then((willDelete) => {
+          if (willDelete) {
+            swal("You are no longer playing the game!", {
+              icon: "success",
+            });
+            if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
+              console.log("You pressed OK!");
+               this.channel
+             .push("leave", {player: window.playerName})
+             .receive("ok", this.gotView.bind(this));
+           }
+           window.location.href  = "/"
+
+          } else {
+
+          }
+        });
+
+
+
+    // if (confirm("Are you sure, you want to leave the game?")){
+    //   if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
+    //     console.log("You pressed OK!");
+    //      this.channel
+    //    .push("leave", {player: window.playerName})
+    //    .receive("ok", this.gotView.bind(this));
+    //  }
+    //  window.location.href  = "/"
+    // }
   }
 
   leaveCurrentGame(){
-    if (confirm("Are you sure, you want to leave the game?")){
-      if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
-        console.log("You pressed OK!");
-         this.channel
-       .push("leave", {player: window.playerName})
-       .receive("ok", this.gotView.bind(this));
-     }
-    }
+        swal({
+              title: "Are you sure?",
+              text: "You want to leave the game?",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+        .then((willDelete) => {
+          if (willDelete) {
+            swal("You are no longer playing the game!", {
+              icon: "success",
+            });
+            if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
+              console.log("You pressed OK!");
+               this.channel
+             .push("leave", {player: window.playerName})
+             .receive("ok", this.gotView.bind(this));
+           }
+          } else {
+
+          }
+    });
+
   }
 
   reset(){
-    if (confirm("Are you sure, you want to reset the game?")){
-        console.log("You pressed OK!");
-         this.channel
-       .push("reset")
-       .receive("ok", this.gotView.bind(this));
-    }
+        swal({
+              title: "Are you sure?",
+              text: "You want to reset the game?",
+              icon: "warning",
+              buttons: true,
+              dangerMode: true,
+            })
+            .then((willDelete) => {
+              if (willDelete) {
+                swal("The game has been reset!", {
+                  icon: "success",
+                });
+                console.log("You pressed OK!");
+                 this.channel
+               .push("reset")
+               .receive("ok", this.gotView.bind(this));
+              } else {
+                // swal("Your imaginary file is safe!");
+              }
+            });
+
+
+    // if (confirm("Are you sure, you want to reset the game?")){
+    //     console.log("You pressed OK!");
+    //      this.channel
+    //    .push("reset")
+    //    .receive("ok", this.gotView.bind(this));
+    // }
   }
 
   serverClickHandle(card, i, j) {
@@ -152,15 +273,35 @@ class Layout extends React.Component {
       this.channel
         .push("handleclickfn", { i: i, j: j})
         .receive("ok", this.gotView.bind(this));
+
     }
     else if (!(this.state.p1_turn) &&  (this.state.p2 == window.playerName) ) {
       this.channel
         .push("handleclickfn", { i: i, j: j})
         .receive("ok", this.gotView.bind(this));
+
+
     }
     else{
-      alert("Trying to be oversmart huh!?")
+      // alert("Trying to be oversmart huh!?")
+      swal("Trying to be oversmart huh!?");
     }
+
+    // this.state.winner==1? swal({
+    //                             title: "THE WINNER IS..",
+    //                             text: this.state.p1,
+    //                             icon: "success",
+    //                             button: "Yayy"
+    //                           })
+    //                           :this.state.winner==2?
+    //                           swal({
+    //                                 title: "THE WINNER IS..",
+    //                                 text: this.state.p2,
+    //                                 icon: "success",
+    //                                 button: "Yayy"
+    //                               })
+    //                               :"";
+
   }
 
   render() {
@@ -192,7 +333,7 @@ class Layout extends React.Component {
       </table>
     ));
 
-    let winnerName = (<div>{this.state.winner==1?this.state.p1:this.state.winner==2?this.state.p2:""}</div>);
+
 
     let messageList = <ChatFeed
             //chatBubble={this.state.useCustomBubble && customBubble}
@@ -204,7 +345,7 @@ class Layout extends React.Component {
             //  bubbleStyles={
             //   {
             //     text: {
-            //       fontSize: 30, 
+            //       fontSize: 30,
             //       color: "white"
             //     },
             //     chatbubble: {
@@ -242,9 +383,7 @@ class Layout extends React.Component {
 
     return<div className ="container">
     <div className="row">
-      <div class="winneralert alert alert-success" role="alert">
-        <h4 class="alert-heading">Congratulations {winnerName}, you have won the game!</h4>
-      </div>
+
     </div>
     <div className="row">
       <div className="d-flex flex-column mx-auto my-auto float-left">
@@ -286,7 +425,7 @@ class Layout extends React.Component {
         <div className="chatfeed-wrapper">
         {messageList}
           <input placeholder={window.playerName + "Enter your msg"} onKeyDown={this.keyPress} onChange={this.handleChange} />
-   </div> 
+   </div>
     </div>
     </div>
   }
