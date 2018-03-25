@@ -36,7 +36,7 @@ class Layout extends React.Component {
       swal("No valid moves left for", noMovePlayer);
       //swal("No valid moves left for" + noMovePlayer);
     }
-    else{
+    else if((this.state.winner == 1) || (this.state.winner == 2)){
       console.log(this.state.winner)
       this.state.winner==1? swal({
                                   title: "THE WINNER IS.." + this.state.p1,
