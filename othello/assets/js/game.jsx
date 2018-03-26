@@ -76,7 +76,7 @@ class Layout extends React.Component {
                                 })
                                 :this.state.winner==2?
                                 swal({
-                                      title: "THE WINNER IS.." + this.state.p1,
+                                      title: "THE WINNER IS.." + this.state.p2,
                                       text: "",
                                       icon: "success",
                                       buttons: true,
@@ -336,11 +336,11 @@ class Layout extends React.Component {
            "Waiting for Players to Join Game":
       //else
            (
-           // if 2 
+           // if 2
            ( (this.state.p1 == window.playerName) || (this.state.p2 == window.playerName))?
               (
                 //if 3
-                this.state.p1_turn ? 
+                this.state.p1_turn ?
                     //if 4
                       (this.state.p1 == window.playerName ?
                         "Your Turn" :
@@ -357,7 +357,7 @@ class Layout extends React.Component {
               (this.state.p1 + "'s turn")
               : (this.state.p2 + "'s turn")
             )}</b></div>
-    
+
 
     let cardsRendered = Object.keys(this.state.grid).map((cardrow, rowindex) => (
       <table key={rowindex}>
@@ -372,7 +372,7 @@ class Layout extends React.Component {
         className={
           this.state.grid[cardrow][card] == 0 ? "card" :
           this.state.grid[cardrow][card] == 1 ? "blackTile" :
-          this.state.grid[cardrow][card] == 2 ? "whiteTile" : 
+          this.state.grid[cardrow][card] == 2 ? "whiteTile" :
           this.state.p1_turn ? "flipWhite":"flipBlack"
         }>
         </div>
@@ -463,7 +463,7 @@ class Layout extends React.Component {
                   </div>
                 </div>
                 <div className="d-flex flex-column mx-auto float-right">
-                  <div className="row">   
+                  <div className="row">
                     <div className="chatcontainer">
                       <div className="chatfeed-wrapper">
                         {messageList}
