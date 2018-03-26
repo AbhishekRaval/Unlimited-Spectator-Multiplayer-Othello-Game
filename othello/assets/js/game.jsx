@@ -23,20 +23,42 @@ class Layout extends React.Component {
 
     this.channel.on("handleclickfn",payload=>
     {let game = payload.game;
+      if (this.state.p1_turn == game.p1_turn){
+        if (this.state.p1_turn) {
+          swal("No valid moves left for", this.state.p2);
+        }
+        else{
+          swal("No valid moves left for", this.state.p1);
+        }
+      }
     this.setState(game)
-        let count =0;
-    Object.keys(game.grid).map((cardrow, rowindex) =>
-                                ( Object.keys(game.grid[cardrow]).map((card, i) =>
-                                                                    ( game.grid[cardrow][card] == 3 ? count+1:count))));
 
-    let noMovePlayer = (game.p1_turn)?game.p2:game.p1;
 
-    if (count==0 && ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)) && this.state.winner == 0) {
-      console.log("Idhar hai ye B****Ka");
-      swal("No valid moves left for", noMovePlayer);
-      //swal("No valid moves left for" + noMovePlayer);
-    }
-    else if((this.state.winner == 1) || (this.state.winner == 2)){
+    // let noMovePlayer = (this.state.p1_turn)?this.state.p2:this.state.p1;
+    //
+    // if (this.state.p1_turn) {
+    //   let count =0;
+    //   Object.keys(this.state.grid).map((cardrow, rowindex) =>
+    //                           ( Object.keys(this.state.grid[cardrow]).map((card, i) =>
+    //                                                               ( this.state.grid[cardrow][card] == 3 ? count+=1:count))));
+    //   if (count==0 && this.state.p2 == window.playerName && this.state.winner == 0) {
+    //     swal("No valid moves left for", noMovePlayer);
+    //   }
+    // }
+    // else {
+    //   let count =0;
+    //   Object.keys(this.state.grid).map((cardrow, rowindex) =>
+    //                           ( Object.keys(this.state.grid[cardrow]).map((card, i) =>
+    //                                                               ( this.state.grid[cardrow][card] == 3 ? count+=1:count))));
+    //   if (count==0 && this.state.p1 == window.playerName && this.state.winner == 0) {
+    //     swal("No valid moves left for", noMovePlayer);
+    //   }
+    // }
+    // if (count==0 && ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)) && this.state.winner == 0) {
+    //   swal("No valid moves left for", noMovePlayer);
+    //   //swal("No valid moves left for" + noMovePlayer);
+    // }
+    if((this.state.winner == 1) || (this.state.winner == 2)){
       console.log(this.state.winner)
       this.state.winner==1? swal({
                                   title: "THE WINNER IS.." + this.state.p1,
@@ -358,7 +380,7 @@ class Layout extends React.Component {
         ))}
       </tr>
       </tbody>
-      </table>
+   </table>
       ));
 
 
