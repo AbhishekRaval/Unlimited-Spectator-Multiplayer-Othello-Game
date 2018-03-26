@@ -6,12 +6,12 @@
  <div class="container">
  	<section class="h-100">
  		<header class="container h-100">
- 			<table class="gameboard table text-center" id="headgame" style="  border-color: black;
+ 			<table class="gameboard table text-center" id="headgame" style="  border-color: #968e8e;
  			border-style: solid;
  			border-width: 0px 0px 4px 0px; " >
  			<thead>
  				<tr>
- 					<th scope="col" class="text-white"><h3> Welcome, <%= @player_name %>  to Othello Game</h3></th>
+ 					<th scope="col" class="text-white" style="text-transform: capitalize;"><h3> Welcome, <%= @player_name %>  to Othello Game</h3></th>
  				</tr>
  			</thead>
  		</table>	 
@@ -29,7 +29,12 @@
  			</div>
 
  		</div>
- 	</header>
+ 	</header> 	
+    <footer>
+        <div class="d-flex align-items-center justify-content-center h-100 text-white mt-3">
+        Made with <span style="color: #e25555; font-size: 25px; margin-left: 2px; margin-right: 2px;">&hearts;</span> at Northeastern University ,by Nishchay, Ketan ,Abhishek.
+        </div>
+      </footer>
 
  </section>
 </div> <!-- /container -->

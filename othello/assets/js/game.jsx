@@ -305,137 +305,155 @@ class Layout extends React.Component {
   }
 
   render() {
-    let playerturn  = <div><b>{(this.state.p1 == null || this.state.p2 == null) ? "":
-    this.state.p1_turn? "Player1: " + this.state.p1 + "'s Turn": "Player2: " + this.state.p2 + "'s Turn"}</b></div>
+
+    let playerturn  = <div>
+    <b>{
+      //main condition if
+      (this.state.p1 == null || this.state.p2 == null) ?
+      //reply for main
+           "Waiting for Players to Join Game":
+      //else
+           (
+           // if 2 
+           ( (this.state.p1 == window.playerName) || (this.state.p2 == window.playerName))?
+              (
+                //if 3
+                this.state.p1_turn ? 
+                    //if 4
+                      (this.state.p1 == window.playerName ?
+                        "Your Turn" :
+                     //else 4
+                        "Opponent's Turn" ) :
+                // else 3
+                (this.state.p2 == window.playerName)?
+                  "Your Turn" :
+                  "Opponent's Turn"
+                )
+
+          //else 2
+            : (this.state.p1_turn)?
+              (this.state.p1 + "'s turn")
+              : (this.state.p2 + "'s turn")
+            )}</b></div>
+    
 
     let cardsRendered = Object.keys(this.state.grid).map((cardrow, rowindex) => (
       <table key={rowindex}>
-        <tbody>
-          <tr key={rowindex}>
-            {Object.keys (this.state.grid[cardrow]).map((card, i) => (
-              <td
-                key={i}
-                onClick={() => this.serverClickHandle(card, rowindex, i)}>
+      <tbody>
+      <tr key={rowindex}>
+      {Object.keys (this.state.grid[cardrow]).map((card, i) => (
+        <td
+        key={i}
+        onClick={() => this.serverClickHandle(card, rowindex, i)}>
 
-                <div
-                  className={
-                    this.state.grid[cardrow][card] == 0 ? "card" :
-                          this.state.grid[cardrow][card] == 1 ? "blackTile" :
-                          this.state.grid[cardrow][card] == 2 ? "whiteTile" : 
-                            this.state.p1_turn ? "flipWhite":"flipBlack"
-                  }>
-                </div>
-              </td>
-            ))}
-          </tr>
-        </tbody>
+        <div
+        className={
+          this.state.grid[cardrow][card] == 0 ? "card" :
+          this.state.grid[cardrow][card] == 1 ? "blackTile" :
+          this.state.grid[cardrow][card] == 2 ? "whiteTile" : 
+          this.state.p1_turn ? "flipWhite":"flipBlack"
+        }>
+        </div>
+        </td>
+        ))}
+      </tr>
+      </tbody>
       </table>
-    ));
+      ));
 
 
 
-    let messageList = <ChatFeed
+    let messageList = <div className="messagecontent"><ChatFeed
             //chatBubble={this.state.useCustomBubble && customBubble}
             maxHeight={563}
             messages={this.state.msg.reverse().map((data, index) =>( (data.senderName === window.playerName)?
               (new Message ({id: 0 ,message: data.message ,senderName: data.senderName})):
               (new Message(data))))} // Boolean: list of message objects
             showSenderName
-            //  bubbleStyles={
-            //   {
-            //     text: {
-            //       fontSize: 30,
-            //       color: "white"
-            //     },
-            //     chatbubble: {
-            //       borderRadius: 70,
-            //       padding: 40
-            //     }
-            //   }
-            // }
-          />
+            /></div>
 
     let gamep1button = (<div>
-                   {(this.state.p1 === null && !(this.state.p2 === window.playerName) ) ? ( <button type="submit" data-toggle="modal" data-target="#player1Join"
-                    className="btn btn-primary my-2"
-                    onClick={() => this.p1join()}>
-                    Join Game as Player1</button>)
-                   :(this.state.p2 === window.playerName && (this.state.p1 === null))?"Waiting for Player1 to join game":""}
-                  </div>);
+     {(this.state.p1 === null && !(this.state.p2 === window.playerName) ) ? ( <button type="submit" data-toggle="modal" data-target="#player1Join"
+      className="btn btn-primary my-2"
+      onClick={() => this.p1join()}>
+      Join Game as Player1</button>)
+     :(this.state.p2 === window.playerName && (this.state.p1 === null))?"Waiting for Player1 to join game":""}
+     </div>);
+
     let gamep1leavebutton =(<div className="mt-2"> {this.state.p1 == window.playerName ?
-                    (<span>
-                       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
-                       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
-                    </span>):("")} </div>);
+      (<span>
+       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
+       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
+       </span>):("")} </div>);
 
     let gamep2button = (<div>
-                   {(this.state.p2 === null && !(this.state.p1 == window.playerName)) ? ( <button type="submit" className="btn btn-primary my-2"
-                    onClick={() => this.p2join()}>
-                    Join Game as Player2</button>)
-                   :(this.state.p1 === window.playerName && (this.state.p2 === null))?"Waiting for Player2 to join game":""}
-                  </div>);
+     {(this.state.p2 === null && !(this.state.p1 == window.playerName)) ? ( <button type="submit" className="btn btn-primary my-2"
+      onClick={() => this.p2join()}>
+      Join Game as Player2</button>)
+     :(this.state.p1 === window.playerName && (this.state.p2 === null))?"Waiting for Player2 to join game":""}
+     </div>);
+
     let gamep2leavebutton =(<div className="mt-2"> {this.state.p2 == window.playerName ?
-                    (<span>
-                       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
-                       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
-                    </span>):("")} </div>);
+      (<span>
+       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
+       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
+       </span>):("")} </div>);
 
     return <div className = "jsxGameContainer">
-    <div className ="container">
-    <div className="row">
+            <div className ="container">
+              <div className="row">
 
-    </div>
-    <div className="row">
-      <div className="d-flex flex-column mx-auto my-auto float-left">
-        <div className="row">
-        <div className="text-center text-white player1">
-          <h4> Player1  </h4>
-          <img src="http://othellogame.net/revello/images/chip-white-1x.png" height="55" width="55"/>
-          <p> Name: {this.state.p1} </p>
-          <p> <h2> {this.state.p1score} </h2> Score</p>
-           <p> {gamep1button} {gamep1leavebutton}</p>
-           <p className="mt-2"> {playerturn}  </p>
-         </div>
-         </div>
-         <div className="row">
-        <div className="player2 text-white text-center">
-          <h4> Player2   </h4>
-          <img src="http://othellogame.net/revello/images/chip-black-1x.png" height="55" width="55"/>
-          <p> Name: {this.state.p2} </p>
-          <p> <h2> {this.state.p2score} </h2> Score</p>
-          <p> {gamep2button} {gamep2leavebutton}</p>
-          <p className="mt-2"> {playerturn}  </p>
-         </div>
-      </div>
-      </div>
-      <div className="d-flex flex-column mx-auto">
-        <table className="table" id="gametable">
-          <tbody>
-            <tr>
-              <td> {  cardsRendered   } </td>
-            </tr>
-          </tbody>
-        </table>
-           <div className="text-center text-white">
-           </div>
-        <div className="text-center">
-          <button type="submit" onClick={() => this.leave()} className="btn btn-primary mt-3">Leave the Game</button>
-        </div>
-      </div>
-      <div className="d-flex flex-column mx-auto float-right">
-      <div className="row">   
-      <div className="chatcontainer">
-          <div className="chatfeed-wrapper">
-          {messageList}
+              </div>
+              <div className="row">
+                <div className="d-flex flex-column mx-auto my-auto float-left">
+                  <div className="row">
+                    <div className="text-center text-white player1">
+                      <h4> Player1  </h4>
+                      <img src="http://othellogame.net/revello/images/chip-white-1x.png" height="55" width="55"/>
+                      <p> Name: {this.state.p1} </p>
+                      <p> <h2> {this.state.p1score} </h2> Score</p>
+                      <p> {gamep1button} {gamep1leavebutton}</p>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="player2 text-white text-center">
+                      <h4> Player2   </h4>
+                      <img src="http://othellogame.net/revello/images/chip-black-1x.png" height="55" width="55"/>
+                      <p> Name: {this.state.p2} </p>
+                      <p> <h2> {this.state.p2score} </h2> Score</p>
+                      <p> {gamep2button} {gamep2leavebutton}</p>
+                    </div>
+                  </div>
+                </div>
+                <div className="d-flex flex-column mx-auto">
+                  <table className="table" id="gametable">
+                    <tbody>
+                      <tr>
+                        <td> {  cardsRendered   } </td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <div className="text-center">
+                    <p className="mt-2 text-white h4"> {playerturn}  </p>
+                  </div>
+                  <div className="text-center text-white h4">
+                    <button type="submit" onClick={() => this.leave()} className="btn btn-primary mt-3">Leave the Game</button>
+                  </div>
+                </div>
+                <div className="d-flex flex-column mx-auto float-right">
+                  <div className="row">   
+                    <div className="chatcontainer">
+                      <div className="chatfeed-wrapper">
+                        {messageList}
+                      </div>
+                      <div className="chatInputBox">
+                        <input placeholder={"Press Enter to Send"} onKeyDown={this.keyPress} onChange={this.handleChange} />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="chatInputBox">
-          <input placeholder={"Press Enter to Send"} onKeyDown={this.keyPress} onChange={this.handleChange} />
-          </div>
-      </div>
-      </div>
-      </div>
-    </div>
-    </div>
-   </div>   
-  }
-}
+        }
+      }

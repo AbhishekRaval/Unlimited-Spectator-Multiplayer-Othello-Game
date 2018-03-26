@@ -89,8 +89,14 @@
 					</div>
 				</div>
 			</div>
-		</div>
-	</header>
+		</div>		
+    <div class="footer" style="position: static; clear: both;">
+        <div class="d-flex align-items-center justify-content-center h-100 text-white mt-3">
+        Made with <span style="color: #e25555; font-size: 25px; margin-left: 2px; margin-right: 2px;">&hearts;</span> at Northeastern University ,by Nishchay, Ketan ,Abhishek.
+        </div>
+      </div>
+	</header>	
 </section>
+
 </div> <!-- /container -->
 </body>
