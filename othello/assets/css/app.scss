@@ -93,14 +93,6 @@ height: 100%;
   width: 100%; 
  }
 
-footer{
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  left: 0;
-  text-align: center;
-}
-
 #gameboard .card span {
   line-height: 55px;
 }
@@ -137,11 +129,12 @@ footer{
  width: 100%;
  height:100%;
  height: 650px;
-  max-width: 600px;
+  max-width: 300px;
   margin: 0 auto;
   margin-left:20px;
 }
 .chat-messages>div>div>div{
+  overflow: hidden;
    background-color: #F1F0F0 !important;
    margin-left: 8px !important;
    margin-right: 8px !important;
@@ -151,9 +144,13 @@ footer{
   font-size: 20px;
    text-decoration: bold;
    color: darkslategray !important;
+    max-width: 200px;
+  word-wrap: break-word !important;
 }
 
 .chat-messages>div>h5{
+  max-width: 200px;
+  word-wrap: break-word !important;
   font-size: 17px !important;
    text-transform: capitalize;
    margin-left: 2px !important;
@@ -205,42 +202,170 @@ footer{
   text-align: center;
 }
 
+
+#gameboard .mobilePlayers ,#gameboard .chatcontainer-mobile{
+  display: none;
+  visibility: none;
+}
+
 @media only screen and (max-width: 500px) {
 
-#gameboard .progressBar{
-  width: 320px;
+  #gameboard .mobilePlayers,#gameboard .chatcontainer-mobile{
+   display: block;
+  visibility: visible;
+  }
+
+
+
+  html,body{
+height: 100%;
+  width: 100%; 
+ }
+
+
+#gameboard .plDets{
+  opacity: 0;
+  display: none;
+  position: absolute;
+  left: -999em;
+  visibility: none;
 }
 
 #gameboard .card {
-  width: 35px;
-  height: 35px;
+  width: 40px;
+  height: 40px;
   text-align: center;
-  font-size:170%;
-  background-color:#20b2aa;
-  }
+  background-color:#17712B;  
+}
+
+
+
+#gameboard .flipWhite:hover{
+  background-image: url("http://othellogame.net/revello/images/chip-white-1x.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: 0 0px 1px 0px #328C46; 
+  background-color: #045315;
+  background-size: 20% 20%;
+}
+
+#gameboard .flipBlack:hover{
+  background-image: url("http://othellogame.net/revello/images/chip-black-1x.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  box-shadow: 0 0px 2px 0px #328C46; 
+  background-color: #045315;
+  background-size: 20% 20%;
+}
+
+#gameboard .table th,#gameboard .table td,#gameboard .table tr {
+  padding: 0.001rem;
+  border: 2px solid black;
+}
+
+#gameboard .table {
+  margin-right: 10px;
+  width: 50% !important;
+}
+
+#gameboard .whiteTile {
+ width: 40px;
+  height: 40px;
+  text-align: center;
+  transition: .4s;
+  /* white */
+  /* Image Source :  http://othellogame.net/revello/; */
+  background-image: url("http://othellogame.net/revello/images/chip-white-1x.png");
+  background-size: 100% 100%;
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-color: #17712B !important; 
+}
+#gameboard .flipWhite {
+ width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: #17712B !important; 
+}
+#gameboard .flipBlack {
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  background-color: #17712B; 
+}
+#gameboard .blackTile{
+  transition: .4s;
+  width: 40px;
+  height: 40px;
+  text-align: center;
+  /* black */
+  background-image: url("http://othellogame.net/revello/images/chip-black-1x.png");
+  background-size: 100% 100%;
+  background-color: #17712B;
+  background-repeat: no-repeat;
+  background-position: center center;
+}
+
+#gameboard .middlefont{
+padding-top:4px;
+}
+
+#gameboard{
+  min-height: 100%;
+  min-width: 100%;
+  height: 100%;
+  width: 100%;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: 100%;
+}
+
+
+#gameboard .mobileSpecLeave{
+  margin: 0px !important;
+}
 
 #gameboard .card span {
   line-height: 35px;
 }
 
+#gameboard .table{
+  width: 50%;
+}
 
-#gameboard .cardFlip {
-  width: 35px;
-  height: 35px;
-  text-align: center;
-  font-size:170%;
-  background-color: white;
-  }
+#gameboard .playerTurn, #gameboard .chatcontainer{
+ display: none;
+  visibility: none;
+}
 
-#gameboard .cardReveal{
-  width: 35px;
-  height: 35px;
-  text-align: center;
-  font-size:170%;
-  background-color: black;
-  }
+#headgame tr th h3{
+    font-size: 18px !important;
+}
+#headgame{
+      border-width: 0px 0px 2px 0px !important;
+}
 
-#gameboard .middlefont{
-  padding-top:4px;
-  }
+.chatcontainer-mobile{
+ width: 100%;
+ height:100%;
+ height: 250px;
+  max-width: 450px;
+  margin: 0 auto;
+}
+
+.chatfeed-wrapper {
+  height: 100%;
+  max-width: 450px;
+  border: 5px solid black;
+  background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%);
+ background-blend-mode: multiply;
+}
+
+.chat-history {
+  display: block;
+  min-width: 270px;
+  min-height: 100px;}
+
 }
