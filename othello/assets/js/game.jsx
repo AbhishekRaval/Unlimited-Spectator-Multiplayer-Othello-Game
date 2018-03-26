@@ -9,7 +9,7 @@ import { ChatFeed, Message } from 'react-chat-ui';
 //sweetalert api used for customizing alertboxes attribution:https://github.com/t4t5/sweetalert
 import swal from 'sweetalert'
 
-export default function run_game(root, channel) { ReactDOM.render( <Layout channel = {channel} />, root)}
+export default function run_game(root, channel,pn) { ReactDOM.render( <Layout channel = {channel}/>, root)}
 
 class Layout extends React.Component {
   constructor(props) {
@@ -23,11 +23,11 @@ class Layout extends React.Component {
 
     this.channel.on("handleclickfn",payload=>
     {let game = payload.game;
-      if (this.state.p1_turn == game.p1_turn){
+      if (this.state.p1_turn == game.p1_turn && this.state.p1score != game.p1score){
         if (this.state.p1_turn) {
           swal("No valid moves left for", this.state.p2);
         }
-        else{
+        else if(this.state.p1_turn == game.p1_turn && this.state.p2score != game.p2score){
           swal("No valid moves left for", this.state.p1);
         }
       }
@@ -76,7 +76,7 @@ class Layout extends React.Component {
                                 })
                                 :this.state.winner==2?
                                 swal({
-                                      title: "THE WINNER IS.." + this.state.p1,
+                                      title: "THE WINNER IS.." + this.state.p2,
                                       text: "",
                                       icon: "success",
                                       buttons: true,
