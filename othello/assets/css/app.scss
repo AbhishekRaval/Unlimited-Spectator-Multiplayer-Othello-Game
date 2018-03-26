@@ -141,18 +141,38 @@ footer{
   margin: 0 auto;
   margin-left:20px;
 }
+.chat-messages>div>div>div{
+   background-color: #F1F0F0 !important;
+   margin-left: 8px !important;
+   margin-right: 8px !important;
+}
+
+.chat-messages>div>div>div>p{
+  font-size: 20px;
+   text-decoration: bold;
+   color: darkslategray !important;
+}
+
+.chat-messages>div>h5{
+  font-size: 17px !important;
+   text-transform: capitalize;
+   margin-left: 2px !important;
+   color: grey !important;
+}
+
 
 .chatfeed-wrapper {
   height: 88%;
-  border-radius: 4px;
   max-width: 270px;
-  border: 4px solid black;
+  border: 5px solid black;
+  background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%);
+ background-blend-mode: multiply;
 }
 
 .chatInputBox{  
   border-color: black;
   border-style: solid;
-  border-width: 0px 4px 4px 4px;  
+  border-width: 0px 5px 5px 5px;  
   height: 50px;
 }
 
@@ -171,8 +191,6 @@ footer{
 
 #chat-panel {
   padding: 0px ;
-background: linear-gradient(to bottom, #323232 0%, #3F3F3F 40%, #1C1C1C 150%), linear-gradient(to top, rgba(255,255,255,0.40) 0%, rgba(0,0,0,0.25) 200%);
- background-blend-mode: multiply;
 }
 
 
