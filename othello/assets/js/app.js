@@ -35,13 +35,13 @@ function init() {
     $('#game-button').click(() => {
       let gn = $('#game-name').val();
       let pn = $('#player-name').val();
-      console.log("/games/"+gn+pn);
       // $('#ahr').attr("href", "/games/"+gn+"/"+pn);
       if (gn == "" || pn == ""){
         swal("Please enter both the game name and the player name!");
       }
       else{
         window.location.href  = "/games/"+gn+"/"+pn;
+        //run_game(root, channel, pn);
       }
 
       //console.log(playerName + "player Name is here : :: : : " + pn )
@@ -67,7 +67,6 @@ function init() {
     });
 
   }
-
   run_game(root, channel);
 
 }

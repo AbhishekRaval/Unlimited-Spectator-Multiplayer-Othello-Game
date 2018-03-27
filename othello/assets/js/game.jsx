@@ -9,7 +9,7 @@ import { ChatFeed, Message } from 'react-chat-ui';
 //sweetalert api used for customizing alertboxes attribution:https://github.com/t4t5/sweetalert
 import swal from 'sweetalert'
 
-export default function run_game(root, channel) { ReactDOM.render( <Layout channel = {channel} />, root)}
+export default function run_game(root, channel,pn) { ReactDOM.render( <Layout channel = {channel}/>, root)}
 
 class Layout extends React.Component {
   constructor(props) {
@@ -23,11 +23,11 @@ class Layout extends React.Component {
 
     this.channel.on("handleclickfn",payload=>
     {let game = payload.game;
-      if (this.state.p1_turn == game.p1_turn){
+      if (this.state.p1_turn == game.p1_turn && this.state.p1score != game.p1score){
         if (this.state.p1_turn) {
           swal("No valid moves left for", this.state.p2);
         }
-        else{
+        else if(this.state.p1_turn == game.p1_turn && this.state.p2score != game.p2score){
           swal("No valid moves left for", this.state.p1);
         }
       }
@@ -165,7 +165,6 @@ class Layout extends React.Component {
 
 
   p1join(){
-
         console.log("You pressed OK!");
         this.channel
       .push("player1join", {player1: window.playerName})
@@ -180,6 +179,8 @@ class Layout extends React.Component {
   }
 
   p2join(){
+         $('whiteImageClick').click(false);
+        $('blackImageClick').click(false);
 
         console.log("You pressed OK!");
         this.channel
@@ -394,11 +395,19 @@ class Layout extends React.Component {
             showSenderName
             /></div>
 
+    let messageListMobile = <div className="messagecontent"><ChatFeed
+            //chatBubble={this.state.useCustomBubble && customBubble}
+            maxHeight={240}
+            messages={this.state.msg.map((data, index) =>( (data.senderName === window.playerName)?
+              (new Message ({id: 0 ,message: data.message ,senderName: data.senderName})):
+              (new Message(data))))} // Boolean: list of message objects
+            showSenderName
+            /></div>        
+
     let gamep1button = (<div>
-     {(this.state.p1 === null && !(this.state.p2 === window.playerName) ) ? ( <button type="submit" data-toggle="modal" data-target="#player1Join"
-      className="btn btn-primary my-2"
-      onClick={() => this.p1join()}>
-      Join Game as Player1</button>)
+     {(this.state.p1 === null && !(this.state.p2 === window.playerName) ) ? 
+      ( <button type="submit" data-toggle="modal" data-target="#player1Join"
+      className="btn btn-primary my-2" onClick={() => this.p1join()}> Join Game as Player1</button>)
      :(this.state.p2 === window.playerName && (this.state.p1 === null))?"Waiting for Player1 to join game":""}
      </div>);
 
@@ -421,13 +430,69 @@ class Layout extends React.Component {
        <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
        </span>):("")} </div>);
 
+    let leaveResButtons = <div> 
+    {this.state.p1 == window.playerName ?
+      (<span>
+       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
+       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
+       </span>):this.state.p2 == window.playerName ?
+      (<span>
+       <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
+       <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
+       </span>):("")}
+    </div>
+
+    let spectatorLeave = <div>{  <button type="submit" onClick={() => this.leave()} 
+    className="btn mobileSpecLeave btn-primary mt-3">Leave the Game</button>}</div>
+
+    let mobileplayerDets = (
+        <div className="row text-center">
+          <div className="float-left col">
+            <img src="http://othellogame.net/revello/images/chip-white-1x.png" 
+             onClick={() => ((this.state.p1 === null) && !(this.state.p2 === window.playerName))? 
+              this.p1join():null} height="55" width="55"/>
+              <p className="text-white h4">{this.state.p1score}</p>
+           </div>
+           <div className="col text-center text-white h5">
+           {(this.state.p1 == null || this.state.p2 == null) ?
+      //reply for main
+           "Waiting for Players to Join Game":
+      //else
+           (
+           // if 2 
+           ( (this.state.p1 == window.playerName) || (this.state.p2 == window.playerName))?
+              (
+                //if 3
+                this.state.p1_turn ? 
+                    //if 4
+                      (this.state.p1 == window.playerName ?
+                        "Your Turn" :
+                     //else 4
+                        "Opponent's Turn" ) :
+                // else 3
+                (this.state.p2 == window.playerName)?
+                  "Your Turn" :
+                  "Opponent's Turn"
+                )
+
+          //else 2
+            : (this.state.p1_turn)?
+              (this.state.p1 + "'s turn")
+              : (this.state.p2 + "'s turn")
+            )}
+           </div>
+          <div className="float-right col">
+            <img src="http://othellogame.net/revello/images/chip-black-1x.png" 
+            onClick={() => ((this.state.p2 === null) && !(this.state.p1 === window.playerName))?
+              this.p2join():null} height="55" width="55"/>
+             <p className="text-white h4"> {this.state.p2score} </p>
+         </div>
+        </div>);
+
     return <div className = "jsxGameContainer">
             <div className ="container">
               <div className="row">
-
-              </div>
-              <div className="row">
-                <div className="d-flex flex-column mx-auto my-auto float-left">
+                <div className="d-flex plDets flex-column mx-auto my-auto float-left">
                   <div className="row">
                     <div className="text-center text-white player1">
                       <h4> Player1  </h4>
@@ -438,7 +503,7 @@ class Layout extends React.Component {
                     </div>
                   </div>
                   <div className="row">
-                    <div className="player2 text-white text-center">
+                    <div className="player2 mb-1 text-white text-center">
                       <h4> Player2   </h4>
                       <img src="http://othellogame.net/revello/images/chip-black-1x.png" height="55" width="55"/>
                       <p> Name: {this.state.p2} </p>
@@ -447,19 +512,25 @@ class Layout extends React.Component {
                     </div>
                   </div>
                 </div>
-                <div className="d-flex flex-column mx-auto">
+                <div className="d-flex flex-column  mx-auto">
+                  <div className="mobilePlayers mb-2">
+                    {mobileplayerDets}
+                    <div className="text-center mt-2">
+                    {leaveResButtons}
+                    </div>
+                </div>
                   <table className="table" id="gametable">
-                    <tbody>
+                    <tbody className="text-center mb-2">
                       <tr>
                         <td> {  cardsRendered   } </td>
                       </tr>
                     </tbody>
                   </table>
                   <div className="text-center">
-                    <p className="mt-2 text-white h4"> {playerturn}  </p>
+                    <p className="mt-2 text-white h4 playerTurn"> {playerturn}  </p>
                   </div>
                   <div className="text-center text-white h4">
-                    <button type="submit" onClick={() => this.leave()} className="btn btn-primary mt-3">Leave the Game</button>
+                    {spectatorLeave}            
                   </div>
                 </div>
                 <div className="d-flex flex-column mx-auto float-right">
@@ -468,6 +539,14 @@ class Layout extends React.Component {
                       <div className="chatfeed-wrapper">
                         {messageList}
                       </div>
+                      <div className="chatInputBox">
+                        <input placeholder={"Press Enter to Send"} onKeyDown={this.keyPress} onChange={this.handleChange} />
+                      </div>
+                    </div>
+                    <div className="chatcontainer-mobile">
+                      <div className="chatfeed-wrapper">
+                        {messageListMobile}
+                        </div>
                       <div className="chatInputBox">
                         <input placeholder={"Press Enter to Send"} onKeyDown={this.keyPress} onChange={this.handleChange} />
                       </div>

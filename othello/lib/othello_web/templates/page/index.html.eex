@@ -9,7 +9,7 @@
  <div class="container">
 <section class="h-100">
 	<header class="container h-100">
-		<table class="table text-center" style="  border-color: black;
+		<table class="table text-center" style="  border-color: #968e8e;
  			border-style: solid;
  			border-width: 0px 0px 4px 0px; ">
 			<thead>
@@ -34,7 +34,7 @@
 				</div>
 			</div>
 		</div>
-		<div class="d-flex align-items-center justify-content-center h-100 py-5">
+		<div class="d-flex align-items-center justify-content-center h-100">
 			<div class="d-flex flex-column mx-auto">
 				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
 				<div>
@@ -50,7 +50,7 @@
 							<ul>
 								<li>
 									Each player takes 32 disks and chooses one color to use throughout the game.
-									Black places two black disks and White places two white disks as shown in Figure 1.
+									Game begins with two black disks and two white disks as shown in Figure 1.
 								</li>
 								<img src="<%= static_path(@conn, "/images/figure1.jpg") %>" height = "25%" width = "25%">
 								<li>
@@ -65,9 +65,9 @@
 						<h5 class="card-title">Othello Game Rules</h5>
 						<p class="card-text">
 							<ol>
-								<li>Black always moves first.</li>
+								<li>White always moves first.</li>
 								<li>If a player cannot outflank and flip at least one opposing disk, they forfeit their turn and their opponent moves again. However, if a move is available a player may not forfeit their turn.</li>
-								<li>A disk may outflank any number of disksin one or more rows in any number of directions at the same time--horizontally, vertically or diagonally. A "row" is defined as one or more disks in a continuous straight line. (See Figures 2 and 3).</li>
+								<li>A disk may outflank any number of disks in one or more rows in any number of directions at the same time--horizontally, vertically or diagonally. A "row" is defined as one or more disks in a continuous straight line. (See Figures 2 and 3).</li>
 								<img src="<%= static_path(@conn, "/images/figure2.jpg") %>" height = "25%" width = "25%">
 								<img src="<%= static_path(@conn, "/images/figure3.jpg") %>" height = "25%" width = "25%">
 								<li>Players may not skip over their own color disk(s) to outflank an opposing disk. (See Figure 4.)</li>
@@ -89,12 +89,7 @@
 					</div>
 				</div>
 			</div>
-		</div>		
-    <div class="footer" style="position: static; clear: both;">
-        <div class="d-flex align-items-center justify-content-center h-100 text-white mt-3">
-        Made with <span style="color: #e25555; font-size: 25px; margin-left: 2px; margin-right: 2px;">&hearts;</span> at Northeastern University ,by Nishchay, Ketan ,Abhishek.
-        </div>
-      </div>
+		</div>
 	</header>	
 </section>
 
