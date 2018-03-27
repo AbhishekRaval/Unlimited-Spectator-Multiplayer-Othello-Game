@@ -13,16 +13,7 @@ defmodule Othello.Game do
   end
 
   def init() do
-    # %{
-    #   0 => %{0 => 0, 1 => 0, 2 => 2, 3 => 2, 4 => 1, 5 => 0, 6 => 2, 7 => 2},
-    #   1 => %{0 => 1, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
-    #   2 => %{0 => 2, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
-    #   3 => %{0 => 2, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
-    #   4 => %{0 => 2, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
-    #   5 => %{0 => 2, 1 => 2, 2 => 2, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
-    #   6 => %{0 => 2, 1 => 2, 2 => 1, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2},
-    #   7 => %{0 => 2, 1 => 2, 2 => 0, 3 => 2, 4 => 2, 5 => 2, 6 => 2, 7 => 2}
-    # }
+    
    %{
       0 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
       1 => %{0 => 0, 1 => 0, 2 => 0, 3 => 0, 4 => 0, 5 => 0, 6 => 0, 7 => 0},
@@ -47,7 +38,6 @@ defmodule Othello.Game do
         newGameState = %{newGameState | p1_turn: !newGameState.p1_turn}
         newGameState = checkforWinner(newGameState)
         newGameState = getvalidtiles(newGameState)
-        IO.inspect(newGameState)
       end
     end
     newGameState
@@ -146,7 +136,6 @@ defmodule Othello.Game do
       end
     end
     retVal
-
 
   end
 
@@ -399,8 +388,6 @@ defmodule Othello.Game do
         retVal = false
       end
     end
-    IO.puts("checkDown retval")
-    IO.inspect(retVal)
     retVal
 
   end
@@ -408,35 +395,27 @@ defmodule Othello.Game do
   def checkHit(game, clickedTile, row, column) do
 
     if checkUp(game, row, column) do
-      # IO.puts("trying checkHitUp")
       game = checkHitUp(game, row,column)
     end
     if checkDown(game, row, column) do
-      # IO.puts("trying checkHitDown")
       game = checkHitDown(game, row,column)
     end
     if checkLeft(game, row, column) do
-      # IO.puts("trying checkHitLeft")
       game = checkHitLeft(game, row,column)
     end
     if checkRight(game, row, column) do
-      # IO.puts("trying checkHitRight")
       game = checkHitRight(game, row,column)
     end
     if checkLeftUp(game, row, column) do
-      # IO.puts("trying checkHitLeftUp")
       game = checkHitLeftUp(game, row,column)
     end
     if checkLeftDown(game, row, column) do
-      # IO.puts("trying checkHitLeftDown")
       game = checkHitLeftDown(game, row,column)
     end
     if checkRightUp(game, row, column) do
-      # IO.puts("trying checkHitRightUp")
       game = checkHitRightUp(game, row,column)
     end
     if checkRightDown(game, row, column) do
-      # IO.puts("trying checkHitRightDown")
       game = checkHitRightDown(game, row,column)
     end
     countScore(game)
@@ -444,13 +423,13 @@ defmodule Othello.Game do
   end
 
   def checkHitUp(game, row,column) do
+
     newGameVal = game
     if game.p1_turn do
       game = put_in(game.grid[row][column], 2)
       if row > 0 do
         if game.grid[row-1][column] === 1 do
           newGameVal = checkHitUp(game, row-1, column)
-          # newGameVal = put_in(game.grid[row-1][column], 2)
         else
           if game.grid[row-1][column] === 2 do
             newGameVal = game
@@ -466,7 +445,6 @@ defmodule Othello.Game do
       if row > 0 do
         if game.grid[row-1][column] === 2 do
           newGameVal = checkHitUp(game, row-1, column)
-          # newGameVal = put_in(game.grid[row-1][column], 1)
         else
           if game.grid[row-1][column] === 1 do
             newGameVal = game
@@ -479,17 +457,18 @@ defmodule Othello.Game do
       end
     end
     newGameVal
+
   end
 
 
   def checkHitDown(game, row, column) do
+
     newGameVal = game
     if game.p1_turn do
       game = put_in(game.grid[row][column], 2)
       if row < 7 do
         if game.grid[row+1][column] === 1 do
           newGameVal = checkHitDown(game, row+1, column)
-          # newGameVal = put_in(game.grid[row+1][column], 2)
         else
           if game.grid[row+1][column] === 2 do
             newGameVal = game
@@ -505,7 +484,6 @@ defmodule Othello.Game do
       if row < 7 do
         if game.grid[row+1][column] === 2 do
           newGameVal = checkHitDown(game, row+1, column)
-          # newGameVal = put_in(game.grid[row+1][column], 1)
         else
           if game.grid[row+1][column] === 1 do
             newGameVal = game
@@ -518,16 +496,17 @@ defmodule Othello.Game do
       end
     end
     newGameVal
+
   end
 
   def checkHitLeft(game, row,column) do
+
     newGameVal = game
     if game.p1_turn do
       game = put_in(game.grid[row][column], 2)
       if column > 0 do
         if game.grid[row][column-1] === 1 do
           newGameVal = checkHitLeft(game, row, column-1)
-          # newGameVal = put_in(game.grid[row][column-1], 2)
         else
           if game.grid[row][column-1] === 2 do
             newGameVal = game
@@ -543,7 +522,6 @@ defmodule Othello.Game do
       if column > 0 do
         if game.grid[row][column-1] === 2 do
           newGameVal = checkHitLeft(game, row, column-1)
-          # newGameVal = put_in(game.grid[row][column-1], 1)
         else
           if game.grid[row][column-1] === 1 do
             newGameVal = game
@@ -556,16 +534,17 @@ defmodule Othello.Game do
       end
     end
     newGameVal
+
   end
 
   def checkHitRight(game, row,column) do
+
     newGameVal = game
     if game.p1_turn do
       game = put_in(game.grid[row][column], 2)
       if column < 7 do
         if game.grid[row][column+1] === 1 do
           newGameVal = checkHitRight(game, row, column+1)
-          # newGameVal = put_in(game.grid[row][column+1], 2)
         else
           if game.grid[row][column+1] === 2 do
             newGameVal = game
@@ -581,7 +560,6 @@ defmodule Othello.Game do
       if column < 7 do
         if game.grid[row][column+1] === 2 do
           newGameVal = checkHitRight(game, row, column+1)
-          # newGameVal = put_in(game.grid[row][column+1], 1)
         else
           if game.grid[row][column+1] === 1 do
             newGameVal = game
@@ -594,17 +572,18 @@ defmodule Othello.Game do
       end
     end
     newGameVal
+
   end
 
 
   def checkHitRightDown(game, row,column) do
+
     newGameVal = game
     if game.p1_turn do
       game = put_in(game.grid[row][column], 2)
       if column < 7 and row < 7 do
         if game.grid[row+1][column+1] === 1 do
           newGameVal = checkHitRightDown(game, row+1, column+1)
-          # newGameVal = put_in(game.grid[row+1][column+1], 2)
         else
           if game.grid[row+1][column+1] === 2 do
             newGameVal = game
@@ -620,7 +599,6 @@ defmodule Othello.Game do
       if column < 7 and row < 7 do
         if game.grid[row+1][column+1] === 2 do
           newGameVal = checkHitRightDown(game, row+1, column+1)
-          # newGameVal = put_in(game.grid[row+1][column+1], 1)
         else
           if game.grid[row+1][column+1] === 1 do
             newGameVal = game
@@ -633,16 +611,17 @@ defmodule Othello.Game do
       end
     end
     newGameVal
+
   end
 
   def checkHitRightUp(game, row,column) do
+
     newGameVal = game
     if game.p1_turn do
       game = put_in(game.grid[row][column], 2)
       if column < 7 and row > 0 do
         if game.grid[row-1][column+1] === 1 do
           newGameVal = checkHitRightUp(game, row-1, column+1)
-          # newGameVal = put_in(game.grid[row-1][column+1], 2)
         else
           if game.grid[row-1][column+1] === 2 do
             newGameVal = game
@@ -658,7 +637,6 @@ defmodule Othello.Game do
       if column < 7 and row > 0 do
         if game.grid[row-1][column+1] === 2 do
           newGameVal = checkHitRightUp(game, row-1, column+1)
-          # newGameVal = put_in(game.grid[row-1][column+1], 1)
         else
           if game.grid[row-1][column+1] === 1 do
             newGameVal = game
@@ -671,16 +649,17 @@ defmodule Othello.Game do
       end
     end
     newGameVal
+
   end
 
   def checkHitLeftDown(game, row,column) do
+
     newGameVal = game
     if game.p1_turn do
       game = put_in(game.grid[row][column], 2)
       if column > 0 and row < 7 do
         if game.grid[row+1][column-1] === 1 do
           newGameVal = checkHitLeftDown(game, row+1, column-1)
-          # newGameVal = put_in(game.grid[row+1][column-1], 2)
         else
           if game.grid[row+1][column-1] === 2 do
             newGameVal = game
@@ -696,7 +675,6 @@ defmodule Othello.Game do
       if column > 0 and row < 7 do
         if game.grid[row+1][column-1] === 2 do
           newGameVal = checkHitLeftDown(game, row+1, column-1)
-          # newGameVal = put_in(game.grid[row+1][column-1], 1)
         else
           if game.grid[row+1][column-1] === 1 do
             newGameVal = game
@@ -709,16 +687,17 @@ defmodule Othello.Game do
       end
     end
     newGameVal
+
   end
 
   def checkHitLeftUp(game, row,column) do
+
     newGameVal = game
     if game.p1_turn do
       game = put_in(game.grid[row][column], 2)
       if column > 0 and row > 0 do
         if game.grid[row-1][column-1] === 1 do
           newGameVal = checkHitLeftUp(game, row-1, column-1)
-          # newGameVal = put_in(game.grid[row-1][column-1], 2)
         else
           if game.grid[row-1][column-1] === 2 do
             newGameVal = game
@@ -734,7 +713,6 @@ defmodule Othello.Game do
       if column > 0 and row > 0 do
         if game.grid[row-1][column-1] === 2 do
           newGameVal = checkHitLeftUp(game, row-1, column-1)
-          # newGameVal = put_in(game.grid[row-1][column-1], 1)
         else
           if game.grid[row-1][column-1] === 1 do
             newGameVal = game
@@ -747,6 +725,7 @@ defmodule Othello.Game do
       end
     end
     newGameVal
+
   end
 
   def countScore(game) do
@@ -767,6 +746,7 @@ defmodule Othello.Game do
               msg: game.msg,
               winner: game.winner
             }
+
   end
 
   def addPlayer1(game, player1) do
@@ -795,15 +775,16 @@ defmodule Othello.Game do
           end), %{})}
         end), %{})
      %{game | grid: gl}
+
   end
 
   def appendmsg(game, msg) do
     msgupdate = [msg | game.msg]
-    #IO.inspect(msgupdate)
     %{game | msg: msgupdate}
   end
 
   def checkforWinner(game) do
+
     if game.p1_turn do
       g = getvalidtiles(game)
       wc = Enum.sum(Enum.map(g.grid, fn{k,v} ->
@@ -844,15 +825,18 @@ defmodule Othello.Game do
       end
     end
     game
+
   end
 
   def leave(game, player) do
+
     if game.p1 === player do
       game = %{game | p1: nil}
     else
       game = %{game | p2: nil}
     end
     game
+
   end
 
   def reset(game) do

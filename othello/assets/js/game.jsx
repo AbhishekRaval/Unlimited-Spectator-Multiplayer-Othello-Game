@@ -59,7 +59,7 @@ class Layout extends React.Component {
     //   //swal("No valid moves left for" + noMovePlayer);
     // }
     if((this.state.winner == 1) || (this.state.winner == 2)){
-      console.log(this.state.winner)
+      // console.log(this.state.winner)
       this.state.winner==1? swal({
                                   title: "THE WINNER IS.." + this.state.p1,
                                   text: "",
@@ -68,7 +68,7 @@ class Layout extends React.Component {
                                   dangerMode: true,
                                 })
                                 .then((willDelete) => {
-                                  if (willDelete) {
+                                  if (willDelete && (this.state.p1 == window.playerName || this.state.p2 == window.playerName)) {
                                     this.channel
                                   .push("reset")
                                   .receive("ok", this.gotView.bind(this));
@@ -83,7 +83,7 @@ class Layout extends React.Component {
                                       dangerMode: true,
                                     })
                                     .then((willDelete) => {
-                                      if (willDelete) {
+                                      if (willDelete && (this.state.p1 == window.playerName || this.state.p2 == window.playerName)) {
                                         this.channel
                                       .push("reset")
                                       .receive("ok", this.gotView.bind(this));
@@ -101,7 +101,7 @@ class Layout extends React.Component {
 
     this.channel.on("sendmsg",payload=>
     {let game = payload.game;
-      console.log(game);
+      // console.log(game);
     this.setState(game)});
 
 
@@ -135,7 +135,7 @@ class Layout extends React.Component {
 
 
   gotView(msg) {
-    console.log("Got View", msg);
+    // console.log("Got View", msg);
     this.setState(msg.game);
   }
 
@@ -156,7 +156,7 @@ class Layout extends React.Component {
 
   onMessageSubmit(txt,e) {
     const input = txt;
-    console.log(input)
+    // console.log(input)
     let msg = {id: ((this.state.msg.length) + 2), message: input, senderName: window.playerName};
     this.channel.push("sendmsg",{msg: msg})
          .receive("ok",this.gotView.bind(this));
@@ -165,7 +165,7 @@ class Layout extends React.Component {
 
 
   p1join(){
-        console.log("You pressed OK!");
+        // console.log("You pressed OK!");
         this.channel
       .push("player1join", {player1: window.playerName})
       .receive("ok", this.gotView.bind(this));
@@ -182,7 +182,7 @@ class Layout extends React.Component {
          $('whiteImageClick').click(false);
         $('blackImageClick').click(false);
 
-        console.log("You pressed OK!");
+        // console.log("You pressed OK!");
         this.channel
       .push("player2join", {player2: window.playerName})
       .receive("ok", this.gotView.bind(this));
@@ -208,7 +208,7 @@ class Layout extends React.Component {
               icon: "success",
             });
             if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
-              console.log("You pressed OK!");
+              // console.log("You pressed OK!");
                this.channel
              .push("leave", {player: window.playerName})
              .receive("ok", this.gotView.bind(this));
@@ -247,7 +247,7 @@ class Layout extends React.Component {
               icon: "success",
             });
             if ((this.state.p1 == window.playerName) || (this.state.p2 == window.playerName)){
-              console.log("You pressed OK!");
+              // console.log("You pressed OK!");
                this.channel
              .push("leave", {player: window.playerName})
              .receive("ok", this.gotView.bind(this));
@@ -272,7 +272,7 @@ class Layout extends React.Component {
                 swal("The game has been reset!", {
                   icon: "success",
                 });
-                console.log("You pressed OK!");
+                // console.log("You pressed OK!");
                  this.channel
                .push("reset")
                .receive("ok", this.gotView.bind(this));
@@ -291,7 +291,7 @@ class Layout extends React.Component {
   }
 
   serverClickHandle(card, i, j) {
-    console.log("here");
+    // console.log("here");
     if (this.state.p1_turn && (this.state.p1 == window.playerName)) {
       this.channel
         .push("handleclickfn", { i: i, j: j})
