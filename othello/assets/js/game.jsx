@@ -15,25 +15,24 @@ class Layout extends React.Component {
   constructor(props) {
     super(props);
     this.channel = props.channel;
+
     this.channel.join()
       .receive("ok", this.gotView.bind(this))
       .receive("error", resp => {
       console.log("Unable to join, failed", resp);
+
     });
 
-    this.channel.on("handleclickfn",payload=>
-    {let game = payload.game;
-      if (this.state.p1_turn == game.p1_turn && this.state.p1score != game.p1score){
-        if (this.state.p1_turn) {
-          swal("No valid moves left for", this.state.p2);
-        }
-        else if(this.state.p1_turn == game.p1_turn && this.state.p2score != game.p2score){
-          swal("No valid moves left for", this.state.p1);
-        }
-      }
-    this.setState(game)
-
-
+    // if (!window.twoPlayer){
+    //   if(this.state.p2 == null) {
+    //     this.channel
+    //     .push("player2join", {player2: "Computer"})
+    //     .receive("ok", this.gotView.bind(this));
+    //   }
+    //   // if(!this.state.p1_turn){
+    //   //
+    //   // }
+    // }
     // let noMovePlayer = (this.state.p1_turn)?this.state.p2:this.state.p1;
     //
     // if (this.state.p1_turn) {
@@ -58,6 +57,20 @@ class Layout extends React.Component {
     //   swal("No valid moves left for", noMovePlayer);
     //   //swal("No valid moves left for" + noMovePlayer);
     // }
+
+
+
+    this.channel.on("handleclickfn",payload=>
+    {let game = payload.game;
+      if (this.state.p1_turn == game.p1_turn && this.state.p1score != game.p1score){
+        if (this.state.p1_turn) {
+          swal("No valid moves left for", this.state.p2);
+        }
+        else if(this.state.p1_turn == game.p1_turn && this.state.p2score != game.p2score){
+          swal("No valid moves left for", this.state.p1);
+        }
+      }
+    this.setState(game)
     if((this.state.winner == 1) || (this.state.winner == 2)){
       // console.log(this.state.winner)
       this.state.winner==1? swal({
@@ -91,12 +104,43 @@ class Layout extends React.Component {
                                     })
                                     :"";
     }
+    // console.log(this.state);
+    if(!window.twoPlayer) {
 
+
+      if(!this.state.p1_turn) {
+        var myArray =
+            Object.keys(this.state.grid).filter((cardrow, rowindex) =>
+                                  ( Object.keys(this.state.grid[cardrow]).filter((card, i) =>
+                                                                      ( this.state.grid[cardrow][card] == 3 ))).length > 0 );
+        if(myArray != null) {
+          var randi = myArray[Math.floor(Math.random() * myArray.length)];
+          var newArray = Object.keys(this.state.grid[randi]).filter((card, i) =>
+                                                ( this.state.grid[randi][card] == 3 ));
+          if(newArray != null) {
+            var randj = newArray[Math.floor(Math.random() * newArray.length)];
+            // console.log(randi+","+randj);
+            this.channel
+            .push("handleclickfn", { i: parseInt(randi), j: parseInt(randj)})
+            .receive("ok", this.gotView.bind(this))
+
+            // this.serverClickHandle(0, randi, randj)
+          }
+        }
+      }
+    }
 
   });
 
     this.channel.on("player1join",payload=>
     {let game = payload.game;
+      if(!window.twoPlayer) {
+
+        if(this.state.p2 == null) {
+          this.channel
+        .push("player2join", {player2: "Computer"})
+        .receive("ok", this.gotView.bind(this));
+      }}
     this.setState(game)});
 
     this.channel.on("sendmsg",payload=>
@@ -292,23 +336,27 @@ class Layout extends React.Component {
 
   serverClickHandle(card, i, j) {
     // console.log("here");
-    if (this.state.p1_turn && (this.state.p1 == window.playerName)) {
-      this.channel
-        .push("handleclickfn", { i: i, j: j})
-        .receive("ok", this.gotView.bind(this));
-
-    }
-    else if (!(this.state.p1_turn) &&  (this.state.p2 == window.playerName) ) {
-      this.channel
-        .push("handleclickfn", { i: i, j: j})
-        .receive("ok", this.gotView.bind(this));
 
 
-    }
-    else{
-      // alert("Trying to be oversmart huh!?")
-      swal("Trying to be oversmart huh!?");
-    }
+      if (this.state.p1_turn && (this.state.p1 == window.playerName)) {
+        this.channel
+          .push("handleclickfn", { i: i, j: j})
+          .receive("ok", this.gotView.bind(this));
+
+      }
+      else if (!(this.state.p1_turn) &&  (this.state.p2 == window.playerName) ) {
+        this.channel
+          .push("handleclickfn", { i: i, j: j})
+          .receive("ok", this.gotView.bind(this));
+
+
+      }
+      else{
+        // alert("Trying to be oversmart huh!?")
+        swal("Trying to be oversmart huh!?");
+      }
+
+
 
     // this.state.winner==1? swal({
     //                             title: "THE WINNER IS..",
@@ -402,10 +450,10 @@ class Layout extends React.Component {
               (new Message ({id: 0 ,message: data.message ,senderName: data.senderName})):
               (new Message(data))))} // Boolean: list of message objects
             showSenderName
-            /></div>        
+            /></div>
 
     let gamep1button = (<div>
-     {(this.state.p1 === null && !(this.state.p2 === window.playerName) ) ? 
+     {(this.state.p1 === null && !(this.state.p2 === window.playerName) ) ?
       ( <button type="submit" data-toggle="modal" data-target="#player1Join"
       className="btn btn-primary my-2" onClick={() => this.p1join()}> Join Game as Player1</button>)
      :(this.state.p2 === window.playerName && (this.state.p1 === null))?"Waiting for Player1 to join game":""}
@@ -418,10 +466,10 @@ class Layout extends React.Component {
        </span>):("")} </div>);
 
     let gamep2button = (<div>
-     {(this.state.p2 === null && !(this.state.p1 == window.playerName)) ? ( <button type="submit" className="btn btn-primary my-2"
+     {(window.twoPlayer) ? (this.state.p2 === null && !(this.state.p1 == window.playerName)) ? ( <button type="submit" className="btn btn-primary my-2"
       onClick={() => this.p2join()}>
       Join Game as Player2</button>)
-     :(this.state.p1 === window.playerName && (this.state.p2 === null))?"Waiting for Player2 to join game":""}
+     :(this.state.p1 === window.playerName && (this.state.p2 === null))?"Waiting for Player2 to join game":"" : ""}
      </div>);
 
     let gamep2leavebutton =(<div className="mt-2"> {this.state.p2 == window.playerName ?
@@ -430,7 +478,7 @@ class Layout extends React.Component {
        <button type="submit" onClick={() => this.reset()} className="btn btn-secondary">Reset</button>
        </span>):("")} </div>);
 
-    let leaveResButtons = <div> 
+    let leaveResButtons = <div>
     {this.state.p1 == window.playerName ?
       (<span>
        <button type="submit" onClick={() => this.leaveCurrentGame()} className="btn btn-primary mr-3">Leave</button>
@@ -442,14 +490,14 @@ class Layout extends React.Component {
        </span>):("")}
     </div>
 
-    let spectatorLeave = <div>{  <button type="submit" onClick={() => this.leave()} 
+    let spectatorLeave = <div>{  <button type="submit" onClick={() => this.leave()}
     className="btn mobileSpecLeave btn-primary mt-3">Leave the Game</button>}</div>
 
     let mobileplayerDets = (
         <div className="row text-center">
           <div className="float-left col">
-            <img src="http://othellogame.net/revello/images/chip-white-1x.png" 
-             onClick={() => ((this.state.p1 === null) && !(this.state.p2 === window.playerName))? 
+            <img src="http://othellogame.net/revello/images/chip-white-1x.png"
+             onClick={() => ((this.state.p1 === null) && !(this.state.p2 === window.playerName))?
               this.p1join():null} height="55" width="55"/>
               <p className="text-white h4">{this.state.p1score}</p>
            </div>
@@ -459,11 +507,11 @@ class Layout extends React.Component {
            "Waiting for Players to Join Game":
       //else
            (
-           // if 2 
+           // if 2
            ( (this.state.p1 == window.playerName) || (this.state.p2 == window.playerName))?
               (
                 //if 3
-                this.state.p1_turn ? 
+                this.state.p1_turn ?
                     //if 4
                       (this.state.p1 == window.playerName ?
                         "Your Turn" :
@@ -482,7 +530,7 @@ class Layout extends React.Component {
             )}
            </div>
           <div className="float-right col">
-            <img src="http://othellogame.net/revello/images/chip-black-1x.png" 
+            <img src="http://othellogame.net/revello/images/chip-black-1x.png"
             onClick={() => ((this.state.p2 === null) && !(this.state.p1 === window.playerName))?
               this.p2join():null} height="55" width="55"/>
              <p className="text-white h4"> {this.state.p2score} </p>
@@ -530,7 +578,7 @@ class Layout extends React.Component {
                     <p className="mt-2 text-white h4 playerTurn"> {playerturn}  </p>
                   </div>
                   <div className="text-center text-white h4">
-                    {spectatorLeave}            
+                    {spectatorLeave}
                   </div>
                 </div>
                 <div className="d-flex flex-column mx-auto float-right">

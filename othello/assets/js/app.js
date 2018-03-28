@@ -66,6 +66,9 @@ function init() {
        }
     });
 
+    
+
+
   }
   run_game(root, channel);
 

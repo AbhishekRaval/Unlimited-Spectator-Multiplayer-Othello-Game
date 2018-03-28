@@ -32,8 +32,13 @@ defmodule Othello.Game do
     newGameState = game
 
     clickedTile = game.grid[row][column]
+    # IO.puts("clickedTile")
+    # IO.inspect(clickedTile)
     if game.p1 !== nil and game.p2 !== nil do
+      # IO.puts("game")
+      # IO.inspect(game)
       if (clickedTile === 0 or clickedTile === 3) and isValid(game, row, column) do
+        # IO.puts('anyting')
         newGameState = checkHit(game, row, column)
         newGameState = %{newGameState | p1_turn: !newGameState.p1_turn}
         newGameState = checkforWinner(newGameState)

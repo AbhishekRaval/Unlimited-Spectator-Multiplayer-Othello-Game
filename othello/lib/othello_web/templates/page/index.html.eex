@@ -1,3 +1,5 @@
+
+
  <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg") %>);
  	background-repeat: no-repeat;
     background-attachment: fixed;
@@ -30,6 +32,9 @@
 						<p class="mr-3 text-white">Enter Your Name: </p>
 						<p><input type="text"  class="form-control" id="player-name" name="Player Name" placeholder="Your Name"></p>
 					</div>
+          
+
+
 					<p  class="text-center"><Button class="btn btn-primary" id="game-button">Join Game</Button></p>
 				</div>
 			</div>
@@ -90,7 +95,7 @@
 				</div>
 			</div>
 		</div>
-	</header>	
+	</header>
 </section>
 
 </div> <!-- /container -->
