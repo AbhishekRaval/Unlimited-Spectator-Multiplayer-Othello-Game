@@ -32,23 +32,28 @@ function init() {
 
 
   if (!root) {
+
     $('#game-button').click(() => {
       let gn = $('#game-name').val();
       let pn = $('#player-name').val();
+      let cn = $('input[name=options]:checked').val();
+      console.log(cn);
       // $('#ahr').attr("href", "/games/"+gn+"/"+pn);
       if (gn == "" || pn == ""){
         swal("Please enter both the game name and the player name!");
       }
-      else{
-        window.location.href  = "/games/"+gn+"/"+pn;
-        //run_game(root, channel, pn);
-      }
+      // else{
+      //   window.location.href  = "/games/"+gn+"/"+pn;
+      //   //run_game(root, channel, pn);
+      // }
 
       //console.log(playerName + "player Name is here : :: : : " + pn )
       // channel.push("joining", { gn: gn, pn: pn }).receive("joined", resp =>
       //   { console.log("Player joined successfully") });
       //
     });
+    
+
     $('#player-name').keypress(function (e) {
       var key = e.which;
       if(key == 13)  // the enter key code

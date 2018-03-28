@@ -20,7 +20,6 @@ class Layout extends React.Component {
       .receive("ok", this.gotView.bind(this))
       .receive("error", resp => {
       console.log("Unable to join, failed", resp);
-
     });
 
     // if (!window.twoPlayer){

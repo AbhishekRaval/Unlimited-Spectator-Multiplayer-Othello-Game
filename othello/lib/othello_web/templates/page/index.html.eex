@@ -24,21 +24,36 @@
 			<div class="d-flex flex-column mx-auto">
 				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
 				<div class="py-5">
-					<div class="row">
-						<p class="mr-2 text-white" >Enter Game Name:</p>
-						<p><input type="text"  class="form-control" id="game-name" name="Game Name" placeholder="Your Game Name"></p>
+					<%= form_tag("/game", method: :post)do %>
+				      <!-- Attribution: https://github.com/NatTuck/microblog/blob/part-two/lib/microblog_web/templates/layout/app.html.eex -->
+				    <div class="row">
+					    <p class="mr-2 text-white h6 form-group">Enter Game Name:</p>
+						<input type="text"  class="form-control" id="game-name" name="gamename" placeholder="Your Game Name">
 					</div>
+
 					<div class="row">
-						<p class="mr-3 text-white">Enter Your Name: </p>
-						<p><input type="text"  class="form-control" id="player-name" name="Player Name" placeholder="Your Name"></p>
+						<p class="mr-2 mt-3 text-white h6 form-group">Enter Your Name:</p>
+						<input type="text" id="player-name" name="playername" class="form-control" placeholder="Your Name">
 					</div>
-          
 
+					<div class="text-center text-white mt-2">
+					  <label class="pr-4">
+					    <input type="radio" class="option-input radio" name="options" value="false" checked />
+					    Single Player
+					  </label>
+					  <label>
+					    <input type="radio" class="option-input radio" value="true" name="options" />
+					    Two Player
+					  </label>
+					</div>
+				    <p class="text-center mt-3"><Button class="btn btn-primary" id="game-button">Join Game</Button></p>
 
-					<p  class="text-center"><Button class="btn btn-primary" id="game-button">Join Game</Button></p>
+				    <% end %>
+				  </div>
 				</div>
 			</div>
 		</div>
+
 		<div class="d-flex align-items-center justify-content-center h-100">
 			<div class="d-flex flex-column mx-auto">
 				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
@@ -100,3 +115,65 @@
 
 </div> <!-- /container -->
 </body>
+<style>
+/* source: https://codepen.io/wilder_taype/pen/pNXwMW*/
+*{font-family: 'Roboto', sans-serif;}
+.option-input {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  -ms-appearance: none;
+  -o-appearance: none;
+  appearance: none;
+  position: relative;
+  top: 13.33333px;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  height: 40px;
+  width: 40px;
+  transition: all 0.15s ease-out 0s;
+  background: #cbd1d8;
+  border: none;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  margin-right: 0.5rem;
+  outline: none;
+  position: relative;
+  z-index: 1000;
+}
+.option-input:hover {
+  background: #9faab7;
+}
+.option-input:checked {
+  background: #007bff;
+}
+.option-input:checked::before {
+  height: 40px;
+  width: 40px;
+  position: absolute;
+  content: '✔';
+  display: inline-block;
+  font-size: 26.66667px;
+  text-align: center;
+  line-height: 40px;
+}
+.option-input:checked::after {
+  -webkit-animation: click-wave 0.65s;
+  -moz-animation: click-wave 0.65s;
+  animation: click-wave 0.65s;
+  background: blue;
+  content: '';
+  display: block;
+  position: relative;
+  z-index: 100;
+}
+.option-input.radio {
+  border-radius: 50%;
+}
+.option-input.radio::after {
+  border-radius: 50%;
+}
+
+
+</style>

@@ -1,0 +1,52 @@
+
+Web Dev Spring 2018 Project 1 Status
+
+Answer the following questions:
+
+
+1. What are the names of the members of your team?
+Abhishek Raval | raval.a@husky.neu.edu
+Nishchay Shah  | shah.nishc@husky.neu.edu
+Ketan Kale     | kale.k@husky.neu.edu
+
+
+2. What's the URL of the github repo with your code for this project?
+https://github.com/nishchaycs/WebDevProject/tree/master/othello
+
+
+3. What's the version number of your github release?
+1.1
+
+
+4. What's the URL that you deployed to?
+http://othello.ketanisthe.name/
+
+
+5. Is your app functionality complete? If not, what's missing?
+Yes
+
+
+6. Is your app properly deployed? If not, what went wrong?
+Yes
+
+
+7. What parts of the project did each team member work on?
+Abhishek - Worked on HTML, CSS , Mobile CSS, React code for rendering,as well some click functions in react.
+	   In addition to that worked on Chat Application using react-chat-UI API, and handled overall navigation of application.
+Nishchay - Worked on Channels, and the game Backend Logic, as well as worked on Game Intelligence, for valid moves. 
+Ketan    - Also worked on game Backend Logic, as well as integrated sweetAlerts Api for Intuitive display of alerts. 
+          And added some functions in React. 
+
+
+
+And here's a list of tasks for grading comments. Just leave this here:
+ - Development
+ - Deployment
+ - Submission
+ - Report
+   - 1
+   - 2
+   - 3
+   - 4
+   - 5
+

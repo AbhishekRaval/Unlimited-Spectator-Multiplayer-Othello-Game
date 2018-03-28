@@ -16,13 +16,14 @@
  			</thead>
  		</table>
  		<div class="d-flex align-items-center justify-content-center h-100 ">
-
  			<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
  			<div id="gameboard">
- 				<script>
- 					window.gameName = "<%= @game_name %>"
- 					window.playerName = "<%= @player_name %>"
- 				</script>
+
+				<script>
+					window.gameName = "<%= @game_name %>"
+					window.playerName = "<%= @player_name %>"
+					window.twoPlayer = "<%= @options %>"
+				</script>
  				<div id="game" >
  					Loading React Code ...
  				</div>
