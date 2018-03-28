@@ -38,11 +38,11 @@
 
 					<div class="text-center text-white mt-2">
 					  <label class="pr-4">
-					    <input type="radio" class="option-input radio" name="options" value="false" checked />
+					    <input type="radio" class="option-input radio" name="options" value="false"  />
 					    Single Player
 					  </label>
 					  <label>
-					    <input type="radio" class="option-input radio" value="true" name="options" />
+					    <input type="radio" class="option-input radio" value="true" name="options" checked/>
 					    Two Player
 					  </label>
 					</div>
