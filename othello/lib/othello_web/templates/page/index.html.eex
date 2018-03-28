@@ -22,18 +22,26 @@
 			<div class="d-flex flex-column mx-auto">
 				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->
 				<div class="py-5">
+					<%= form_tag("/game", method: :post)do %>
+				      <!-- Attribution: https://github.com/NatTuck/microblog/blob/part-two/lib/microblog_web/templates/layout/app.html.eex -->
+				    <div class="row">
+					    <p class="mr-2 text-white h6 form-group">Enter Game Name:</p>
+						<input type="text"  class="form-control" id="game-name" name="gamename" placeholder="Your Game Name">
+					</div>    
+
 					<div class="row">
-						<p class="mr-2 text-white" >Enter Game Name:</p>
-						<p><input type="text"  class="form-control" id="game-name" name="Game Name" placeholder="Your Game Name"></p>
+						<p class="mr-2 mt-3 text-white h6 form-group">Enter Your Name:</p>
+						<input type="text" id="player-name" name="playername" class="form-control" placeholder="Your Name">
 					</div>
-					<div class="row">
-						<p class="mr-3 text-white">Enter Your Name: </p>
-						<p><input type="text"  class="form-control" id="player-name" name="Player Name" placeholder="Your Name"></p>
-					</div>
-					<p  class="text-center"><Button class="btn btn-primary" id="game-button">Join Game</Button></p>
+
+				    <p class="text-center mt-3"><Button class="btn btn-primary" id="game-button">Join Game</Button></p>
+
+				    <% end %>
+				  </div>
 				</div>
 			</div>
 		</div>
+
 		<div class="d-flex align-items-center justify-content-center h-100">
 			<div class="d-flex flex-column mx-auto">
 				<!-- source: https://stackoverflow.com/a/46298729 || code for centering a page -->

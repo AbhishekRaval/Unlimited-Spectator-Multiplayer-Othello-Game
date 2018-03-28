@@ -5,8 +5,14 @@ defmodule OthelloWeb.PageController do
     render conn, "index.html"
   end
 
-  def game(conn, params) do
-    render conn, "game.html", game_name: params["game_name"], player_name: params["player_name"]
+  def game(conn, %{"gamename"=>gamename,"playername"=>playername}) do
+  	if(gamename == "" || playername == "") do
+	  	conn
+    	|> put_flash(:error, "Can't create session")
+    	|> redirect(to: "/")	
+  	else  	
+  	    render conn, "game.html", game_name: gamename, player_name: playername		
+  	end
   end
 
 end
