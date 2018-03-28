@@ -22,7 +22,7 @@
 				<script>
 					window.gameName = "<%= @game_name %>"
 					window.playerName = "<%= @player_name %>"
-
+					window.twoPlayer = "<%= @options %>"
 				</script>
  				<div id="game" >
  					Loading React Code ... 

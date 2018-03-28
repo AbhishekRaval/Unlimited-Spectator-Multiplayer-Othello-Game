@@ -21,6 +21,9 @@ class Layout extends React.Component {
       console.log("Unable to join, failed", resp);
     });
 
+      console.log(window.twoPlayer);
+      console.log(window.playerName); 
+
     this.channel.on("handleclickfn",payload=>
     {let game = payload.game;
       if (this.state.p1_turn == game.p1_turn && this.state.p1score != game.p1score){
