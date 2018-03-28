@@ -53,7 +53,6 @@ function init() {
       //
     });
     
-    $().button('toggle');
 
     $('#player-name').keypress(function (e) {
       var key = e.which;
