@@ -8,7 +8,7 @@ defmodule Othello.Game do
       p1score: 0,
       p2score: 0,
       msg: [],
-      winner: 0
+      winner: 0 
     }
   end
 

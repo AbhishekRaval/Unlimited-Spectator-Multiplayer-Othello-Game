@@ -14,7 +14,6 @@
 </head>
 
 <!-- Background Image Source: http://cdn.akamai.steamstatic.com/steamcommunity/public/images/items/307430/769489f1336ad61ab6ca83770bbc642ab1db9207.jpg-->
-
 <main role="main">
   <%= render @view_module, @view_template, assigns%>
 </main>      
