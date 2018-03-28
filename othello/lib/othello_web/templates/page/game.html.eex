@@ -20,7 +20,13 @@
  			<div id="gameboard">
 
 				<script>
-					window.gameName = "<%= @game_name %>"
+        if ("<%= @options %>" == "false") {
+          window.gameName = "<%= @game_name %>"+"rdxtgfcj8gkllktjHf46gdx7gs@hdvhy6hdbbvb"
+        }
+        else{
+          window.gameName = "<%= @game_name %>"
+        }
+
 					window.playerName = "<%= @player_name %>"
 					window.twoPlayer = ("<%= @options %>" == "true")
 				</script>
