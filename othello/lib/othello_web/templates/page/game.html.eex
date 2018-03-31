@@ -11,7 +11,7 @@
  			border-width: 0px 0px 4px 0px; " >
  			<thead>
  				<tr>
- 					<th scope="col" class="text-white" style="text-transform: capitalize;"><h3> Welcome, <%= @player_name %>  to Othello Game</h3></th>
+ 					<th scope="col" class="text-white" style="text-transform: capitalize;"><h3> Welcome, <%= @player_name %>  to <%= @game_name %>'s Lobby</h3></th>
  				</tr>
  			</thead>
  		</table>

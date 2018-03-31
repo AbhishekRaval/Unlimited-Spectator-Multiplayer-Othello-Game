@@ -492,18 +492,20 @@ class Layout extends React.Component {
     let spectatorLeave = <div>{  <button type="submit" onClick={() => this.leave()}
     className="btn mobileSpecLeave btn-primary mt-3">Leave the Game</button>}</div>
 
+
     let mobileplayerDets = (
         <div className="row text-center">
           <div className="float-left col">
+          <p className="text-white"> {this.state.p1==window.playerName?"You":this.state.p1} </p>
             <img src="http://othellogame.net/revello/images/chip-white-1x.png"
              onClick={() => ((this.state.p1 === null) && !(this.state.p2 === window.playerName))?
               this.p1join():null} height="55" width="55"/>
-              <p className="text-white h4">{this.state.p1score}</p>
+              <p className="text-white h4">{this.state.p1==null?"Click above to Join":this.state.p1score}</p>
            </div>
-           <div className="col text-center text-white h5">
+           <div className="col text-center text-white h4">
            {(this.state.p1 == null || this.state.p2 == null) ?
       //reply for main
-           "Waiting for Players to Join Game":
+           "Waiting for other player to Join":
       //else
            (
            // if 2
@@ -529,10 +531,11 @@ class Layout extends React.Component {
             )}
            </div>
           <div className="float-right col">
+          <p className="text-white"> {this.state.p2==window.playerName?"You":this.state.p2} </p>
             <img src="http://othellogame.net/revello/images/chip-black-1x.png"
-            onClick={() => ((this.state.p2 === null) && !(this.state.p1 === window.playerName))?
+            onClick={() => ((this.state.p2 === null) && !(this.state.p1 === window.playerName) && (window.twoPlayer))?
               this.p2join():null} height="55" width="55"/>
-             <p className="text-white h4"> {this.state.p2score} </p>
+             <p className="text-white h4"> {this.state.p2 == null?(window.twoPlayer?"Click above to Join":"Computer"):this.state.p2score} </p>
          </div>
         </div>);
 

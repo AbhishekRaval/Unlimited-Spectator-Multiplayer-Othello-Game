@@ -1,5 +1,3 @@
-
-
  <body style="background-image: url(<%= static_path(@conn, "/images/background.jpg") %>);
  	background-repeat: no-repeat;
     background-attachment: fixed;
@@ -48,6 +46,14 @@
 					</div>
 				    <p class="text-center mt-3"><Button class="btn btn-primary" id="game-button">Join Game</Button></p>
 
+				    <p class="text-center mt-4 text-white">
+				    <ul>
+				    <li class="text-white">	
+				    For a Multiplayer Game, Ask your friends to Join with same Game Name. </li>
+					<li class="text-white">  You should use separate Player Name, But same Game Name. </li>
+					<li class="text-white"> Scroll Below to learn Game rules.</li>
+					</ul>
+					</p>
 				    <% end %>
 				  </div>
 				</div>
