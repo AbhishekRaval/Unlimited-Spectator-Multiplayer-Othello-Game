@@ -80,7 +80,11 @@ defmodule OthelloWeb.GamesChannel do
 
  def handle_in("handleclickfn", %{"i" => i, "j" => j}, socket) do
     game_init = Othello.GameBackup.load(socket.assigns[:game_name])
+    IO.puts('inspect:')
+
     game_fn = Game.handleTileClick(game_init,i,j)
+    
+    IO.inspect(game_fn)
     Othello.GameBackup.save(socket.assigns[:game_name], game_fn)
     socket = socket|>assign(:game, game_fn)
     #attribution: https://medium.com/@Stephanbv/elixir-phoenix-build-a-simple-chat-room-7f20ee8e8f9c
